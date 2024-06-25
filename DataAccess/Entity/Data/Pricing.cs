@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Claims;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
-    [Table("StaffProfile")]
-    public class StaffProfile
+    public class Pricing
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public User User { get; set; }
+        public string Type { get; set; }
+        public TimeSpan Duration { get; set; }
+        public float Price { get; set; }
 
-        [ForeignKey("Club")]
+        [ForeignKey("Clubs")]
         public string ClubId { get; set; }
         public Club Club { get; set; }
-
     }
 }

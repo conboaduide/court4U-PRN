@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
     [Table("Court")]
     public class Court

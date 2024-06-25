@@ -1,16 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
-    [Table("ClubImage")]
-    public class ClubImage
+    [Table("StaffProfile")]
+    public class StaffProfile
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string Name { get; set; }
-        public string ClubImageUrl { get; set; }
+        public User User { get; set; }
 
-        [ForeignKey("Clubs")]
+        [ForeignKey("Club")]
         public string ClubId { get; set; }
         public Club Club { get; set; }
+
     }
 }

@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Claims;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
-    [Table("UserRole")]
-    public class UserRole
+    [Table("StaffRole")]
+    public class StaffRole
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
+
+        [ForeignKey("ClubRole")]
+        public string ClubRoleId { get; set; }
+        public ClubRole ClubRole { get; set; }
 
         [ForeignKey("Users")]
         public string UserId { get; set; }
         public User User { get; set; }
-
-        [ForeignKey("Role")]
-        public string RoleId { get; set; }
-        public Role Role { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
     [Table("Cancellation")]
     public class Cancellation

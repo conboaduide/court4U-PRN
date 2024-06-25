@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
-    [Table("Role")]
-    public class Role
+    [Table("Permission")]
+    public class Permission
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
-        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<ClubRole> ClubRoles { get; set; }
+
     }
 }

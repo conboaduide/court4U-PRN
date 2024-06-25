@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using DataAccess.Data;
 using Microsoft.Extensions.Configuration;
 using System;
+using DataAccess.Entity.Data;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity
 {
     public interface ICourt4UDbContext
     {
@@ -37,7 +37,7 @@ namespace DataAccess.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var configuration = new ConfigurationBuilder()
-            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Court4U")) 
+            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Court4U"))
             .AddJsonFile("appsettings.json")
             .Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("Local"),

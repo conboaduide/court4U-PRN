@@ -1,4 +1,4 @@
-﻿namespace DataAccess
+﻿namespace DataAccess.Entity
 {
     public class Enums
     {

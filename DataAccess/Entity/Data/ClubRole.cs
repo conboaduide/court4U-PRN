@@ -2,7 +2,7 @@
 using System.Security;
 using System.Security.Claims;
 
-namespace DataAccess.Data
+namespace DataAccess.Entity.Data
 {
     [Table("ClubRole")]
     public class ClubRole

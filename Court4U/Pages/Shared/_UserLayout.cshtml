@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Court4U_PRN</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body class="bg-gray-100">
+    <header>
+        <nav class="fixed z-10 w-full top-0 flex items-center justify-between space-x-16 border-b px-8 h-20 bg-gradient-to-l from-[#6bc945] to-[#22ad5c] border-none">
+            <div class="flex px-36 justify-between w-full">
+                <a href="/" class="flex items-center space-x-6 hover:text-primary">
+                    <img class="w-8 h-8" src="~/favicon.ico" alt="Logo" />
+                    <div class="text-2xl text-white font-sans font-bold hover:text-primary">Court4U</div>
+                </a>
+                <div class="flex justify-between items-center w-[82%]">
+                    <ul class="flex space-x-16 text-lg font-medium">
+                        <li>
+                            <a href="/" class="text-white hover:text-primary transition-colors @((ViewContext.RouteData.Values["page"]?.ToString() == "/" ? "text-white font-bold" : ""))">Home</a>
+                        </li>
+                        <li>
+                            <a href="/clubs" class="text-white hover:text-primary transition-colors @((ViewContext.RouteData.Values["page"]?.ToString() == "/clubs" ? "text-primary font-bold" : ""))">Clubs</a>
+                        </li>
+                        <li>
+                            <a href="/about" class="text-white hover:text-primary transition-colors @((ViewContext.RouteData.Values["page"]?.ToString() == "/about" ? "text-primary font-bold" : ""))">About</a>
+                        </li>
+                    </ul>
+                    <ul class="flex space-x-16 text-lg font-medium">
+                        <li>
+                            <a href="/login" class="text-white hover:text-primary transition-colors @((ViewContext.RouteData.Values["page"]?.ToString() == "/login" ? "text-primary font-bold" : ""))">Login</a>
+                        </li>
+                        <li>
+                            <a href="/register" class="text-white hover:text-primary transition-colors @((ViewContext.RouteData.Values["page"]?.ToString() == "/register" ? "text-primary font-bold" : ""))">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="relative bg-[#222222] text-white w-full py-10 space-y-10">
+        <div class="flex justify-around items-start">
+            <div class="flex space-y-2 flex-col justify-center items-center">
+                <div class="font-bold text-xl">Company</div>
+                <ul>
+                    <li>About us</li>
+                    <li>Privacy policy</li>
+                    <li>Terms of Use</li>
+                </ul>
+            </div>
+            <div class="flex space-y-2 flex-col justify-center items-center">
+                <div class="font-bold text-xl">Social</div>
+                <ul>
+                    <li class="flex space-x-1">
+                        <p class="pt-1">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/2023_Facebook_icon.svg" alt="Facebook" class="w-4 h-4" />
+                        </p>
+                        <p>facebook.com/court4u</p>
+                    </li>
+                    <li class="flex space-x-1">
+                        <p class="pt-1">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Ins" class="w-4 h-4" />
+                        </p>
+                        <p>instagram.com/court4u</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex items-center justify-center">| © 2024 Court4U |</div>
+    </footer>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
