@@ -7,6 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Update="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -27,6 +31,14 @@
 	<ItemGroup>
 		<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
 		<UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,59 @@
+﻿@page
+@model Court4U.Pages.Admin.ClubManagement.CreateModel
+@{
+    ViewData["Title"] = "Create Club";
+    Layout = "_Layout";
+}
+
+<h1>Create Club</h1>
+
+<h4>Club</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Club.Name" class="control-label"></label>
+                <input asp-for="Club.Name" class="form-control" />
+                <span asp-validation-for="Club.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.Description" class="control-label"></label>
+                <input asp-for="Club.Description" class="form-control" />
+                <span asp-validation-for="Club.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.Address" class="control-label"></label>
+                <input asp-for="Club.Address" class="form-control" />
+                <span asp-validation-for="Club.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.CityOfProvince" class="control-label"></label>
+                <input asp-for="Club.CityOfProvince" class="form-control" />
+                <span asp-validation-for="Club.CityOfProvince" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.District" class="control-label"></label>
+                <input asp-for="Club.District" class="form-control" />
+                <span asp-validation-for="Club.District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.LogoUrl" class="control-label"></label>
+                <input asp-for="Club.LogoUrl" class="form-control" />
+                <span asp-validation-for="Club.LogoUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.UserId" class="control-label"></label>
+                <input asp-for="Club.UserId" class="form-control" />
+                <span asp-validation-for="Club.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
