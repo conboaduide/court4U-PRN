@@ -8,6 +8,13 @@
             Inactive,
             Disable,
         }
+        public enum Roles
+        {
+            Owner,
+            Admin,
+            Staff,
+            Member,
+        }
         public enum SubscriptionOptionStatus
         {
             InActive,

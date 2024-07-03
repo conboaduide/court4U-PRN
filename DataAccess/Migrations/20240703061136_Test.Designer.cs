@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Court4UDbContext))]
-    [Migration("20240625090705_Test")]
+    [Migration("20240703061136_Test")]
     partial class Test
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DataAccess.Data.Bill", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Bill", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -49,7 +49,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Bill");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.BookedSlot", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.BookedSlot", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -71,7 +71,7 @@ namespace DataAccess.Migrations
                     b.ToTable("BookedSlot");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Booking", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -93,23 +93,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Booking");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Cancellation", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CancellerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CancellerId");
-
-                    b.ToTable("Cancellation");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Club", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Club", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -149,7 +133,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Clubs");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.ClubImage", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.ClubImage", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -173,33 +157,7 @@ namespace DataAccess.Migrations
                     b.ToTable("ClubImage");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.ClubRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClubId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PermissionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClubId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.ToTable("ClubRole");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Court", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Court", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -221,7 +179,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Court");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.MemberSubscription", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.MemberSubscription", b =>
                 {
                     b.Property<string>("MemberId")
                         .HasColumnType("nvarchar(450)");
@@ -237,47 +195,7 @@ namespace DataAccess.Migrations
                     b.ToTable("MemberSubscription");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Permission", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Permission");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Pricing", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClubId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClubId");
-
-                    b.ToTable("Pricings");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Review", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Review", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -314,21 +232,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Role", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Slot", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Slot", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -353,7 +257,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Slot");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.StaffProfile", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.StaffProfile", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -369,13 +273,9 @@ namespace DataAccess.Migrations
                     b.ToTable("StaffProfile");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.StaffRole", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.StaffRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClubRoleId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
@@ -384,14 +284,12 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClubRoleId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("StaffRole");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.SubOptionSlot", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.SubOptionSlot", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -413,7 +311,7 @@ namespace DataAccess.Migrations
                     b.ToTable("SubOptionSlot");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.SubscriptionOption", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.SubscriptionOption", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -445,7 +343,7 @@ namespace DataAccess.Migrations
                     b.ToTable("SubscriptionOption");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.User", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -479,6 +377,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -491,36 +392,9 @@ namespace DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.UserRole", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.BookedSlot", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MemberSubscriptionMemberId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberSubscriptionMemberId");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRole");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.BookedSlot", b =>
-                {
-                    b.HasOne("DataAccess.Data.Slot", "Slot")
+                    b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
                         .WithMany("BookedSlots")
                         .HasForeignKey("SlotId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -529,15 +403,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Slot");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Booking", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
                 {
-                    b.HasOne("DataAccess.Data.Bill", "Bill")
+                    b.HasOne("DataAccess.Entity.Data.Bill", "Bill")
                         .WithOne("Booking")
-                        .HasForeignKey("DataAccess.Data.Booking", "Id")
+                        .HasForeignKey("DataAccess.Entity.Data.Booking", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.User", "User")
+                    b.HasOne("DataAccess.Entity.Data.User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -548,28 +422,9 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Cancellation", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Club", b =>
                 {
-                    b.HasOne("DataAccess.Data.User", "Canceller")
-                        .WithMany("Cancellations")
-                        .HasForeignKey("CancellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Data.BookedSlot", "BookedSlot")
-                        .WithOne("Cancellation")
-                        .HasForeignKey("DataAccess.Data.Cancellation", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookedSlot");
-
-                    b.Navigation("Canceller");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Club", b =>
-                {
-                    b.HasOne("DataAccess.Data.User", "User")
+                    b.HasOne("DataAccess.Entity.Data.User", "User")
                         .WithMany("Clubs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -578,9 +433,9 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.ClubImage", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.ClubImage", b =>
                 {
-                    b.HasOne("DataAccess.Data.Club", "Club")
+                    b.HasOne("DataAccess.Entity.Data.Club", "Club")
                         .WithMany("ClubImages")
                         .HasForeignKey("ClubId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -589,28 +444,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Club");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.ClubRole", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Court", b =>
                 {
-                    b.HasOne("DataAccess.Data.Club", "Club")
-                        .WithMany("ClubRoles")
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Data.Permission", "Permission")
-                        .WithMany("ClubRoles")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Club");
-
-                    b.Navigation("Permission");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Court", b =>
-                {
-                    b.HasOne("DataAccess.Data.Club", "Club")
+                    b.HasOne("DataAccess.Entity.Data.Club", "Club")
                         .WithMany("Courts")
                         .HasForeignKey("ClubId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -619,21 +455,21 @@ namespace DataAccess.Migrations
                     b.Navigation("Club");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.MemberSubscription", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.MemberSubscription", b =>
                 {
-                    b.HasOne("DataAccess.Data.Bill", "Bill")
+                    b.HasOne("DataAccess.Entity.Data.Bill", "Bill")
                         .WithOne("MemberSubscription")
-                        .HasForeignKey("DataAccess.Data.MemberSubscription", "MemberId")
+                        .HasForeignKey("DataAccess.Entity.Data.MemberSubscription", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.User", "Member")
+                    b.HasOne("DataAccess.Entity.Data.User", "Member")
                         .WithMany("MemberSubscriptions")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.SubscriptionOption", "SubscriptionOption")
+                    b.HasOne("DataAccess.Entity.Data.SubscriptionOption", "SubscriptionOption")
                         .WithMany("MemberSubscriptions")
                         .HasForeignKey("SubscriptionOptionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -646,26 +482,15 @@ namespace DataAccess.Migrations
                     b.Navigation("SubscriptionOption");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Pricing", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Review", b =>
                 {
-                    b.HasOne("DataAccess.Data.Club", "Club")
-                        .WithMany("Pricings")
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Club");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Review", b =>
-                {
-                    b.HasOne("DataAccess.Data.Club", "Club")
+                    b.HasOne("DataAccess.Entity.Data.Club", "Club")
                         .WithMany("Reviews")
                         .HasForeignKey("ClubId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.User", "Reviewer")
+                    b.HasOne("DataAccess.Entity.Data.User", "Reviewer")
                         .WithMany("Reviews")
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -676,9 +501,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Reviewer");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.Slot", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Slot", b =>
                 {
-                    b.HasOne("DataAccess.Data.Club", "Club")
+                    b.HasOne("DataAccess.Entity.Data.Club", "Club")
                         .WithMany("Slots")
                         .HasForeignKey("ClubId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -687,17 +512,17 @@ namespace DataAccess.Migrations
                     b.Navigation("Club");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.StaffProfile", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.StaffProfile", b =>
                 {
-                    b.HasOne("DataAccess.Data.Club", "Club")
+                    b.HasOne("DataAccess.Entity.Data.Club", "Club")
                         .WithMany("StaffProfiles")
                         .HasForeignKey("ClubId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.User", "User")
+                    b.HasOne("DataAccess.Entity.Data.User", "User")
                         .WithOne("StaffProfile")
-                        .HasForeignKey("DataAccess.Data.StaffProfile", "Id")
+                        .HasForeignKey("DataAccess.Entity.Data.StaffProfile", "Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -706,34 +531,26 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.StaffRole", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.StaffRole", b =>
                 {
-                    b.HasOne("DataAccess.Data.ClubRole", "ClubRole")
-                        .WithMany("StaffRoles")
-                        .HasForeignKey("ClubRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Data.User", "User")
+                    b.HasOne("DataAccess.Entity.Data.User", "User")
                         .WithMany("StaffRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ClubRole");
-
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.SubOptionSlot", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.SubOptionSlot", b =>
                 {
-                    b.HasOne("DataAccess.Data.Slot", "Slot")
+                    b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
                         .WithMany("SubOptionSlots")
                         .HasForeignKey("SlotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Data.SubscriptionOption", "SubscriptionOption")
+                    b.HasOne("DataAccess.Entity.Data.SubscriptionOption", "SubscriptionOption")
                         .WithMany("SubOptionSlots")
                         .HasForeignKey("SubscriptionOptionId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -744,9 +561,9 @@ namespace DataAccess.Migrations
                     b.Navigation("SubscriptionOption");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.SubscriptionOption", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.SubscriptionOption", b =>
                 {
-                    b.HasOne("DataAccess.Data.Club", "Club")
+                    b.HasOne("DataAccess.Entity.Data.Club", "Club")
                         .WithMany("SubscriptionOptions")
                         .HasForeignKey("ClubId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -755,30 +572,7 @@ namespace DataAccess.Migrations
                     b.Navigation("Club");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.UserRole", b =>
-                {
-                    b.HasOne("DataAccess.Data.MemberSubscription", null)
-                        .WithMany("UserRoles")
-                        .HasForeignKey("MemberSubscriptionMemberId");
-
-                    b.HasOne("DataAccess.Data.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Data.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Bill", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Bill", b =>
                 {
                     b.Navigation("Booking")
                         .IsRequired();
@@ -787,21 +581,11 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataAccess.Data.BookedSlot", b =>
-                {
-                    b.Navigation("Cancellation")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Club", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Club", b =>
                 {
                     b.Navigation("ClubImages");
 
-                    b.Navigation("ClubRoles");
-
                     b.Navigation("Courts");
-
-                    b.Navigation("Pricings");
 
                     b.Navigation("Reviews");
 
@@ -812,45 +596,23 @@ namespace DataAccess.Migrations
                     b.Navigation("SubscriptionOptions");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.ClubRole", b =>
-                {
-                    b.Navigation("StaffRoles");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.MemberSubscription", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Permission", b =>
-                {
-                    b.Navigation("ClubRoles");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Role", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("DataAccess.Data.Slot", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.Slot", b =>
                 {
                     b.Navigation("BookedSlots");
 
                     b.Navigation("SubOptionSlots");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.SubscriptionOption", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.SubscriptionOption", b =>
                 {
                     b.Navigation("MemberSubscriptions");
 
                     b.Navigation("SubOptionSlots");
                 });
 
-            modelBuilder.Entity("DataAccess.Data.User", b =>
+            modelBuilder.Entity("DataAccess.Entity.Data.User", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Cancellations");
 
                     b.Navigation("Clubs");
 
@@ -862,8 +624,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("StaffRoles");
-
-                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

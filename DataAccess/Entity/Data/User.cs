@@ -17,13 +17,12 @@ namespace DataAccess.Entity.Data
         public bool Gender { get; set; }
         public string? AvatarUrl { get; set; }
         public Enums.Status Status { get; set; }
+        public Enums.Roles Role { get; set; }
         public StaffProfile StaffProfile { get; set; }
-        public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Club> Clubs { get; set; }
         public ICollection<StaffRole> StaffRoles { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<MemberSubscription> MemberSubscriptions { get; set; }
         public ICollection<Booking> Bookings { get; set; }
-        public ICollection<Cancellation> Cancellations { get; set; }
     }
 }

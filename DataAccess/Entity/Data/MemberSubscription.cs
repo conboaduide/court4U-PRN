@@ -6,7 +6,6 @@ namespace DataAccess.Entity.Data
     public class MemberSubscription
     {
         public Bill Bill { get; set; }
-        public ICollection<UserRole> UserRoles { get; set; }
         [ForeignKey("Users")]
         public string MemberId { get; set; }
         public User Member { get; set; }
