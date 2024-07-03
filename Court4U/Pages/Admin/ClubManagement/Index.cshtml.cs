@@ -17,10 +17,22 @@ namespace Court4U.Pages.Admin.ClubManagement
         }
 
         public IList<Club> Clubs { get; private set; }
+        public string CurrentFilter { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string searchString)
         {
-            Clubs = (IList<Club>)await _clubService.GetAllClubsAsync();
+            CurrentFilter = searchString;
+
+            var clubs = await _clubService.GetAllClubsAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                clubs = clubs.Where(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                                         c.District.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                                         c.CityOfProvince.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            Clubs = (IList<Club>)clubs;
         }
     }
 }
