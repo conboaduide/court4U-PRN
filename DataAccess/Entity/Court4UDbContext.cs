@@ -17,23 +17,17 @@ namespace DataAccess.Entity
         public DbSet<Bill> Bills { get; set; }
         public DbSet<BookedSlot> BookedSlots { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Cancellation> Cancellations { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<ClubImage> ClubImages { get; set; }
-        public DbSet<ClubRole> ClubRoles { get; set; }
         public DbSet<Court> Courts { get; set; }
         public DbSet<MemberSubscription> MemberSubscriptions { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Pricing> Pricings { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Slot> Slots { get; set; }
         public DbSet<StaffProfile> StaffProfiles { get; set; }
         public DbSet<StaffRole> StaffRoles { get; set; }
         public DbSet<SubOptionSlot> SubOptionSlots { get; set; }
         public DbSet<SubscriptionOption> SubscriptionOptions { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var configuration = new ConfigurationBuilder()
@@ -66,10 +60,6 @@ namespace DataAccess.Entity
                 .HasOne(bs => bs.Slot)
                 .WithMany(s => s.BookedSlots)
                 .HasForeignKey(bs => bs.SlotId);
-            modelBuilder.Entity<BookedSlot>()
-                .HasOne(bs => bs.Cancellation)
-                .WithOne(c => c.BookedSlot)
-                .HasForeignKey<Cancellation>(c => c.Id);
 
             //
             modelBuilder.Entity<Booking>()
@@ -78,15 +68,6 @@ namespace DataAccess.Entity
                 .HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
                 .HasForeignKey(b => b.UserId);
-
-            //
-            modelBuilder.Entity<Cancellation>()
-                .HasKey(c => c.Id);
-            modelBuilder.Entity<Cancellation>()
-               .HasOne(c => c.Canceller)
-               .WithMany(u => u.Cancellations)
-               .HasForeignKey(c => c.CancellerId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             //
             modelBuilder.Entity<Club>()
@@ -104,17 +85,6 @@ namespace DataAccess.Entity
                 .WithMany(c => c.ClubImages)
                 .HasForeignKey(ci => ci.ClubId);
 
-            //
-            modelBuilder.Entity<ClubRole>()
-                .HasKey(cr => cr.Id);
-            modelBuilder.Entity<ClubRole>()
-                .HasOne(cr => cr.Club)
-                .WithMany(c => c.ClubRoles)
-                .HasForeignKey(cr => cr.ClubId);
-            modelBuilder.Entity<ClubRole>()
-                .HasOne(cr => cr.Permission)
-                .WithMany(p => p.ClubRoles)
-                .HasForeignKey(cr => cr.PermissionId);
 
             //
             modelBuilder.Entity<Court>()
@@ -137,16 +107,6 @@ namespace DataAccess.Entity
                 .WithMany(so => so.MemberSubscriptions)
                 .HasForeignKey(ms => ms.SubscriptionOptionId);
 
-            //
-            modelBuilder.Entity<Permission>()
-                .HasKey(p => p.Id);
-
-            modelBuilder.Entity<Pricing>()
-                .HasKey(p => p.Id);
-            modelBuilder.Entity<Pricing>()
-                .HasOne(p => p.Club)
-                .WithMany(c => c.Pricings)
-                .HasForeignKey(p => p.ClubId);
 
             //
             modelBuilder.Entity<Review>()
@@ -161,10 +121,6 @@ namespace DataAccess.Entity
                 .WithMany(u => u.Reviews)
                 .HasForeignKey(r => r.ReviewerId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            //
-            modelBuilder.Entity<Role>()
-                .HasKey(r => r.Id);
 
             //
             modelBuilder.Entity<Slot>()
@@ -190,10 +146,6 @@ namespace DataAccess.Entity
             //
             modelBuilder.Entity<StaffRole>()
                 .HasKey(sr => sr.Id);
-            modelBuilder.Entity<StaffRole>()
-                .HasOne(sr => sr.ClubRole)
-                .WithMany(cr => cr.StaffRoles)
-                .HasForeignKey(sr => sr.ClubRoleId);
             modelBuilder.Entity<StaffRole>()
                 .HasOne(sr => sr.User)
                 .WithMany(u => u.StaffRoles)
@@ -224,18 +176,6 @@ namespace DataAccess.Entity
             //
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
-
-            //
-            modelBuilder.Entity<UserRole>()
-                .HasKey(ur => ur.Id);
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.User)
-                .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.UserId);
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId);
         }
     }
 }
