@@ -18,8 +18,6 @@ builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IClubService, ClubService>();
 
-builder.Services.AddSingleton<ICourt4UDbContext, Court4UDbContext>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
