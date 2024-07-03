@@ -24,7 +24,6 @@ namespace DataAccess.Entity
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Slot> Slots { get; set; }
         public DbSet<StaffProfile> StaffProfiles { get; set; }
-        public DbSet<StaffRole> StaffRoles { get; set; }
         public DbSet<SubOptionSlot> SubOptionSlots { get; set; }
         public DbSet<SubscriptionOption> SubscriptionOptions { get; set; }
         public DbSet<User> Users { get; set; }
@@ -141,15 +140,6 @@ namespace DataAccess.Entity
                 .HasOne(sp => sp.User)
                 .WithOne(u => u.StaffProfile)
                 .HasForeignKey<StaffProfile>(sp => sp.Id)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            //
-            modelBuilder.Entity<StaffRole>()
-                .HasKey(sr => sr.Id);
-            modelBuilder.Entity<StaffRole>()
-                .HasOne(sr => sr.User)
-                .WithMany(u => u.StaffRoles)
-                .HasForeignKey(sr => sr.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             //

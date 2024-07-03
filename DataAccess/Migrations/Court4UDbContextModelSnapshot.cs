@@ -270,22 +270,6 @@ namespace DataAccess.Migrations
                     b.ToTable("StaffProfile");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Data.StaffRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("StaffRole");
-                });
-
             modelBuilder.Entity("DataAccess.Entity.Data.SubOptionSlot", b =>
                 {
                     b.Property<string>("Id")
@@ -528,17 +512,6 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Data.StaffRole", b =>
-                {
-                    b.HasOne("DataAccess.Entity.Data.User", "User")
-                        .WithMany("StaffRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DataAccess.Entity.Data.SubOptionSlot", b =>
                 {
                     b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
@@ -619,8 +592,6 @@ namespace DataAccess.Migrations
 
                     b.Navigation("StaffProfile")
                         .IsRequired();
-
-                    b.Navigation("StaffRoles");
                 });
 #pragma warning restore 612, 618
         }

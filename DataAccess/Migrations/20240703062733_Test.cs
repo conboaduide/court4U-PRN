@@ -99,23 +99,6 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StaffRole",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StaffRole", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StaffRole_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ClubImage",
                 columns: table => new
                 {
@@ -373,11 +356,6 @@ namespace DataAccess.Migrations
                 column: "ClubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StaffRole_UserId",
-                table: "StaffRole",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SubOptionSlot_SlotId",
                 table: "SubOptionSlot",
                 column: "SlotId");
@@ -416,9 +394,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "StaffProfile");
-
-            migrationBuilder.DropTable(
-                name: "StaffRole");
 
             migrationBuilder.DropTable(
                 name: "SubOptionSlot");
