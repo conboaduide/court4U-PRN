@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DataAccess.Entity.Data
 {
     [Table("Court")]
-    public class Court
+    public class Court : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public int Num { get; set; }
         public Enums.CourtStatus Status { get; set; }
 

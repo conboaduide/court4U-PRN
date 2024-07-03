@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DataAccess.Entity.Data
 {
     [Table("Users")]
-    public class User
+    public class User : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }

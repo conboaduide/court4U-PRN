@@ -3,10 +3,8 @@
 namespace DataAccess.Entity.Data
 {
     [Table("BookedSlot")]
-    public class BookedSlot
+    public class BookedSlot : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-        public DateTime Date { get; set; }
         public bool CheckedIn { get; set; }
 
         [ForeignKey("Slot")]

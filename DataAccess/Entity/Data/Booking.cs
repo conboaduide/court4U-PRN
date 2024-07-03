@@ -3,10 +3,8 @@
 namespace DataAccess.Entity.Data
 {
     [Table("Booking")]
-    public class Booking
+    public class Booking : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-        public DateTime Date { get; set; }
         public bool Status { get; set; }
         public Bill Bill { get; set; }
 

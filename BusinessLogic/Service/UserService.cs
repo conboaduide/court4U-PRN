@@ -22,7 +22,8 @@ namespace BusinessLogic.Service
             var users = await iuserRepository.Get();
             if (users != null)
             {
-                var user = users.Where(c => c.Username.ToLower().Equals(username.ToLower()) && c.Password!.Equals(password)).SingleOrDefault();
+                var user = users.Where(c => c.Username.ToLower().Equals(username.ToLower()) && c.Password!.Equals(password)
+                ).SingleOrDefault();
                 
                 return user;
             }

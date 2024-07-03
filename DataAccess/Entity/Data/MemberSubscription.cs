@@ -3,7 +3,7 @@
 namespace DataAccess.Entity.Data
 {
     [Table("MemberSubscription")]
-    public class MemberSubscription
+    public class MemberSubscription : Entity
     {
         public Bill Bill { get; set; }
         [ForeignKey("Users")]

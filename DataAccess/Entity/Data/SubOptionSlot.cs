@@ -3,9 +3,8 @@
 namespace DataAccess.Entity.Data
 {
     [Table("SubOptionSlot")]
-    public class SubOptionSlot
+    public class SubOptionSlot : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [ForeignKey("Slot")]
         public string SlotId { get; set; }

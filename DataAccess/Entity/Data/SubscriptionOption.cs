@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DataAccess.Entity.Data
 {
     [Table("SubscriptionOption")]
-    public class SubscriptionOption
+    public class SubscriptionOption : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public float price { get; set; }
         public DateTime StartDate { get; set; }

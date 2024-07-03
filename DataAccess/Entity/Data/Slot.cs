@@ -3,9 +3,8 @@
 namespace DataAccess.Entity.Data
 {
     [Table("Slot")]
-    public class Slot
+    public class Slot : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public DateTime DateOfWeek { get; set; }

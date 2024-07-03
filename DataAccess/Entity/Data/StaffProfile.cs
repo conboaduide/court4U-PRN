@@ -4,9 +4,8 @@ using System.Security.Claims;
 namespace DataAccess.Entity.Data
 {
     [Table("StaffProfile")]
-    public class StaffProfile
+    public class StaffProfile : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public User User { get; set; }
 
         [ForeignKey("Club")]

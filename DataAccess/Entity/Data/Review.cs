@@ -3,9 +3,8 @@
 namespace DataAccess.Entity.Data
 {
     [Table("Reviews")]
-    public class Review
+    public class Review : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Content { get; set; }
         public int ParentId { get; set; }
         public string CommentLeft { get; set; }

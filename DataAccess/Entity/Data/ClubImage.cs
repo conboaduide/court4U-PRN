@@ -3,9 +3,8 @@
 namespace DataAccess.Entity.Data
 {
     [Table("ClubImage")]
-    public class ClubImage
+    public class ClubImage : Entity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public string ClubImageUrl { get; set; }
 
