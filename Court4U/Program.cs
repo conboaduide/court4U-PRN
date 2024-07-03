@@ -11,12 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Court4UDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local")));
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true; // Make the session cookie essential
+});
+
 //Service
 builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IClubService, ClubService>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
-builder.Services.AddSingleton<IClubService, ClubService>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
@@ -32,6 +42,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

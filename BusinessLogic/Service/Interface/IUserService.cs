@@ -9,6 +9,8 @@ namespace BusinessLogic.Service.Interface
 {
     public interface IUserService : IBaseService<User>
     {
-        Task<User?> CheckLogin(string username, string password);
+        Task<User?> CheckLogin(string identifier, string password);
+        Task<bool> CheckVerify(string token);
+        Task<User?> GetByUsernameAndEmail(string username, string email);
     }
 }

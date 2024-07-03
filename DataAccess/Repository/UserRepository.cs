@@ -78,5 +78,29 @@ namespace DataAccess.Repository
                 return entity;
             }
         }
+        public async Task<bool> CheckVerify(string token)
+        {
+            using var db = new Court4UDbContext();
+            var user = await db.Users.Where(c => c.Token == token).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.Status = (int)Enums.Status.Active;
+            await db.SaveChangesAsync();
+            return true;
+        }
+        public async Task<User?> GetByUsernameAndEmail(string username, string email)
+        {
+            using (var db = new Court4UDbContext())
+            {
+                var user = await db.Users
+                                   .Where(u => u.Username.ToLower() == username.ToLower() &&
+                                               u.Email.ToLower() == email.ToLower())
+                                   .FirstOrDefaultAsync();
+                return user;
+            }
+        }
     }
 }

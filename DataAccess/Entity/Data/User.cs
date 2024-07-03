@@ -8,13 +8,14 @@ namespace DataAccess.Entity.Data
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
         public string Email { get; set; }
-        public DateTime DOB { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public bool Gender { get; set; }
+        public DateTime? DOB { get; set; }
+        public string? Phone { get; set; }
+        public string? Address { get; set; }
+        public bool? Gender { get; set; }
         public string? AvatarUrl { get; set; }
+        public string? Token { get; set; }
         public Enums.Status Status { get; set; }
         public Enums.Roles Role { get; set; }
         public StaffProfile StaffProfile { get; set; }

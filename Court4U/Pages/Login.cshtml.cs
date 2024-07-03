@@ -21,8 +21,8 @@ namespace Court4U.Pages
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [DataType(DataType.Text)]
+            public string Username { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -40,14 +40,18 @@ namespace Court4U.Pages
                 return Page();
             }
 
-            var user = await _userService.CheckLogin(Input.Email, Input.Password);
+            var user = await _userService.CheckLogin(Input.Username, Input.Password);
 
             if (user != null)
             {
+                HttpContext.Session.SetString("UserId", user.Id.ToString());
+                HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetString("Email", user.Email);
+                HttpContext.Session.SetString("Role", user.Role.ToString());
                 return RedirectToPage("/Index");  
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Invalid Email or Password.");
             return Page();
         }
     }
