@@ -1,7 +1,7 @@
 ﻿using DataAccess.Entity.Data;
 using DataAccess.Repository.Request;
 
-namespace BusinessLogic.Interface
+namespace BusinessLogic.Service.Interface
 {
     public interface IClubService
     {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccess.Entity.Data;
 using System.Threading.Tasks;
-using BusinessLogic.Interface;
+using BusinessLogic.Service.Interface;
 using DataAccess.Repository.Request;
 
 namespace Court4U.Pages.Admin.ClubManagement

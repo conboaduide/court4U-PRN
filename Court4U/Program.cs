@@ -3,17 +3,21 @@ using DataAccess.Entity;
 using Microsoft.EntityFrameworkCore;
 using BusinessLogic;
 using DataAccess.Repository.Interface;
-using BusinessLogic.Interface;
-
+using BusinessLogic.Service.Interface;
+using BusinessLogic.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Court4UDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local")));
-// Register the ClubRepository
-builder.Services.AddScoped<IClubRepository, ClubRepository>();
-builder.Services.AddScoped<IClubService, ClubService>();
+//Service
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+//Repository
+builder.Services.AddSingleton<IClubRepository, ClubRepository>();
+builder.Services.AddSingleton<IClubService, ClubService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

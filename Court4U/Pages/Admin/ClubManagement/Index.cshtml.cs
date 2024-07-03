@@ -2,7 +2,7 @@
 using DataAccess.Entity.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BusinessLogic.Interface;
+using BusinessLogic.Service.Interface;
 
 
 namespace Court4U.Pages.Admin.ClubManagement
