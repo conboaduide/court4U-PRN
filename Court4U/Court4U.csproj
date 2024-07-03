@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Pages\Admin\About\**" />
+	  <Content Remove="Pages\Admin\About\**" />
+	  <EmbeddedResource Remove="Pages\Admin\About\**" />
+	  <None Remove="Pages\Admin\About\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />

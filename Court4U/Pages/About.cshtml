@@ -1,0 +1,33 @@
+﻿@page
+@model Court4U.Pages.AboutModel
+@{
+    ViewData["Title"] = "Home page";
+    Layout = "_UserLayout";
+}
+<div class="flex vh-100 mt-[12vh] min-h-100vh mb-[20px]">
+    <div class="col-6 mx-lg-2">
+        <div class=" vh-100">
+            <img src="https://apicms.thestar.com.my/uploads/images/2020/07/11/752952.jpg"
+                 alt="Badminton Wallpaper"
+                 class="w-full h-auto " />
+        </div>
+        <div></div>
+    </div>
+    <div class="ml-10 mr-10 flex flex-col-reverse">
+        <div class="mb-[10rem]">
+            <h2 class="text-center font-bold text-4xl">About Us</h2>
+            <div class="mb-0">Welcome to the leading badminton court booking website, where we offer a convenient and quick experience for sports enthusiasts.
+                With the goal of connecting the badminton-loving community and providing the best conditions for everyone to easily find and book courts,
+                we proudly introduce our outstanding features<br/>
+                <sapn class="font-bold">Try It Now!</sapn><br />
+                Experience our badminton court booking service today to feel the convenience and professionalism. 
+                Whether you are a beginner or a professional athlete, we are always ready to serve and accompany you in every match.
+            </div>
+
+            <a href="/login" class="text-blue-600 font-bold text-2xl text-md-end  hover:text-primary transition-colors @((ViewContext.RouteData.Values["page"]?.ToString() == "/login" ? "text-primary font-bold" : ""))">Learn mode</a>
+        </div>
+        
+         </div>
+
+
+</div>
