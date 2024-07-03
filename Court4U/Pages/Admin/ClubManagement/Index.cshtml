@@ -7,47 +7,58 @@
 
 <h1>Clubs</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>District</th>
-            <th>Actions</th>
-            <th>Logo</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var club in Model.Clubs)
-        {
+<div class="mb-3 mt-20">
+    <form class="form-inline" method="get" style="border: 2px solid #ced4da; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <div class="form-group mb-2">
+            <input type="text" class="form-control" name="searchString" value="@Model.CurrentFilter" placeholder="Search by name or district" style="border: 1px solid #ced4da; width: 400px; padding: 12px; border-radius: 15px;" />
+            <button type="submit" class="btn btn-primary mb-2 ml-2 px-4 py-2" style="background-color: #28a745; border-color: #28a745; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">Search</button>
+        </div>
+    </form>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-5 mt-5">
+    <a asp-page="Create" class="btn btn-success btn-lg rounded-pill px-4 py-2 ml-4" style="background-color: #28a745; border-color: #28a745; border-radius: 50px;">Create New</a>
+    <table class="table table-striped table-bordered mt-5">
+        <thead class="thead-dark">
             <tr>
-                <td>@club.Name</td>
-                <td>@club.Description</td>
-                <td>@club.Address</td>
-                <td>@club.CityOfProvince</td>
-                <td>@club.District</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(club.LogoUrl))
-                    {
-                        <img src="@club.LogoUrl" alt="Club Logo" style="max-width: 100px; max-height: 100px;" />
-                    }
-                    else
-                    {
-                        <span>No logo available</span>
-                    }
-                </td>
-                <td>
-                    <a asp-page="Edit" asp-route-id="@club.Id">Edit</a> |
-                    <a asp-page="Details" asp-route-id="@club.Id">Details</a> |
-                    <a asp-page="Delete" asp-route-id="@club.Id">Delete</a>
-                </td>
+                <th style="width: 10%; border-right: 2px solid #343a40; border-bottom: 2px solid #343a40;" class="text-center">Name</th>
+                <th style="width: 25%; border-right: 2px solid #343a40; border-bottom: 2px solid #343a40;" class="text-center">Description</th>
+                <th style="width: 20%; border-right: 2px solid #343a40; border-bottom: 2px solid #343a40;" class="text-center">Address</th>
+                <th style="width: 10%; border-right: 2px solid #343a40; border-bottom: 2px solid #343a40;" class="text-center">City</th>
+                <th style="width: 10%; border-right: 2px solid #343a40; border-bottom: 2px solid #343a40;" class="text-center">District</th>
+                <th style="width: 10%; border-right: 2px solid #343a40; border-bottom: 2px solid #343a40;" class="text-center">Logo</th>
+                <th style="width: 22%; border-bottom: 2px solid #343a40;" class="text-center">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var club in Model.Clubs)
+            {
+                <tr>
+                    <td style="border-right: 2px solid #343a40; border-bottom: 1px solid #dee2e6;" class="text-center">@club.Name</td>
+                    <td style="border-right: 2px solid #343a40; border-bottom: 1px solid #dee2e6;" class="text-center">@club.Description</td>
+                    <td style="border-right: 2px solid #343a40; border-bottom: 1px solid #dee2e6;" class="text-center">@club.Address</td>
+                    <td style="border-right: 2px solid #343a40; border-bottom: 1px solid #dee2e6;" class="text-center">@club.CityOfProvince</td>
+                    <td style="border-right: 2px solid #343a40; border-bottom: 1px solid #dee2e6;" class="text-center">@club.District</td>
+                    <td style="border-right: 2px solid #343a40; border-bottom: 1px solid #dee2e6;" class="text-center">
+                        @if (!string.IsNullOrEmpty(club.LogoUrl))
+                        {
+                            <img src="@club.LogoUrl" alt="Club Logo" style="max-width: 80px; max-height: 80px; display: block; margin: 0 auto;" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <span>No logo available</span>
+                        }
+                    </td>
+                    <td style="border-bottom: 1px solid #dee2e6; border-left: 2px solid #343a40;" class="text-center ml-2">
+                        <div class="btn-group" role="group">
+                            <a asp-page="Edit" asp-route-id="@club.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <span>|</span>
+                            <a asp-page="Details" asp-route-id="@club.Id" class="btn btn-sm btn-info">Details</a>
+                            <span>|</span>
+                            <a asp-page="Delete" asp-route-id="@club.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -5,55 +5,54 @@
     Layout = "_UserLayout";
 }
 
-<h1>Edit Club</h1>
-
-<h4>Club</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div class="form-group">
-                <label asp-for="ClubRequest.Name" class="control-label"></label>
-                <input asp-for="ClubRequest.Name" class="form-control" />
-                <span asp-validation-for="ClubRequest.Name" class="text-danger"></span>
+<div style="position: relative;">
+    <img src="https://t3.ftcdn.net/jpg/01/74/15/42/360_F_174154232_KBkyo0GZHOWMSoRIeLtUvsPv4VwjWwMg.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; margin-bottom: -5px; min-height: 750px;">
+    <div class="container mt-5 mb-30">
+        <h1 class="mt-20 mb-2 ml-20 text-center" style="font-size: 2.5rem; color: lightgreen;">Edit Club</h1>
+        <div class="row mt-5 ml-5">
+            <div class="col-md-8 mt-10 text-center">
+                <form method="post">
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.Name" class="control-label mr-20"></label>
+                        <input asp-for="ClubRequest.Name" class="form-control form-control-lg rounded border-primary py-1" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.Description" class="control-label mr-10"></label>
+                        <input asp-for="ClubRequest.Description" class="form-control form-control-lg rounded border-primary py-1" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.Address" class="control-label mr-10"></label>
+                        <input asp-for="ClubRequest.Address" class="form-control form-control-lg rounded border-primary py-1 ml-6" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.CityOfProvince" class="control-label mr-4"></label>
+                        <input asp-for="ClubRequest.CityOfProvince" class="form-control form-control-lg rounded border-primary py-1" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.CityOfProvince" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.District" class="control-label mr-10"></label>
+                        <input asp-for="ClubRequest.District" class="form-control form-control-lg rounded border-primary py-1 ml-8" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.District" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.LogoUrl" class="control-label mr-10"></label>
+                        <input asp-for="ClubRequest.LogoUrl" class="form-control form-control-lg rounded border-primary py-1 ml-6" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.LogoUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="ClubRequest.UserId" class="control-label mr-10"></label>
+                        <input asp-for="ClubRequest.UserId" class="form-control form-control-lg rounded border-primary py-1 ml-9" style="width: 400px;" />
+                        <span asp-validation-for="ClubRequest.UserId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5 mb-5">
+                        <button type="submit" class="btn btn-primary mr-20" style="background-color: #28a745; font-size: 20px; padding: 10px 25px; border: none; color: white; cursor: pointer; border-radius: 10px;">Save</button>
+                        <a asp-page="Index" style="display: inline-block; background-color: #f44336; font-size: 20px; color: white; padding: 10px 25px; text-align: center; text-decoration: none; border-radius: 10px; cursor: pointer;">Back to List</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="ClubRequest.Description" class="control-label"></label>
-                <input asp-for="ClubRequest.Description" class="form-control" />
-                <span asp-validation-for="ClubRequest.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubRequest.Address" class="control-label"></label>
-                <input asp-for="ClubRequest.Address" class="form-control" />
-                <span asp-validation-for="ClubRequest.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubRequest.CityOfProvince" class="control-label"></label>
-                <input asp-for="ClubRequest.CityOfProvince" class="form-control" />
-                <span asp-validation-for="ClubRequest.CityOfProvince" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubRequest.District" class="control-label"></label>
-                <input asp-for="ClubRequest.District" class="form-control" />
-                <span asp-validation-for="ClubRequest.District" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubRequest.LogoUrl" class="control-label"></label>
-                <input asp-for="ClubRequest.LogoUrl" class="form-control" />
-                <span asp-validation-for="ClubRequest.LogoUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubRequest.UserId" class="control-label"></label>
-                <input asp-for="ClubRequest.UserId" class="form-control" />
-                <span asp-validation-for="ClubRequest.UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
 </div>
