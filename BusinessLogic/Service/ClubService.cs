@@ -1,9 +1,9 @@
-﻿using BusinessLogic.Interface;
+﻿using BusinessLogic.Service.Interface;
 using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
 using DataAccess.Repository.Request;
 
-namespace BusinessLogic
+namespace BusinessLogic.Service
 {
     public class ClubService : IClubService
     {
