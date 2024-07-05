@@ -1,0 +1,60 @@
+﻿@page
+@model Court4U.Pages.Admin.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_UserLayout";
+}
+<div class="min-vh-100 mt-[10vh]">
+<h1 class="text-2xl font-bold mb-4">User Management</h1>
+
+<p>
+    <a asp-page="Create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New</a>
+</p>
+
+<table class="min-w-full bg-white border border-gray-200">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="py-2 px-4 border-b">Username</th>
+            <th class="py-2 px-4 border-b">Password</th>
+            <th class="py-2 px-4 border-b">FullName</th>
+            <th class="py-2 px-4 border-b">Email</th>
+            <th class="py-2 px-4 border-b">DOB</th>
+            <th class="py-2 px-4 border-b">Phone</th>
+            <th class="py-2 px-4 border-b">Address</th>
+            <th class="py-2 px-4 border-b">Gender</th>
+            <th class="py-2 px-4 border-b">Avatar</th>
+            <th class="py-2 px-4 border-b">Status</th>
+            <th class="py-2 px-4 border-b">Role</th>
+            <th class="py-2 px-4 border-b">CreatedDate</th>
+            <th class="py-2 px-4 border-b">UpdatedDate</th>
+            <th class="py-2 px-4 border-b"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.User)
+        {
+            <tr>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Username)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Password)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.FullName)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Email)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.DOB)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Phone)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Address)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Gender)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.AvatarUrl)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Status)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Role)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.UpdatedDate)</td>
+                <td class="py-2 px-4 border-b">
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

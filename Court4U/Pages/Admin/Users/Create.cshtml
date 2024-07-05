@@ -1,0 +1,114 @@
+﻿@page
+@model Court4U.Pages.Admin.Users.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_UserLayout";
+}
+
+<h1 class="text-center text-2xl font-bold mb-4">Create</h1>
+
+<h4 class="text-center text-xl font-semibold mb-4">User</h4>
+<hr />
+<div class="flex justify-center">
+    <div class="w-full max-w-lg">
+        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4"></div>
+
+            <div class="mb-4">
+                <label asp-for="User.Username" class="block text-gray-700"></label>
+                <input asp-for="User.Username" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Username" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Password" class="block text-gray-700"></label>
+                <input asp-for="User.Password" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Password" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.FullName" class="block text-gray-700"></label>
+                <input asp-for="User.FullName" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.FullName" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Email" class="block text-gray-700"></label>
+                <input asp-for="User.Email" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Email" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.DOB" class="block text-gray-700"></label>
+                <input asp-for="User.DOB" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.DOB" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Phone" class="block text-gray-700"></label>
+                <input asp-for="User.Phone" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Phone" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Address" class="block text-gray-700"></label>
+                <input asp-for="User.Address" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Address" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Gender" class="block text-gray-700"></label>
+                <input asp-for="User.Gender" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Gender" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.AvatarUrl" class="block text-gray-700"></label>
+                <input asp-for="User.AvatarUrl" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.AvatarUrl" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Status" class="block text-gray-700"></label>
+                <select asp-for="User.Status" class="form-select mt-1 block w-full"></select>
+                <span asp-validation-for="User.Status" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Role" class="block text-gray-700"></label>
+                <select asp-for="User.Role" class="form-select mt-1 block w-full"></select>
+                <span asp-validation-for="User.Role" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.Id" class="block text-gray-700"></label>
+                <input asp-for="User.Id" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.Id" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.CreatedDate" class="block text-gray-700"></label>
+                <input asp-for="User.CreatedDate" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.CreatedDate" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="User.UpdatedDate" class="block text-gray-700"></label>
+                <input asp-for="User.UpdatedDate" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.UpdatedDate" class="text-red-500"></span>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <input type="submit" value="Create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-page="Index" class="text-blue-500">Back to List</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
