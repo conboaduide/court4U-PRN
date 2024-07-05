@@ -35,7 +35,9 @@ namespace DataAccess.Repository
             {
                 try
                 {
-                    return await _context.Courts.ToListAsync();
+                    return await _context.Courts
+                        .Include(c => c.Club)
+                        .ToListAsync();
                 }
                 catch (Exception ex)
                 {
