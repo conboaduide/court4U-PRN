@@ -24,9 +24,11 @@ builder.Services.AddSession(options =>
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IClubService, ClubService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddScoped<ICourtService, CourtService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICourtRepository, CourtRepository>();
 
 var app = builder.Build();
 

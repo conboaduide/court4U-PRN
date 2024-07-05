@@ -3,6 +3,7 @@ using DataAccess.Entity.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogic.Service.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Court4U.Pages.Admin.Clubs
@@ -19,8 +20,13 @@ namespace Court4U.Pages.Admin.Clubs
         public IList<Club> Clubs { get; private set; }
         public string CurrentFilter { get; set; }
 
-        public async Task OnGetAsync(string searchString)
+        public async Task<IActionResult> OnGetAsync(string searchString)
         {
+            var userRole = HttpContext.Session.GetString("Role");
+            if (userRole == null || userRole != "Admin")
+            {
+                return RedirectToPage("/Index");
+            }
             CurrentFilter = searchString;
 
             var clubs = await _clubService.GetAllClubsAsync();
@@ -31,8 +37,8 @@ namespace Court4U.Pages.Admin.Clubs
                                          c.District.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                                          c.CityOfProvince.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
             }
-
             Clubs = (IList<Club>)clubs;
+            return Page();
         }
     }
 }

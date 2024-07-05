@@ -1,0 +1,49 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_AdminLayout";
+}
+<div style="position: relative;">
+    <img src="https://t3.ftcdn.net/jpg/04/84/86/42/360_F_484864213_3Qve2ufnWY7Wkqk9r6RXXVUbraC6lfvQ.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; margin-bottom: -5px; min-height: 850px;">
+    <div class="container mb-30 text-center mx-auto">
+        <h1 class="mb-4" style="font-size: 2.5rem; color: #dc3545;">Delete</h1>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="alert alert-warning" role="alert">
+                    <h3 style="display: inline-block; background-color: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius: 5px;">Are you sure you want to delete this?</h3>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-6">
+                        <p>Name: @Html.DisplayFor(model => model.Court.Club.Name)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Number: @Html.DisplayFor(model => model.Court.Num)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Status: @Html.DisplayFor(model => model.Court.Status)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Status: @Html.DisplayFor(model => model.Court.Club.Address)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Status: @Html.DisplayFor(model => model.Court.Club.District)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Status: @Html.DisplayFor(model => model.Court.Club.CityOfProvince)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Created Date: @Html.DisplayFor(model => model.Court.CreatedDate)</p>
+                    </div>
+                </div>
+                <form method="post">
+                    <input type="hidden" asp-for="Court.Id" />
+                    <button type="submit" class="btn btn-danger" style="font-size: 20px; padding: 10px 25px; border: none; color: #fff; background-color: #dc3545; cursor: pointer; border-radius: 10px;">Delete</button>
+                    <a asp-page="./Index" class="btn btn-secondary" style="font-size: 20px; padding: 10px 25px; border: none; color: #fff; background-color: #28a745; cursor: pointer; border-radius: 10px;">Back to List</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
