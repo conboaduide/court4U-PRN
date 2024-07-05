@@ -65,5 +65,10 @@ namespace BusinessLogic.Service
         {
             return await iuserRepository.GetByUsernameAndEmail(username, email);
         }
+        public bool UserExists(string id)
+        {
+            var user = iuserRepository.Get(id).Result;
+            return user != null;
+        }
     }
 }

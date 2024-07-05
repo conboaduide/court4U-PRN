@@ -12,5 +12,6 @@ namespace BusinessLogic.Service.Interface
         Task<User?> CheckLogin(string identifier, string password);
         Task<bool> CheckVerify(string token);
         Task<User?> GetByUsernameAndEmail(string username, string email);
+        bool UserExists(string id);
     }
 }
