@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogic.Service.Interface;
 using DataAccess.Repository.Request;
 
-namespace Court4U.Pages.Admin.ClubManagement
+namespace Court4U.Pages.Admin.Clubs
 {
     public class CreateModel : PageModel
     {

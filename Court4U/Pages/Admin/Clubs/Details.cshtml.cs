@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
 
-namespace Court4U.Pages.Admin.ClubManagement
+namespace Court4U.Pages.Admin.Clubs
 {
     public class DetailsModel : PageModel
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccess.Repository.Request;
 using BusinessLogic.Service.Interface;
 
-namespace Court4U.Pages.Admin.ClubManagement
+namespace Court4U.Pages.Admin.Clubs
 {
     public class EditModel : PageModel
     {
