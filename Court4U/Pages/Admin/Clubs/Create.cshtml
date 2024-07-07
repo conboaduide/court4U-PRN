@@ -5,48 +5,47 @@
     Layout = "_AdminLayout";
 }
 <div style="position: relative;">
-    <img src="https://t3.ftcdn.net/jpg/04/84/86/42/360_F_484864213_3Qve2ufnWY7Wkqk9r6RXXVUbraC6lfvQ.jpg" alt="Background Image" style="position: absolute; top: 0;left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; margin-bottom: -5px; min-height: 950px;">
     <div class="container mb-30">
-        <h1 class="ml-40" style="font-size: 2.5rem; color: #28a745;">Create Club</h1>
+        <h1 class="ml-5 text-center" style="font-size: 2.5rem; color: #28a745;">Create Club</h1>
         <div class="row mt-5 ml-5 mb-5">
             <div class="col-md-8 mt-10">
                 <form method="post">
                     <div class="form-group mt-5">
                         <label asp-for="Club.Name" class="control-label mr-20"></label>
-                        <input asp-for="Club.Name" class="form-control form-control-lg rounded border-primary py-1" style="width: 400px;" />
+                        <input asp-for="Club.Name" class="form-control form-control-lg rounded border-primary py-1" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-5">
                         <label asp-for="Club.Description" class="control-label mr-10"></label>
-                        <input asp-for="Club.Description" class="form-control form-control-lg rounded border-primary py-1" style="width: 400px;" />
+                        <input asp-for="Club.Description" class="form-control form-control-lg rounded border-primary py-1" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.Description" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-5">
                         <label asp-for="Club.Address" class="control-label mr-10"></label>
-                        <input asp-for="Club.Address" class="form-control form-control-lg rounded border-primary py-1 ml-6" style="width: 400px;" />
+                        <input asp-for="Club.Address" class="form-control form-control-lg rounded border-primary py-1 ml-6" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.Address" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-5">
                         <label asp-for="Club.CityOfProvince" class="control-label mr-4"></label>
-                        <input asp-for="Club.CityOfProvince" class="form-control form-control-lg rounded border-primary py-1" style="width: 400px;" />
+                        <input asp-for="Club.CityOfProvince" class="form-control form-control-lg rounded border-primary py-1" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.CityOfProvince" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-5">
                         <label asp-for="Club.District" class="control-label mr-10"></label>
-                        <input asp-for="Club.District" class="form-control form-control-lg rounded border-primary py-1 ml-8" style="width: 400px;" />
+                        <input asp-for="Club.District" class="form-control form-control-lg rounded border-primary py-1 ml-8" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.District" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-5">
                         <label asp-for="Club.LogoUrl" class="control-label mr-10"></label>
-                        <input asp-for="Club.LogoUrl" class="form-control form-control-lg rounded border-primary py-1 ml-6" style="width: 400px;" />
+                        <input asp-for="Club.LogoUrl" class="form-control form-control-lg rounded border-primary py-1 ml-6" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.LogoUrl" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-5">
                         <label asp-for="Club.UserId" class="control-label mr-10"></label>
-                        <input asp-for="Club.UserId" class="form-control form-control-lg rounded border-primary py-1 ml-9" style="width: 400px;" />
+                        <input asp-for="Club.UserId" class="form-control form-control-lg rounded border-primary py-1 ml-9" style="border: 1px solid #ced4da; width: 900px; padding: 12px; border-radius: 15px;" />
                         <span asp-validation-for="Club.UserId" class="text-danger"></span>
                     </div>
-                    <div class="form-group mt-5">
+                    <div class="form-group mt-5 text-center">
                         <button type="submit" class="btn btn-primary mr-20" style="background-color: #28a745; font-size: 20px; padding: 10px 25px; border: none; color: white; cursor: pointer; border-radius: 10px;">Create</button>
                         <a asp-page="Index" style="display: inline-block; background-color: #f44336; color: white; font-size: 20px; padding: 10px 20px; text-align: center; text-decoration: none; border-radius: 10px; cursor: pointer;">Back to List</a>
                     </div>
