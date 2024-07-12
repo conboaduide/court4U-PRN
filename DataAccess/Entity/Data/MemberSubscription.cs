@@ -5,6 +5,8 @@ namespace DataAccess.Entity.Data
     [Table("MemberSubscription")]
     public class MemberSubscription : Entity
     {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public Bill Bill { get; set; }
         [ForeignKey("Users")]
         public string MemberId { get; set; }
