@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using BusinessLogic.Service.Interface;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using static DataAccess.Entity.Enums;
 
 namespace Court4U.Pages
 {
@@ -48,10 +50,18 @@ namespace Court4U.Pages
                 HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetString("Email", user.Email);
                 HttpContext.Session.SetString("Role", user.Role.ToString());
-                return RedirectToPage("/Index");  
+
+                if (user.Role == Roles.Admin)
+                {
+                    return RedirectToPage("/Admin/Clubs/Index");
+                }
+                else
+                {
+                    return RedirectToPage("/Index");
+                }
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid Email or Password.");
+            ModelState.AddModelError(string.Empty, "Invalid Username or Password.");
             return Page();
         }
     }
