@@ -701,20 +701,12 @@ video {
   margin-left: 0.5rem;
 }
 
-.ml-20 {
-  margin-left: 5rem;
-}
-
 .ml-3 {
   margin-left: 0.75rem;
 }
 
 .ml-4 {
   margin-left: 1rem;
-}
-
-.ml-40 {
-  margin-left: 10rem;
 }
 
 .ml-5 {
@@ -743,6 +735,10 @@ video {
 
 .mr-12 {
   margin-right: 3rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .mr-20 {
@@ -787,14 +783,6 @@ video {
 
 .mt-\[12vh\] {
   margin-top: 12vh;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
-.mr-5 {
-  margin-right: 1.25rem;
 }
 
 .block {
