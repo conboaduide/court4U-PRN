@@ -377,8 +377,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TotalDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("TotalDate")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");

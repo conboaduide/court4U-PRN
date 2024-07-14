@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Court4UDbContext))]
-    [Migration("20240712031059_Update")]
+    [Migration("20240714075734_Update")]
     partial class Update
     {
         /// <inheritdoc />
@@ -380,8 +380,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TotalDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("TotalDate")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
