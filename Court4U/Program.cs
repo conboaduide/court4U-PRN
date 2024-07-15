@@ -20,15 +20,18 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // Make the session cookie essential
 });
 
+
 //Service
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IClubService, ClubService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
+builder.Services.AddScoped<ISubscriptionOptionService, SubscriptionOptionService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICourtRepository, CourtRepository>();
+builder.Services.AddScoped<ISubscriptionOptionRepository, SubscriptionOptionRepository>();
 
 var app = builder.Build();
 

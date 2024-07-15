@@ -1,0 +1,52 @@
+﻿@page
+@model CreateModel
+
+@{
+    Layout = "_OwnerLayout";
+}
+
+<div class="flex justify-center">
+    <div class="w-[50vw]  p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 shadow-2xl">
+        <h2 class="text-center font-bold text-xl mb-4">CREATE NEW MEMBER SUBSCRIPTION</h2>
+        <form method="post" >
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
+            <div class="form-group">
+                <label class="text-sm font-bold mb-2 ">Subscription Name</label>
+                <input 
+                    asp-for="SubscriptionOption.Name" 
+                    type="text" 
+                    class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Name" required />
+                <span asp-validation-for="SubscriptionOption.Name" class="text-danger"></span>
+            </div>
+            <div class="flex w-full justify-between">
+                <div class="form-group w-[48%]">
+                    <label asp-for="SubscriptionOption.price" class="text-sm font-bold mb-2 ">Price</label>
+                    <input 
+                        asp-for="SubscriptionOption.price"
+                        type="number"
+                        min="0" step="500"
+                        class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="0" required />
+                    <span asp-validation-for="SubscriptionOption.price" class="text-danger"></span>
+                </div>
+                <div class="form-group w-[48%]">
+                    <label asp-for="SubscriptionOption.TotalDate" class="text-sm font-bold mb-2"></label>
+                    <input 
+                        asp-for="SubscriptionOption.TotalDate"
+                           type="number"
+                           min="0" step="1"
+                           class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="0" required />
+                    <span asp-validation-for="SubscriptionOption.TotalDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group flex justify-center mt-4">
+                <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* <div>
+    <a asp-page="Index">Back to List</a>
+</div> *@
+
