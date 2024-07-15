@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Service.Interface;
 using DataAccess.Entity.Data;
+using DataAccess.Repository;
 using DataAccess.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,34 @@ namespace BusinessLogic.Service
         public async Task<Slot?> Update(Slot entity)
         {
             return await iSlotRepository.Update(entity);
+        }
+        public async Task<bool> BookSlotAsync(string clubId, string slotId, Booking booking, BookedSlot bookedSlot)
+        {
+            try
+            {
+                var slotToBook = await iSlotRepository.Get(slotId);
+
+                if (slotToBook == null)
+                {
+                    throw new Exception("Slot not found or does not belong to the specified club.");
+                }
+
+                await iSlotRepository.Booking(booking, bookedSlot);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public Task<List<Slot>> GetAvailableSlotsAsync(string clubId, DateTime startDate, DateTime endDate)
+        {
+            return iSlotRepository.GetAvailableSlots(clubId, startDate, endDate);
+        }
+        public async Task<List<Slot>> SearchByDateAsync(DateTime date, string ClubId)
+        {
+            return await iSlotRepository.SearchByDate(date, ClubId);
         }
     }
 }
