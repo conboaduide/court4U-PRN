@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "_UserLayout";
+    Layout = "_AdminLayout";
 }
 
 <h1 class="text-center text-2xl font-bold mb-4">Create</h1>
@@ -41,7 +41,7 @@
 
             <div class="mb-4">
                 <label asp-for="User.DOB" class="block text-gray-700"></label>
-                <input asp-for="User.DOB" class="form-input mt-1 block w-full" />
+                <input asp-for="DOB" type="date" format="dd-mm-yyyy" class="form-input mt-1 block w-full" />
                 <span asp-validation-for="User.DOB" class="text-red-500"></span>
             </div>
 
@@ -59,7 +59,10 @@
 
             <div class="mb-4">
                 <label asp-for="User.Gender" class="block text-gray-700"></label>
-                <input asp-for="User.Gender" class="form-input mt-1 block w-full" />
+                <select asp-for="User.Gender" class="form-select mt-1 block w-full">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
                 <span asp-validation-for="User.Gender" class="text-red-500"></span>
             </div>
 
@@ -71,44 +74,32 @@
 
             <div class="mb-4">
                 <label asp-for="User.Status" class="block text-gray-700"></label>
-                <select asp-for="User.Status" class="form-select mt-1 block w-full"></select>
+                <select asp-for="User.Status" class="form-select mt-1 block w-full">
+                    @foreach (var status in Model.Statuses)
+                    {
+                        <option value="@status.Value">@status.Text</option>
+                    }
+                </select>
                 <span asp-validation-for="User.Status" class="text-red-500"></span>
             </div>
 
             <div class="mb-4">
                 <label asp-for="User.Role" class="block text-gray-700"></label>
-                <select asp-for="User.Role" class="form-select mt-1 block w-full"></select>
+                <select asp-for="User.Role" class="form-select mt-1 block w-full">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <option value="@role.Value">@role.Text</option>
+                    }
+                </select>
                 <span asp-validation-for="User.Role" class="text-red-500"></span>
             </div>
 
-            <div class="mb-4">
-                <label asp-for="User.Id" class="block text-gray-700"></label>
-                <input asp-for="User.Id" class="form-input mt-1 block w-full" />
-                <span asp-validation-for="User.Id" class="text-red-500"></span>
-            </div>
-
-            <div class="mb-4">
-                <label asp-for="User.CreatedDate" class="block text-gray-700"></label>
-                <input asp-for="User.CreatedDate" class="form-input mt-1 block w-full" />
-                <span asp-validation-for="User.CreatedDate" class="text-red-500"></span>
-            </div>
-
-            <div class="mb-4">
-                <label asp-for="User.UpdatedDate" class="block text-gray-700"></label>
-                <input asp-for="User.UpdatedDate" class="form-input mt-1 block w-full" />
-                <span asp-validation-for="User.UpdatedDate" class="text-red-500"></span>
-            </div>
-
             <div class="flex items-center justify-between">
-                <input type="submit" value="Create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                <input type="submit" value="Create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" />
+                <a asp-page="./Index" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                    Cancel
+                </a>
             </div>
         </form>
     </div>
 </div>
-
-<div class="text-center mt-4">
-    <a asp-page="Index" class="text-blue-500">Back to List</a>
-</div>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

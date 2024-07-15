@@ -1,103 +1,79 @@
 ﻿@page
-@model Court4U.Pages.Admin.Users.DetailsModel
+@model DetailsModel
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "_AdminLayout";
 }
 
-<h1>Details</h1>
+<h1 class="text-center text-2xl font-bold mb-4">User Details</h1>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Username)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Username)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Password)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.DOB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.DOB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Phone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.AvatarUrl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.AvatarUrl)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Token)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Token)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Role)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Role)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.CreatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.CreatedDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.UpdatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.UpdatedDate)
-        </dd>
-    </dl>
+<div class="flex justify-center">
+    <div class="w-full max-w-2xl bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h4 class="text-xl font-semibold mb-4">User Information</h4>
+        <hr class="mb-4" />
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Username)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Username)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Password)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Password)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.FullName)</dt>
+                <dd>@Html.DisplayFor(model => model.User.FullName)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Email)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Email)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.DOB)</dt>
+                <dd>@Html.DisplayFor(model => model.User.DOB)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Phone)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Phone)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Address)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Address)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Gender)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Gender)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.AvatarUrl)</dt>
+                <dd>@Html.DisplayFor(model => model.User.AvatarUrl)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Token)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Token)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Status)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Status)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.Role)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Role)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.CreatedDate)</dt>
+                <dd>@Html.DisplayFor(model => model.User.CreatedDate)</dd>
+            </div>
+            <div>
+                <dt class="font-semibold">@Html.DisplayNameFor(model => model.User.UpdatedDate)</dt>
+                <dd>@Html.DisplayFor(model => model.User.UpdatedDate)</dd>
+            </div>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.User.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+
+<div class="flex justify-center mt-4">
+    <a asp-page="./Edit" asp-route-id="@Model.User.Id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+    <a asp-page="./Index" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Back to List</a>
 </div>
