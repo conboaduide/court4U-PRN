@@ -9,5 +9,6 @@ namespace BusinessLogic.Service.Interface
 {
     public interface ICourtService: IBaseService<Court>
     {
+        Task<List<Court>> GetCourtsByClubIdAsync(string clubId);
     }
 }

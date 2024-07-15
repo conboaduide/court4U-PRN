@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Service.Interface;
 using DataAccess.Entity.Data;
+using DataAccess.Repository;
 using DataAccess.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,10 @@ namespace BusinessLogic.Service
         public async Task<Court?> Update(Court entity)
         {
             return await iCourtRepository.Update(entity);
+        }
+        public async Task<List<Court>> GetCourtsByClubIdAsync(string clubId)
+        {
+            return await iCourtRepository.GetCourtsByClubId(clubId);
         }
     }
 }

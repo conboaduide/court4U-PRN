@@ -33,7 +33,7 @@ namespace BusinessLogic.Service
             else return null;
         }
 
-            public async Task<User?> Create(User entity)
+        public async Task<User?> Create(User entity)
         {
             return await iuserRepository.Create(entity);
         }
@@ -45,12 +45,12 @@ namespace BusinessLogic.Service
 
         public async Task<User?> Get(string id)
         {
-            return await iuserRepository.Get(id); 
+            return await iuserRepository.Get(id);
         }
 
         public async Task<List<User>?> Get()
         {
-           return await iuserRepository.Get();
+            return await iuserRepository.Get();
         }
 
         public async Task<User?> Update(User entity)
