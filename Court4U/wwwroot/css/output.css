@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.4.4 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.5 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -628,6 +628,11 @@ video {
   z-index: 10;
 }
 
+.-mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
 .mx-8 {
   margin-left: 2rem;
   margin-right: 2rem;
@@ -933,6 +938,10 @@ video {
 
 .flex-col-reverse {
   flex-direction: column-reverse;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .items-start {
@@ -1649,6 +1658,10 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:w-1\/4 {
+    width: 25%;
+  }
+
   .md\:p-8 {
     padding: 2rem;
   }

@@ -3,3 +3,39 @@
 @{
     Layout = "_AdminLayout";
 }
+
+<h2 class="text-2xl font-semibold mb-4">Counts</h2>
+
+<div class="container mx-auto">
+    <!-- Statistics Row -->
+    <div class="flex flex-wrap -mx-2 mb-4">
+        <!-- Members Statistics Card -->
+        <div class="w-full md:w-1/4 px-2 mb-4">
+            <div class="bg-white border border-gray-300 rounded-lg shadow p-4">
+                <h3 class="text-lg font-semibold mb-2">Members</h3>
+                <p class="text-2xl">@Model.MemberCount</p>
+            </div>
+        </div>
+        <!-- Court Owners Statistics Card -->
+        <div class="w-full md:w-1/4 px-2 mb-4">
+            <div class="bg-white border border-gray-300 rounded-lg shadow p-4">
+                <h3 class="text-lg font-semibold mb-2">Court Owners</h3>
+                <p class="text-2xl">@Model.CourtOwnerCount</p>
+            </div>
+        </div>
+        <!-- Clubs Statistics Card -->
+        <div class="w-full md:w-1/4 px-2 mb-4">
+            <div class="bg-white border border-gray-300 rounded-lg shadow p-4">
+                <h3 class="text-lg font-semibold mb-2">Clubs</h3>
+                <p class="text-2xl">@Model.ClubCount</p>
+            </div>
+        </div>
+        <!-- Courts Statistics Card -->
+        <div class="w-full md:w-1/4 px-2 mb-4">
+            <div class="bg-white border border-gray-300 rounded-lg shadow p-4">
+                <h3 class="text-lg font-semibold mb-2">Courts</h3>
+                <p class="text-2xl">@Model.CourtCount</p>
+            </div>
+        </div>
+    </div>
+</div>
