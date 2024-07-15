@@ -49,5 +49,11 @@ namespace BusinessLogic.Service
             // Business logic, validations, etc.
             await _clubRepository.DeleteAsync(id);
         }
+
+        public async Task<Club> GetClubByUserIdAsync(string id)
+        {
+            var listClub = await _clubRepository.GetAllAsync();
+            return listClub.FirstOrDefault(x => x.UserId == id);
+        }
     }
 }

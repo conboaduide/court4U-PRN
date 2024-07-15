@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Court4UDbContext))]
-    [Migration("20240703105144_Test")]
-    partial class Test
+    [Migration("20240715111744_UpdateBooking")]
+    partial class UpdateBooking
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("BookingId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("CheckedIn")
                         .HasColumnType("bit");
 
@@ -71,6 +74,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("SlotId");
 
@@ -214,8 +219,14 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SubscriptionOptionId")
                         .IsRequired()
@@ -367,17 +378,14 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalDate")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -450,6 +458,10 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entity.Data.BookedSlot", b =>
                 {
+                    b.HasOne("DataAccess.Entity.Data.Booking", null)
+                        .WithMany("BookedSlots")
+                        .HasForeignKey("BookingId");
+
                     b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
                         .WithMany("BookedSlots")
                         .HasForeignKey("SlotId")
@@ -624,6 +636,11 @@ namespace DataAccess.Migrations
 
                     b.Navigation("MemberSubscription")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
+                {
+                    b.Navigation("BookedSlots");
                 });
 
             modelBuilder.Entity("DataAccess.Entity.Data.Club", b =>

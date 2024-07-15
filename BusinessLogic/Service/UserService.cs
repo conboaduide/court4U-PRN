@@ -27,7 +27,7 @@ namespace BusinessLogic.Service
                 var user = users.FirstOrDefault(c => (c.Username.ToLower().Equals(identifier.ToLower()) ||
                                              c.Email.ToLower().Equals(identifier.ToLower()) &&
                                             c.Password!.Equals(password)) &&
-                                            c.Status != Enums.Status.Inactive);
+                                            c.Status == Enums.Status.Active);
                 return user;
             }
             else return null;

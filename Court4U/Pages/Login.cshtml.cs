@@ -53,7 +53,11 @@ namespace Court4U.Pages
 
                 if (user.Role == Roles.Admin)
                 {
-                    return RedirectToPage("/Admin/Clubs/Index");
+                    return RedirectToPage("/Admin/Dashboard");
+                }
+                if (user.Role == Roles.Owner)
+                {
+                    return RedirectToPage("/Owner/MemberSubscriptions/Index");
                 }
                 else
                 {

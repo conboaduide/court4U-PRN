@@ -54,6 +54,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("BookingId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("CheckedIn")
                         .HasColumnType("bit");
 
@@ -68,6 +71,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("SlotId");
 
@@ -377,8 +382,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TotalDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("TotalDate")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -450,6 +455,10 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entity.Data.BookedSlot", b =>
                 {
+                    b.HasOne("DataAccess.Entity.Data.Booking", null)
+                        .WithMany("BookedSlots")
+                        .HasForeignKey("BookingId");
+
                     b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
                         .WithMany("BookedSlots")
                         .HasForeignKey("SlotId")
@@ -624,6 +633,11 @@ namespace DataAccess.Migrations
 
                     b.Navigation("MemberSubscription")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
+                {
+                    b.Navigation("BookedSlots");
                 });
 
             modelBuilder.Entity("DataAccess.Entity.Data.Club", b =>

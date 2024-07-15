@@ -18,8 +18,8 @@ namespace DataAccess.Repository
             {
                 try
                 {
-                    _context.Add(subscriptionOption);
-                    _context.SaveChanges();
+                    await _context.AddAsync(subscriptionOption);
+                    await _context.SaveChangesAsync();
                     return subscriptionOption;
                 }
                 catch (Exception ex)

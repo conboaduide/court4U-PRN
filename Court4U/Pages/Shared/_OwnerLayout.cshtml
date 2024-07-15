@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Owner</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body class="flex bg-primary">
+    <aside class="fixed bg-base-200 w-[21vw] h-screen bg-gradient-to-b to-[#6bc945] from-[#22ad5c] gap-y-2 font-semibold text-base text-white">
+        <ul class="space-y-2 p-4">
+            <li class="w-full bg-slate-900 bg-opacity-40 hover:bg-opacity-75 rounded-xl p-2">
+                <div class="flex items-center space-x-2">
+                    <img class="w-9 h-9" src="~/favicon.ico" alt="Logo" />
+                    <div class="text-xl text-secondary font-sans font-bold hover:text-primary">Court4U</div>
+                </div>
+            </li>
+            <li>
+                <a href="/owner" class="block px-4 py-2 rounded @((Context.Request.Path == "/owner" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Dashboard</a>
+            </li>
+            <li>
+                <a href="/owner/MemberSubscription" class="block px-4 py-2 rounded @((Context.Request.Path == "/owner/MemberSubscription" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Member Subscription</a>
+            </li>
+            <li>
+                <a href="/owner/clubs" class="block px-4 py-2 rounded @((Context.Request.Path == "/owner/clubs" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Clubs</a>
+            </li>
+            <li>
+                <a href="/owner/courts" class="block px-4 py-2 rounded @((Context.Request.Path == "/owner/courts" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Courts</a>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="flex flex-col w-[79vw] ml-[21vw]">
+        <nav class="shadow-lg fixed z-10 w-full top-0 flex items-center justify-between px-8 h-16 bg-gradient-to-l from-[#6bc945] to-[#22ad5c]">
+            <div class="text-2xl font-semibold text-white">
+                @if (Context.Request.Path != "/owner")
+                {
+                    var path = Context.Request.Path.Value;
+                    if (path.Length > 7)
+                    {
+                        @(path.Substring(7).First().ToString().ToUpper() + path.Substring(8))
+                    }
+                    else
+                    {
+                        @:Dashboard
+                    }
+                }
+                else
+                {
+                    @:Dashboard
+                }
+            </div>
+        </nav>
+
+        <main class="mt-16 p-5 min-h-screen">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

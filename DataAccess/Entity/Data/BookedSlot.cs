@@ -10,5 +10,9 @@ namespace DataAccess.Entity.Data
         [ForeignKey("Slot")]
         public string SlotId { get; set; }
         public Slot Slot { get; set; }
+
+        [ForeignKey("Booking")]
+        public string BookingId { get; set; }
+        public Booking Booking { get; set; }
     }
 }
