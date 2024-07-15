@@ -1,106 +1,83 @@
 ﻿@page
-@model Court4U.Pages.Admin.Users.DeleteModel
+@model DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "_AdminLayout";
 }
 
-<h1>Delete</h1>
+<h1 class="text-2xl font-bold mb-4">Delete User</h1>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>User</h4>
+    <h3>Are you sure you want to delete this user?</h3>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Username)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Username)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Password)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.DOB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.DOB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Phone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.AvatarUrl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.AvatarUrl)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Token)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Token)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Role)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Role)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.CreatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.CreatedDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.UpdatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.UpdatedDate)
-        </dd>
+
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="mb-4">
+            <dt class="font-semibold">Username</dt>
+            <dd>@Html.DisplayFor(model => model.User.Username)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Password</dt>
+            <dd>@Html.DisplayFor(model => model.User.Password)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Full Name</dt>
+            <dd>@Html.DisplayFor(model => model.User.FullName)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Email</dt>
+            <dd>@Html.DisplayFor(model => model.User.Email)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Date of Birth</dt>
+            <dd>@Html.DisplayFor(model => model.User.DOB)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Phone</dt>
+            <dd>@Html.DisplayFor(model => model.User.Phone)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Address</dt>
+            <dd>@Html.DisplayFor(model => model.User.Address)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Gender</dt>
+            <dd>@Html.DisplayFor(model => model.User.Gender)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Avatar URL</dt>
+            <dd>@Html.DisplayFor(model => model.User.AvatarUrl)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Token</dt>
+            <dd>@Html.DisplayFor(model => model.User.Token)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Status</dt>
+            <dd>@Html.DisplayFor(model => model.User.Status)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Role</dt>
+            <dd>@Html.DisplayFor(model => model.User.Role)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Created Date</dt>
+            <dd>@Html.DisplayFor(model => model.User.CreatedDate)</dd>
+        </div>
+        <div class="mb-4">
+            <dt class="font-semibold">Updated Date</dt>
+            <dd>@Html.DisplayFor(model => model.User.UpdatedDate)</dd>
+        </div>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="User.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <div class="mt-6">
+            <input type="submit" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer" /> |
+            <a asp-page="./Index" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                Back to List
+            </a>
+        </div>
     </form>
 </div>

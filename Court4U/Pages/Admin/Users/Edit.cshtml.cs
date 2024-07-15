@@ -68,12 +68,10 @@ namespace Court4U.Pages.Admin.Users
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            var id = HttpContext.Session.GetString("UserId");
+           
 
-            var id = HttpContext.Session.GetString("EditUserId");
+            
             if (id == null)
             {
                 return NotFound();

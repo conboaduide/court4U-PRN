@@ -3,13 +3,22 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_UserLayout";
+    Layout = "_AdminLayout";
 }
+<div class="mb-3">
+    <form class="form-inline" method="get" style="border: 2px solid #ced4da; padding: 15px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <div class="form-group mb-2">
+            <input type="text" class="form-control" name="searchString" placeholder="Search by username" style="border: 1px solid #ced4da; width: 400px; padding: 12px; border-radius: 15px;" />
+            <button type="submit" class="btn btn-primary mb-2 ml-2 px-4 py-2" style="background-color: #28a745; border-color: #28a745; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">Search</button>
+        </div>
+    </form>
+</div>
+
 <div class="min-vh-100 mt-[10vh]">
 <h1 class="text-2xl font-bold mb-4">User Management</h1>
 
 <p>
-    <a asp-page="Create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create New</a>
+        <a asp-page="Create" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-[5px]" style="background-color: #28a745; border-color: #28a745; border-radius: 50px;" >Create New</a>
 </p>
 
 <table class="min-w-full bg-white border border-gray-200">
@@ -19,20 +28,20 @@
             <th class="py-2 px-4 border-b">Password</th>
             <th class="py-2 px-4 border-b">FullName</th>
             <th class="py-2 px-4 border-b">Email</th>
-            <th class="py-2 px-4 border-b">DOB</th>
-            <th class="py-2 px-4 border-b">Phone</th>
-            <th class="py-2 px-4 border-b">Address</th>
+             <th class="py-2 px-4 border-b">DOB</th>
+                @*<th class="py-2 px-4 border-b">Phone</th>
+            <th class="py-2 px-4 border-b">Address</th> *@
             <th class="py-2 px-4 border-b">Gender</th>
-            <th class="py-2 px-4 border-b">Avatar</th>
+           @*  <th class="py-2 px-4 border-b">Avatar</th> *@
             <th class="py-2 px-4 border-b">Status</th>
             <th class="py-2 px-4 border-b">Role</th>
-            <th class="py-2 px-4 border-b">CreatedDate</th>
-            <th class="py-2 px-4 border-b">UpdatedDate</th>
+            @* <th class="py-2 px-4 border-b">CreatedDate</th>
+            <th class="py-2 px-4 border-b">UpdatedDate</th> *@
             <th class="py-2 px-4 border-b"></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.User)
+        @foreach (var item in Model.Users)
         {
             <tr>
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Username)</td>
@@ -40,16 +49,16 @@
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.FullName)</td>
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Email)</td>
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.DOB)</td>
-                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Phone)</td>
-                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Address)</td>
+                @* <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Phone)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Address)</td> *@
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Gender)</td>
-                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.AvatarUrl)</td>
+                @* <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.AvatarUrl)</td> *@
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Status)</td>
                 <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.Role)</td>
-                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.UpdatedDate)</td>
+                    @* <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                <td class="py-2 px-4 border-b">@Html.DisplayFor(modelItem => item.UpdatedDate)</td> *@
                 <td class="py-2 px-4 border-b">
-                    <a asp-page="./Edit" asp-route-id="@item.Id" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Edit</a>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mb-[]">Edit</a>
                     <a asp-page="./Details" asp-route-id="@item.Id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Details</a>
                     <a asp-page="./Delete" asp-route-id="@item.Id" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</a>
                 </td>
