@@ -9,5 +9,6 @@ namespace DataAccess.Repository.Interface
 {
     public interface ICourtRepository : IBaseRepository<Court>
     {
+        Task<List<Court>> GetCourtsByClubId(string clubId);
     }
 }

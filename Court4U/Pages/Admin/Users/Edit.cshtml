@@ -1,108 +1,106 @@
-﻿@page
-@model Court4U.Pages.Admin.Users.EditModel
+﻿@page "{id}"
+@model EditModel
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "_UserLayout";
+    Layout = "_AdminLayout";
 }
 
-<h1>Edit</h1>
-
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="User.Username" class="control-label"></label>
-                <input asp-for="User.Username" class="form-control" />
-                <span asp-validation-for="User.Username" class="text-danger"></span>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md">
+        <div class="bg-white shadow-md rounded-lg">
+            <div class="bg-blue-500 text-white p-4 rounded-t-lg">
+                <h3 class="text-center text-xl font-bold">Edit User</h3>
             </div>
-            <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
+            <div class="p-6">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4"></div>
+                    <div class="mb-4">
+                        <label asp-for="User.Username" class="block text-gray-700"></label>
+                        <input asp-for="User.Username" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.Username" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Password" class="block text-gray-700"></label>
+                        <input asp-for="User.Password" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.Password" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.FullName" class="block text-gray-700"></label>
+                        <input asp-for="User.FullName" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.FullName" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Email" class="block text-gray-700"></label>
+                        <input asp-for="User.Email" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.Email" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.DOB" class="block text-gray-700"></label>
+                        <input asp-for="User.DOB" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.DOB" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Phone" class="block text-gray-700"></label>
+                        <input asp-for="User.Phone" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.Phone" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Address" class="block text-gray-700"></label>
+                        <input asp-for="User.Address" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.Address" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Gender" class="block text-gray-700"></label>
+                        <input asp-for="User.Gender" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.Gender" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.AvatarUrl" class="block text-gray-700"></label>
+                        <input asp-for="User.AvatarUrl" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.AvatarUrl" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Status" class="block text-gray-700"></label>
+                        <select asp-for="User.Status" class="block w-full mt-1 p-2 border border-gray-300 rounded">
+                            @foreach (var status in Model.Statuses)
+                            {
+                                <option value="@status.Value" selected="@(status.Value == Model.User.Status.ToString())">@status.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="User.Status" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.Role" class="block text-gray-700"></label>
+                        <select asp-for="User.Role" class="block w-full mt-1 p-2 border border-gray-300 rounded">
+                            @foreach (var role in Model.Roles)
+                            {
+                                <option value="@role.Value" selected="@(role.Value == Model.User.Role.ToString())">@role.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="User.Role" class="text-red-500 text-sm"></span>
+                    </div>
+                    <input type="hidden" asp-for="User.Id" />
+                    <div class="mb-4">
+                        <label asp-for="User.CreatedDate" class="block text-gray-700"></label>
+                        <input asp-for="User.CreatedDate" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.CreatedDate" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="User.UpdatedDate" class="block text-gray-700"></label>
+                        <input asp-for="User.UpdatedDate" class="block w-full mt-1 p-2 border border-gray-300 rounded" />
+                        <span asp-validation-for="User.UpdatedDate" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="flex justify-center">
+                        <input type="submit" value="Save" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="User.FullName" class="control-label"></label>
-                <input asp-for="User.FullName" class="form-control" />
-                <span asp-validation-for="User.FullName" class="text-danger"></span>
+            <div class="bg-gray-100 p-4 rounded-b-lg text-center">
+                <a asp-page="./Index" class="text-blue-500 hover:text-blue-700">Back to List</a>
             </div>
-            <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.DOB" class="control-label"></label>
-                <input asp-for="User.DOB" class="form-control" />
-                <span asp-validation-for="User.DOB" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Phone" class="control-label"></label>
-                <input asp-for="User.Phone" class="form-control" />
-                <span asp-validation-for="User.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Address" class="control-label"></label>
-                <input asp-for="User.Address" class="form-control" />
-                <span asp-validation-for="User.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Gender" class="control-label"></label>
-                <input asp-for="User.Gender" class="form-control" />
-                <span asp-validation-for="User.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.AvatarUrl" class="control-label"></label>
-                <input asp-for="User.AvatarUrl" class="form-control" />
-                <span asp-validation-for="User.AvatarUrl" class="text-danger"></span>
-            </div>
-            @* <div class="form-group">
-                <label asp-for="User.Status" class="control-label"></label>
-                <select asp-for="User.Status" class="form-control">
-                    @foreach (var status in Model.Statuses)
-                    {
-                        var isSelected = status.Value == Model.User.Status.ToString() ? "selected" : "";
-                        <option value="@status.Value" @isSelected>@status.Text</option>
-                    }
-                </select>
-                <span asp-validation-for="User.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Role" class="control-label"></label>
-                <select asp-for="User.Role" class="form-control">
-                    @foreach (var role in Model.Roles)
-                    {
-                        var isSelected = role.Value == Model.User.Role.ToString() ? "selected" : "";
-                        <option value="@role.Value" @isSelected>@role.Text</option>
-                    }
-                </select>
-                <span asp-validation-for="User.Role" class="text-danger"></span>
-            </div> *@
-            <input type="hidden" asp-for="User.Id" />
-            <div class="form-group">
-                <label asp-for="User.CreatedDate" class="control-label"></label>
-                <input asp-for="User.CreatedDate" class="form-control" />
-                <span asp-validation-for="User.CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.UpdatedDate" class="control-label"></label>
-                <input asp-for="User.UpdatedDate" class="form-control" />
-                <span asp-validation-for="User.UpdatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

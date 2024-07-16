@@ -96,5 +96,22 @@ namespace DataAccess.Repository
                 }
             }
         }
+
+        public async Task<List<Court>> GetCourtsByClubId(string clubId)
+        {
+            using (var _context = new Court4UDbContext())
+            {
+                try
+                {
+                    return await _context.Courts
+                        .Where(c => c.ClubId == clubId)
+                        .ToListAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
     }
 }
