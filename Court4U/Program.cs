@@ -27,11 +27,17 @@ builder.Services.AddSingleton<IClubService, ClubService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
 builder.Services.AddScoped<ISubscriptionOptionService, SubscriptionOptionService>();
+builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService>();
+builder.Services.AddScoped<ISlotService, SlotService>();
+builder.Services.AddScoped<IBillService, BillService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICourtRepository, CourtRepository>();
 builder.Services.AddScoped<ISubscriptionOptionRepository, SubscriptionOptionRepository>();
+builder.Services.AddScoped<IMemberSubscriptionRepository, MemberSubscriptionRepository>();
+builder.Services.AddScoped<ISlotRepository, SlotRepository>();
+builder.Services.AddScoped<IBillRepository, BillRepository>();
 
 var app = builder.Build();
 

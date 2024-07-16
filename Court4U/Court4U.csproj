@@ -21,6 +21,10 @@
 		<Content Update="appsettings.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Update="Pages\Owner\SubscriptionOptions\Active.cshtml">
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
 	</ItemGroup>
 
 	<!--<Target Name="tailwindcss:watch" BeforeTargets="Build">
@@ -49,7 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Pages\Owner\SubscriptionOptions\" />
 	  <Folder Include="wwwroot\assets\" />
 	</ItemGroup>
 
