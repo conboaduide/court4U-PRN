@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Owner</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body class="flex bg-primary">
+    <aside class="fixed bg-base-200 w-[21vw] h-screen bg-gradient-to-b to-[#6bc945] from-[#22ad5c] gap-y-2 font-semibold text-base text-white">
+        <ul class="space-y-2 p-4">
+            
+        </ul>
+    </aside>
+
+    <div class="flex flex-col w-[79vw] ml-[21vw]">
+        <nav class="shadow-lg fixed z-10 w-full top-0 flex items-center justify-between px-8 h-16 bg-gradient-to-l from-[#6bc945] to-[#22ad5c]">
+            <div class="text-2xl font-semibold text-white">
+                @if (Context.Request.Path != "/owner")
+                {
+                    var path = Context.Request.Path.Value;
+                    if (path.Length > 7)
+                    {
+                        @(path.Substring(7).First().ToString().ToUpper() + path.Substring(8))
+                    }
+                    else
+                    {
+                        @:Dashboard
+                    }
+                }
+                else
+                {
+                    @:Dashboard
+                }
+            </div>
+        </nav>
+
+        <main class="mt-16 p-5 min-h-screen">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

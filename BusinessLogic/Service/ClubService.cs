@@ -50,10 +50,10 @@ namespace BusinessLogic.Service
             await _clubRepository.DeleteAsync(id);
         }
 
-        public async Task<Club> GetClubByUserIdAsync(string id)
+        public async Task<List<Club>> GetClubByUserIdAsync(string id)
         {
             var listClub = await _clubRepository.GetAllAsync();
-            return listClub.FirstOrDefault(x => x.UserId == id);
+            return listClub.Where(x => x.UserId == id).ToList();
         }
     }
 }

@@ -11,7 +11,7 @@ using BusinessLogic.Service.Interface;
 using BusinessLogic.Service;
 using System.Collections;
 
-namespace Court4U.Pages.Owner.MemberSubscriptions
+namespace Court4U.Pages.Owner.SubscriptionOptions
 {
     public class CreateModel : PageModel
     {
@@ -34,8 +34,9 @@ namespace Court4U.Pages.Owner.MemberSubscriptions
             {
                 var userId = HttpContext.Session.Get("UserId");
                 var convertUserId = System.Text.Encoding.UTF8.GetString(userId);
-                var club = await _clubService.GetClubByUserIdAsync(convertUserId);
-                SubscriptionOption.ClubId = club?.Id;
+                var clubId = HttpContext.Session.Get("ClubId");
+                var convertClubId = System.Text.Encoding.UTF8.GetString(clubId);
+                SubscriptionOption.ClubId = convertClubId;
                 SubscriptionOption.Status = Enums.SubscriptionOptionStatus.Active;
                 var result = await _subscriptionOptionService.Create(SubscriptionOption);
                 if (result != null)

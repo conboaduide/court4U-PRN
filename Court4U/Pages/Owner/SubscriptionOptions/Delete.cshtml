@@ -1,0 +1,37 @@
+﻿@page
+@model Court4U.Pages.Owner.SubscriptionOptions.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "_OwnerLayout";
+}
+
+<h1 class="font-bold text-2xl" >DELETE SUBSCRIPTION</h1>
+
+<h3 class="font-bold mt-4" >Are you sure you want to delete this?</h3>
+<div>
+    <dl class="row">
+        <dt class="flex">
+            <p class="font-bold mr-2">Name: </p>
+            <p>@Html.DisplayFor(model => model.SubscriptionOption.Name)</p>
+        </dt>
+        <dt class="flex">
+            <div class="font-bold mr-2">
+                Price: 
+            </div>
+            @Html.DisplayFor(model => model.SubscriptionOption.price)
+        </dt>
+        <dt class="flex">
+            <div class="font-bold mr-2">Total Date: </div> @Html.DisplayFor(model => model.SubscriptionOption.TotalDate)
+        </dt>
+        <dt class="flex mb-4">
+            <div class="font-bold mr-2">Status:</div> @Html.DisplayFor(model => model.SubscriptionOption.Status)
+        </dt>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="SubscriptionOption.Id" />
+        <input type="submit" value="Delete" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" /> 
+        <a class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" asp-page="./Index">Back to List</a>
+    </form>
+</div>

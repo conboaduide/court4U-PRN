@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
+using BusinessLogic.Service.Interface;
 
-namespace Court4U.Pages.Owner.MemberSubscriptions
+namespace Court4U.Pages.Owner.SubscriptionOptions
 {
-    public class DeleteModel : PageModel
+    public class ActiveModel : PageModel
     {
-        private readonly DataAccess.Entity.Court4UDbContext _context;
+        private readonly ISubscriptionOptionService subscriptionOptionService;
 
-        public DeleteModel(DataAccess.Entity.Court4UDbContext context)
+        public ActiveModel(ISubscriptionOptionService isubscriptionOptionService)
         {
-            _context = context;
+            this.subscriptionOptionService = isubscriptionOptionService;
         }
 
         [BindProperty]
@@ -29,7 +30,7 @@ namespace Court4U.Pages.Owner.MemberSubscriptions
                 return NotFound();
             }
 
-            var subscriptionoption = await _context.SubscriptionOptions.FirstOrDefaultAsync(m => m.Id == id);
+            var subscriptionoption = await subscriptionOptionService.Get(id);
 
             if (subscriptionoption == null)
             {
@@ -49,12 +50,12 @@ namespace Court4U.Pages.Owner.MemberSubscriptions
                 return NotFound();
             }
 
-            var subscriptionoption = await _context.SubscriptionOptions.FindAsync(id);
+            var subscriptionoption = await subscriptionOptionService.Get(id);
             if (subscriptionoption != null)
             {
                 SubscriptionOption = subscriptionoption;
-                _context.SubscriptionOptions.Remove(SubscriptionOption);
-                await _context.SaveChangesAsync();
+                SubscriptionOption.Status = Enums.SubscriptionOptionStatus.Active;
+                await subscriptionOptionService.Update(SubscriptionOption);
             }
 
             return RedirectToPage("./Index");

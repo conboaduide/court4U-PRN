@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BusinessLogic.Service.Interface;
+using DataAccess.Entity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using DataAccess.Entity;
-using DataAccess.Entity.Data;
-using BusinessLogic.Service.Interface;
-using BusinessLogic.Service;
 
 namespace Court4U.Pages.Owner.MemberSubscriptions
 {
     public class IndexModel : PageModel
     {
-        private readonly ISubscriptionOptionService _subscriptionOptionService;
-
-        public IndexModel(ISubscriptionOptionService _subscriptionOptionService)
+        private readonly IMemberSubscriptionService _memberSubscriptionService;
+        public IndexModel(IMemberSubscriptionService memberSubscriptionService)
         {
-            this._subscriptionOptionService = _subscriptionOptionService;
+            this._memberSubscriptionService = memberSubscriptionService;
         }
-
-        public IList<SubscriptionOption> SubscriptionOption { get;set; } = default!;
-
+        public IList<MemberSubscription> MemberSubscriptions { get; set; }
         public async Task OnGetAsync()
         {
-            SubscriptionOption = await _subscriptionOptionService.Get();
+            MemberSubscriptions = await _memberSubscriptionService.Get();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BusinessLogic.Service.Interface
     {
         Task<IEnumerable<Club>> GetAllClubsAsync();
         Task<Club> GetClubByIdAsync(string id);
-        Task<Club> GetClubByUserIdAsync(string id);
+        Task<List<Club>> GetClubByUserIdAsync(string id);
         Task AddClubAsync(ClubRequest clubRequest);
         Task UpdateClubAsync(Club club);
         Task DeleteClubAsync(string id);
