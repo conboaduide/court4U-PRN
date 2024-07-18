@@ -82,7 +82,7 @@ namespace Court4U.Pages
             var userRole = HttpContext.Session.GetString("Role");
             if (userRole == null || userRole != "Member")
             {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/Login");
             }
 
             if (string.IsNullOrEmpty(SelectedSlotId))
@@ -118,7 +118,7 @@ namespace Court4U.Pages
                 var bookedSlot = new BookedSlot()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    CheckedIn = true,
+                    CheckedIn = false,
                     SlotId = SelectedSlotId,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
