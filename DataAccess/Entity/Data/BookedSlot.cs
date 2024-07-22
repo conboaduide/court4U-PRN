@@ -6,6 +6,7 @@ namespace DataAccess.Entity.Data
     public class BookedSlot : Entity
     {
         public bool CheckedIn { get; set; }
+        public float Price { get; set; }
 
         [ForeignKey("Slot")]
         public string SlotId { get; set; }

@@ -6,6 +6,8 @@ namespace DataAccess.Entity.Data
     public class Booking : Entity
     {
         public bool Status { get; set; }
+        public float Price { get; set; }
+        public string BillId { get; set; }
         public Bill Bill { get; set; }
 
         public ICollection<BookedSlot> BookedSlots { get; set; }

@@ -58,7 +58,8 @@ namespace DataAccess.Entity
             modelBuilder.Entity<BookedSlot>()
                 .HasOne(bs => bs.Slot)
                 .WithMany(s => s.BookedSlots)
-                .HasForeignKey(bs => bs.SlotId);
+                .HasForeignKey(bs => bs.SlotId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //
             modelBuilder.Entity<Booking>()
