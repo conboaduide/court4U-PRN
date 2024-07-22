@@ -7,6 +7,7 @@ namespace DataAccess.Entity.Data
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public float Price { get; set; }
         public string BillId { get; set; }
         public Bill Bill { get; set; }
         [ForeignKey("Users")]
