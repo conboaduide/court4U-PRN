@@ -5,6 +5,7 @@ using BusinessLogic;
 using DataAccess.Repository.Interface;
 using BusinessLogic.Service.Interface;
 using BusinessLogic.Service;
+using DataAccess.Repository.Request;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -38,7 +39,8 @@ builder.Services.AddScoped<ISubscriptionOptionRepository, SubscriptionOptionRepo
 builder.Services.AddScoped<IMemberSubscriptionRepository, MemberSubscriptionRepository>();
 builder.Services.AddScoped<ISlotRepository, SlotRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
-
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

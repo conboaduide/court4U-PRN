@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{595A12C5-73D8-4C67-9D5B-63BD6128C0DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateStatusWorker", "UpdateStatusWorker\UpdateStatusWorker.csproj", "{FDE815F6-8487-4214-8B61-7DC1254B0733}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{595A12C5-73D8-4C67-9D5B-63BD6128C0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{595A12C5-73D8-4C67-9D5B-63BD6128C0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{595A12C5-73D8-4C67-9D5B-63BD6128C0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDE815F6-8487-4214-8B61-7DC1254B0733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDE815F6-8487-4214-8B61-7DC1254B0733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDE815F6-8487-4214-8B61-7DC1254B0733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDE815F6-8487-4214-8B61-7DC1254B0733}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

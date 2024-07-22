@@ -26,7 +26,7 @@ namespace Court4U.Pages.Owner.Clubs
         {
             HttpContext.Session.SetString("ClubId", ClubId);
             
-            return Redirect("/Owner/SubscriptionOptions/Index");
+            return Redirect("/Owner/Dashboard/Index");
         }
     }
 }
