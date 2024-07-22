@@ -35,10 +35,7 @@ namespace DataAccess.Repository
             {
                 try
                 {
-                    return await _context.BookedSlots
-                            .Include(c => c.Slot)
-                            .ThenInclude(c => c.Club)
-                            .ToListAsync();
+                    return await _context.BookedSlots.ToListAsync();
                 }
                 catch (Exception ex)
                 {
@@ -83,7 +80,7 @@ namespace DataAccess.Repository
         {
             using (var db = new Court4UDbContext())
             {
-                var found = await db.BookedSlots.Include(bs => bs.Slot).Where(c => c.Id == id).SingleOrDefaultAsync();
+                var found = await db.BookedSlots.Where(c => c.Id == id).SingleOrDefaultAsync();
 
                 if (found != null)
                 {
@@ -95,34 +92,6 @@ namespace DataAccess.Repository
                 {
                     return null;
                 }
-            }
-        }
-        public async Task<List<BookedSlot>> GetByUserId(string userId)
-        {
-            using (var _context = new Court4UDbContext())
-            {
-                try
-                {
-                    return await _context.BookedSlots
-                            .Where(bs => bs.Booking.UserId == userId)
-                            .Include(c => c.Slot)
-                            .ThenInclude(c => c.Club)
-                            .ToListAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
-            }
-        }
-
-        public async Task<BookedSlot> GetWithBooking(string id)
-        {
-            using (var _context = new Court4UDbContext())
-            {
-                return await _context.BookedSlots
-                    .Include(bs => bs.Booking)
-                    .FirstOrDefaultAsync(bs => bs.Id == id);
             }
         }
     }
