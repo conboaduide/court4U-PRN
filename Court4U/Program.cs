@@ -5,6 +5,7 @@ using BusinessLogic;
 using DataAccess.Repository.Interface;
 using BusinessLogic.Service.Interface;
 using BusinessLogic.Service;
+
 using DataAccess.Repository.Request;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +22,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // Make the session cookie essential
 });
 
-
-//Service
+// Service
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IClubService, ClubService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
@@ -39,6 +39,12 @@ builder.Services.AddScoped<ISubscriptionOptionRepository, SubscriptionOptionRepo
 builder.Services.AddScoped<IMemberSubscriptionRepository, MemberSubscriptionRepository>();
 builder.Services.AddScoped<ISlotRepository, SlotRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
+
+// Add logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
 builder.Services.AddScoped<IMomoService, MomoService>();
 var app = builder.Build();
