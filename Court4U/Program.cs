@@ -31,6 +31,7 @@ builder.Services.AddScoped<ISubscriptionOptionService, SubscriptionOptionService
 builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService>();
 builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddScoped<IBillService, BillService>();
+builder.Services.AddScoped<IBookedSlotService, BookedSlotService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
@@ -39,6 +40,7 @@ builder.Services.AddScoped<ISubscriptionOptionRepository, SubscriptionOptionRepo
 builder.Services.AddScoped<IMemberSubscriptionRepository, MemberSubscriptionRepository>();
 builder.Services.AddScoped<ISlotRepository, SlotRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
+builder.Services.AddScoped<IBookedSlotRepository, BookedSlotRepository>();
 
 // Add logging
 builder.Logging.ClearProviders();

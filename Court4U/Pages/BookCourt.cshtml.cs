@@ -2,6 +2,7 @@
 using BusinessLogic.Service.Interface;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
+using DataAccess.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -82,7 +83,7 @@ namespace Court4U.Pages
             var userRole = HttpContext.Session.GetString("Role");
             if (userRole == null || userRole != "Member")
             {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/Login");
             }
 
             if (string.IsNullOrEmpty(SelectedSlotId))
@@ -97,19 +98,28 @@ namespace Court4U.Pages
                 var bill = new Bill()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Method = "",
-                    Price = 0,
-                    Type = "",
+                    Method = "Momo",
+                    Price = 150000,
+                    Type = "Member",
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
                 };
 
                 UserId = HttpContext.Session.GetString("UserId");
+                if (ClubId.Equals("ClubId"))
+                {
+                    ClubId = HttpContext.Session.GetString("ClubId");
+                }
+                else
+                {
+                    HttpContext.Session.SetString("ClubId", ClubId);
+                }
 
                 var booking = new Booking()
                 {
                     Id = BookingId,
                     Bill = bill,
+                    BillId = bill.Id,
                     Status = true,
                     UserId = UserId,
                     CreatedDate = DateTime.Now,
@@ -118,7 +128,7 @@ namespace Court4U.Pages
                 var bookedSlot = new BookedSlot()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    CheckedIn = true,
+                    CheckedIn = false,
                     SlotId = SelectedSlotId,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,

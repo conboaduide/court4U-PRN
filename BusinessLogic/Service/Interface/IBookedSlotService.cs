@@ -9,5 +9,7 @@ namespace BusinessLogic.Service.Interface
 {
     public interface IBookedSlotService:IBaseService<BookedSlot>
     {
+        Task<List<BookedSlot>?> GetByUserId(string userId);
+        Task<bool> CancelBooking(string bookingId, string userId);
     }
 }

@@ -2,6 +2,7 @@
 using DataAccess.Entity.Data;
 using DataAccess.Repository;
 using DataAccess.Repository.Interface;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,10 @@ namespace BusinessLogic.Service
             try
             {
                 var slotToBook = await iSlotRepository.Get(slotId);
-
+                if (clubId == null)
+                {
+                    throw new Exception("Club Id not found or does not belong to the specified club.");
+                }
                 if (slotToBook == null)
                 {
                     throw new Exception("Slot not found or does not belong to the specified club.");
