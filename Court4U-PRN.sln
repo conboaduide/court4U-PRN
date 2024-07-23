@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{595A12C5-73D8-4C67-9D5B-63BD6128C0DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateStatusWorker", "UpdateStatusWorker\UpdateStatusWorker.csproj", "{FDE815F6-8487-4214-8B61-7DC1254B0733}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateStatusWorker", "UpdateStatusWorker\UpdateStatusWorker.csproj", "{FDE815F6-8487-4214-8B61-7DC1254B0733}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

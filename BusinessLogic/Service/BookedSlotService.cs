@@ -42,5 +42,22 @@ namespace BusinessLogic.Service
         {
             return await iBookedSlotRepository.Update(entity);
         }
+        public async Task<List<BookedSlot>?> GetByUserId(string userId)
+        {
+            return await iBookedSlotRepository.GetByUserId(userId);
+        }
+
+        public async Task<bool> CancelBooking(string bookingId, string userId)
+        {
+            var bookedSlot = await iBookedSlotRepository.GetWithBooking(bookingId);
+
+            if (bookedSlot == null || bookedSlot.Booking == null || bookedSlot.Booking.UserId != userId)
+            {
+                return false;
+            }
+
+            await iBookedSlotRepository.Delete(bookingId);
+            return true;
+        }
     }
 }
