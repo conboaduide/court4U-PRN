@@ -42,7 +42,7 @@ namespace BusinessLogic.Service
             return hashString;
         }
 
-        public async Task<MomoCreatePaymentResponseModel> CreatePaymentAsync(RequestCreateOrderModel order)
+        public async Task<MomoCreatePaymentResponseModel> CreateBookSlotPaymentAsync(RequestCreateOrderModel order)
         {
             var bill = new Bill
             {
@@ -50,13 +50,15 @@ namespace BusinessLogic.Service
                 Price = order.Price,
                 Type = order.Type,
             };
+            var returnUrl = "https://localhost:7292/BookedSlot/PaymentCallBack";
+
             var model = await _billService.Create(bill);
             //var model = await _orderService.CreateOrder(order);
             var user = await _userService.Get(order.UserId);
             //var course = await _unitOfWork.CourseRepository.GetSingleById(model.CourseId);
             var orderInfo = "Khách hàng: " + user.FullName + ". Nội dung: Mua hàng tại court4u ";
             var rawData =
-                $"partnerCode={_options.Value.PartnerCode}&accessKey={_options.Value.AccessKey}&requestId={model.Id}&amount={model.Price}&orderId={model.Id}&orderInfo={orderInfo}&returnUrl={_options.Value.ReturnUrl}&notifyUrl={_options.Value.NotifyUrl}&extraData=";
+                $"partnerCode={_options.Value.PartnerCode}&accessKey={_options.Value.AccessKey}&requestId={model.Id}&amount={model.Price}&orderId={model.Id}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={_options.Value.NotifyUrl}&extraData=";
 
             var signature = ComputeHmacSha256(rawData, _options.Value.SecretKey);
 
@@ -71,7 +73,7 @@ namespace BusinessLogic.Service
                 partnerCode = _options.Value.PartnerCode,
                 requestType = _options.Value.RequestType,
                 notifyUrl = _options.Value.NotifyUrl,
-                returnUrl = _options.Value.ReturnUrl,
+                returnUrl = returnUrl,
                 orderId = model.Id,
                 amount = order.Price.ToString(),
                 orderInfo = orderInfo,

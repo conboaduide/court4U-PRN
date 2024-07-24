@@ -12,7 +12,7 @@ namespace Court4U.Pages
         {
             _bookedSlotService = bookedSlotService;
         }
-        public IList<BookedSlot> BookedSlotList { get; set; }
+        public IList<DataAccess.Entity.Data.BookedSlot> BookedSlotList { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             var userId = HttpContext.Session.GetString("UserId");
