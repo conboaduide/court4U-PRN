@@ -6,6 +6,7 @@ namespace DataAccess.Entity.Data
     [Table("StaffProfile")]
     public class StaffProfile : Entity
     {
+        public string UserId { get; set; }
         public User User { get; set; }
 
         [ForeignKey("Club")]
