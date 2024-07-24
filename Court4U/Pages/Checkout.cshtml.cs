@@ -12,13 +12,15 @@ namespace Court4U.Pages
         private readonly IClubService _clubService;
         private readonly IBillService _billService;
         private readonly IMomoService _momoService;
+        private readonly IBookingService _bookingService;
 
-        public CheckoutModel(ISlotService slotService, IClubService clubService, IBillService billService, IMomoService momoService)
+        public CheckoutModel(ISlotService slotService, IClubService clubService, IBillService billService, IMomoService momoService, IBookingService bookingService)
         {
             _slotService = slotService;
             _clubService = clubService;
             _billService = billService;
             _momoService = momoService;
+            _bookingService = bookingService;
         }
         [BindProperty]
         public Slot slot { get; set; }
@@ -30,10 +32,13 @@ namespace Court4U.Pages
 
         [BindProperty]
         public string ClubId { get; set; }
-        public async Task<IActionResult> OnGetAsync(string selectedSlotId, string clubId)
+        [BindProperty]
+        public DateTime SearchDate { get; set; }
+        public async Task<IActionResult> OnGetAsync(string selectedSlotId, string clubId, string searchDate)
         {
             slot = await _slotService.Get(selectedSlotId);
             Price = slot.Price.ToString("C0", new CultureInfo("vi-VN"));
+            SearchDate = DateTime.Parse(searchDate);
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
@@ -66,20 +71,13 @@ namespace Court4U.Pages
                     UserId = UserId,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
-                };
-                var bookedSlot = new DataAccess.Entity.Data.BookedSlot()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CheckedIn = false,
-                    SlotId = SelectedSlotId,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                    BookingId = BookingId,
+                    Date = SearchDate
                 };
 
-                var result = await _slotService.BookSlotAsync(ClubId, SelectedSlotId, booking, bookedSlot);
 
-                if (result)
+                var result = await _bookingService.Create(booking);
+
+                if (result != null)
                 {
                     var requestMomo = new RequestCreateOrderModel
                     {
