@@ -9,6 +9,6 @@ namespace BusinessLogic.Service.Interface
 {
     public interface ISlotService: IBaseService<Slot>
     {
-        
+        Task<List<Slot>> GetSlotsByClubId(string id);
     }
 }

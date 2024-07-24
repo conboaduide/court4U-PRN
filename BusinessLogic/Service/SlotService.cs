@@ -45,5 +45,9 @@ namespace BusinessLogic.Service
             return await iSlotRepository.Update(entity);
         }
        
+        public async Task<List<Slot>> GetSlotsByClubId(string id)
+        {
+            return await iSlotRepository.GetSlotsByClubId(id);
+        }
     }
 }
