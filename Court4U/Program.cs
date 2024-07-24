@@ -32,6 +32,7 @@ builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService
 builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddScoped<IBillService, BillService>();
 builder.Services.AddScoped<IBookedSlotService, BookedSlotService>();
+builder.Services.AddScoped<IQRService, QRService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();

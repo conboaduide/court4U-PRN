@@ -5,5 +5,8 @@
   "scripts": {
     "build:css": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css",
     "watch:css": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch"
+  },
+  "dependencies": {
+    "react-qr-reader": "^3.0.0-beta-1"
   }
 }
