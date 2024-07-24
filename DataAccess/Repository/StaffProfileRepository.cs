@@ -1,97 +1,89 @@
-﻿using DataAccess.Entity.Data;
-using DataAccess.Entity;
+﻿using DataAccess.Entity;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repository
 {
     public class StaffProfileRepository : IStaffProfileRepository
     {
-        public async Task<StaffProfile> Create(StaffProfile StaffProfile)
+        private readonly Court4UDbContext _dbContext;
+
+        public StaffProfileRepository(Court4UDbContext dbContext)
         {
-            using (var _context = new Court4UDbContext())
+            _dbContext = dbContext;
+        }
+
+        public async Task<StaffProfile?> Create(StaffProfile entity)
+        {
+            try
             {
-                try
-                {
-                    _context.Add(StaffProfile);
-                    _context.SaveChanges();
-                    return StaffProfile;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                _dbContext.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<StaffProfile>> Get()
+        public async Task<StaffProfile?> Delete(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
+                var staffProfile = await _dbContext.StaffProfiles.FindAsync(id);
+                if (staffProfile != null)
                 {
-                    return await _context.StaffProfiles.ToListAsync();
+                    _dbContext.StaffProfiles.Remove(staffProfile);
+                    await _dbContext.SaveChangesAsync();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return staffProfile;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<StaffProfile?> Get(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.StaffProfiles.Where(x => x.Id == id).FirstOrDefaultAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.StaffProfiles.FirstOrDefaultAsync(sp => sp.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<StaffProfile> Update(StaffProfile StaffProfile)
+        public async Task<List<StaffProfile>> Get()
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    _context.Update(StaffProfile);
-                    _context.SaveChanges();
-                    return StaffProfile;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.StaffProfiles.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<StaffProfile> Delete(string id)
+        public async Task<StaffProfile?> Update(StaffProfile entity)
         {
-            using (var db = new Court4UDbContext())
+            try
             {
-                var found = await db.StaffProfiles.Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (found != null)
-                {
-                    db.Remove(found);
-                    await db.SaveChangesAsync();
-                    return found;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

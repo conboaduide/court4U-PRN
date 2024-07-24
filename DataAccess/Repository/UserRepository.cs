@@ -2,105 +2,82 @@
 using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly Court4UDbContext _dbContext;
+
+        public UserRepository(Court4UDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public async Task<User?> Create(User entity)
         {
-            using (var db = new Court4UDbContext())
+            // Check for existing username or email
+            if (await _dbContext.Users.AnyAsync(u => u.Username.ToLower() == entity.Username.ToLower()))
             {
-                foreach (var c in db.Users.ToList())
-                {
-                    if (c.Username.ToLower() == entity.Username.ToLower())
-                    {
-                        throw new Exception("Username is existed!");
-                    }
-                    if (c.Email.ToLower() == entity.Email.ToLower())
-                    {
-                        throw new Exception("Email is existed!");
-                    }
-                }
-
-                db.Add(entity);
-                await db.SaveChangesAsync();
-                return await db.Users.Where(c => c.Username == entity.Username).SingleOrDefaultAsync();
+                throw new Exception("Username is already taken.");
             }
+
+            if (await _dbContext.Users.AnyAsync(u => u.Email.ToLower() == entity.Email.ToLower()))
+            {
+                throw new Exception("Email is already registered.");
+            }
+
+            _dbContext.Add(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<User?> Delete(string id)
         {
-            using (var db = new Court4UDbContext())
+            var user = await _dbContext.Users.FindAsync(id);
+            if (user != null)
             {
-                var customer = await db.Users.Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (customer != null)
-                {
-                    db.Remove(customer);
-                    await db.SaveChangesAsync();
-                    return customer;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Users.Remove(user);
+                await _dbContext.SaveChangesAsync();
             }
+            return user;
         }
 
         public async Task<User?> Get(string id)
         {
-            using (var db = new Court4UDbContext())
-            {
-                return await db.Users.Where(c => c.Id == id).SingleOrDefaultAsync();
-            }
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<List<User>?> Get()
+        public async Task<List<User>> Get()
         {
-            using (var db = new Court4UDbContext())
-            {
-                return await db.Users.ToListAsync();
-            }
+            return await _dbContext.Users.ToListAsync();
         }
 
         public async Task<User?> Update(User entity)
         {
-            using (var db = new Court4UDbContext())
-            {
-                db.Update(entity);
-                await db.SaveChangesAsync();
-                return entity;
-            }
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
+
         public async Task<bool> CheckVerify(string token)
         {
-            using var db = new Court4UDbContext();
-            var user = await db.Users.Where(c => c.Token == token).FirstOrDefaultAsync();
-            if (user == null)
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Token == token);
+            if (user != null)
             {
-                return false;
+                user.Status = (int)Enums.Status.Active;
+                await _dbContext.SaveChangesAsync();
+                return true;
             }
-
-            user.Status = (int)Enums.Status.Active;
-            await db.SaveChangesAsync();
-            return true;
+            return false;
         }
+
         public async Task<User?> GetByUsernameAndEmail(string username, string email)
         {
-            using (var db = new Court4UDbContext())
-            {
-                var user = await db.Users
-                                   .Where(u => u.Username.ToLower() == username.ToLower() &&
-                                               u.Email.ToLower() == email.ToLower())
-                                   .FirstOrDefaultAsync();
-                return user;
-            }
+            return await _dbContext.Users
+                .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower() && u.Email.ToLower() == email.ToLower());
         }
     }
 }

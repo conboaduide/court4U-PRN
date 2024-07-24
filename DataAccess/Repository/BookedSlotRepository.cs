@@ -1,129 +1,122 @@
-﻿using DataAccess.Entity.Data;
-using DataAccess.Entity;
+﻿using DataAccess.Entity;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repository
 {
     public class BookedSlotRepository : IBookedSlotRepository
     {
-        public async Task<BookedSlot> Create(BookedSlot bill)
+        private readonly Court4UDbContext _dbContext;
+
+        public BookedSlotRepository(Court4UDbContext dbContext)
         {
-            using (var _context = new Court4UDbContext())
+            _dbContext = dbContext;
+        }
+
+        public async Task<BookedSlot?> Create(BookedSlot entity)
+        {
+            try
             {
-                try
-                {
-                    _context.Add(bill);
-                    _context.SaveChanges();
-                    return bill;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                _dbContext.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<BookedSlot>> Get()
+        public async Task<BookedSlot?> Delete(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
+                var bookedSlot = await _dbContext.BookedSlots.Include(bs => bs.Slot).Where(bs => bs.Id == id).SingleOrDefaultAsync();
+                if (bookedSlot != null)
                 {
-                    return await _context.BookedSlots
-                            .Include(c => c.Slot)
-                            .ThenInclude(c => c.Club)
-                            .ToListAsync();
+                    _dbContext.BookedSlots.Remove(bookedSlot);
+                    await _dbContext.SaveChangesAsync();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return bookedSlot;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<BookedSlot?> Get(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.BookedSlots.Where(x => x.Id == id).FirstOrDefaultAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.BookedSlots.Where(bs => bs.Id == id).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<BookedSlot> Update(BookedSlot bookedSlot)
+        public async Task<List<BookedSlot>> Get()
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    _context.Update(bookedSlot);
-                    _context.SaveChanges();
-                    return bookedSlot;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.BookedSlots
+                    .Include(bs => bs.Slot)
+                    .ThenInclude(s => s.Club)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<BookedSlot> Delete(string id)
+        public async Task<BookedSlot?> Update(BookedSlot entity)
         {
-            using (var db = new Court4UDbContext())
+            try
             {
-                var found = await db.BookedSlots.Include(bs => bs.Slot).Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (found != null)
-                {
-                    db.Remove(found);
-                    await db.SaveChangesAsync();
-                    return found;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<List<BookedSlot>> GetByUserId(string userId)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.BookedSlots
-                            .Where(bs => bs.Booking.UserId == userId)
-                            .Include(c => c.Slot)
-                            .ThenInclude(c => c.Club)
-                            .ToListAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.BookedSlots
+                    .Where(bs => bs.Booking.UserId == userId)
+                    .Include(bs => bs.Slot)
+                    .ThenInclude(s => s.Club)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<BookedSlot> GetWithBooking(string id)
+        public async Task<BookedSlot?> GetWithBooking(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                return await _context.BookedSlots
+                return await _dbContext.BookedSlots
                     .Include(bs => bs.Booking)
                     .FirstOrDefaultAsync(bs => bs.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -61,7 +61,7 @@ namespace Court4U.Pages
                 }
                 else
                 {
-                    return RedirectToPage("/Index");
+                    return RedirectToPage("/Login");
                 }
             }
 

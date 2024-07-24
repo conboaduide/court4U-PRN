@@ -1,0 +1,84 @@
+﻿@page
+@model Court4U.Pages.Staff.CheckIn.IndexModel
+@{
+    Layout = "_StaffLayout";
+}
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100 bg-center bg-cover" style="background-image: url('https://img.freepik.com/premium-photo/3d-rendering-camera-lens-dark-studio-background_772449-9699.jpg');">
+    <div class="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md opacity-75">
+        <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Check-In Page</h2>
+        <div id="reader" class="w-72 h-72 border-2 border-gray-300 mb-4 hidden mx-auto"></div>
+        <button id="openCameraBtn" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700 w-full">Open Camera to Scan QR Code</button>
+        @* @if(Model.Message != null) {
+            <p class="mt-4 text-center text-gray-600">@Model.Message</p>
+        } *@
+        <p id="scanResult" class="mt-4 text-center text-gray-600">@Model.Message</p>
+    </div>
+</div>
+
+<img src="@Model.QRCode" />
+
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const button = document.getElementById('openCameraBtn');
+        const readerDiv = document.getElementById('reader');
+        const scanResult = document.getElementById('scanResult');
+        let qrCodeScanner;
+
+        button.addEventListener('click', function () {
+            if (!qrCodeScanner) {
+                if (window.Html5Qrcode) {
+                    qrCodeScanner = new Html5Qrcode("reader");
+
+                    qrCodeScanner.start(
+                        { facingMode: "environment" },
+                        {
+                            fps: 15, // Increase FPS
+                            qrbox: { width: 300, height: 300 } // Adjust QR box size
+                        },
+                        async qrCodeMessage => {
+                            scanResult.textContent = `QR Code detected: ${qrCodeMessage}`;
+
+                            // Call the server-side endpoint with the QR code data
+                            try {
+                                // const response = await fetch('/Staff/CheckIn?data=' + qrCodeMessage, {
+                                //     method: 'GET',
+                                //     headers: {
+                                //         'Content-Type': 'application/json'
+                                //     },
+                                // });
+
+                                window.location.href = '/Staff/CheckIn?data=' + qrCodeMessage;
+                            } catch (error) {
+                                console.error('Error making request:', error);
+                            }
+
+                            qrCodeScanner.stop().then(() => {
+                                readerDiv.classList.add('hidden');
+                            }).catch(err => {
+                                console.error(`Stop failed: ${err}`);
+                            });
+                        },
+                        errorMessage => {
+                            console.warn(`QR Code scan error: ${errorMessage}`);
+                        }
+                    ).catch(err => {
+                        console.error(`Unable to start scanning, error: ${err}`);
+                    });
+                } else {
+                    console.error('Html5Qrcode is not defined');
+                }
+            } else {
+                qrCodeScanner.stop().then(() => {
+                    readerDiv.classList.add('hidden');
+                }).catch(err => {
+                    console.error(`Stop failed: ${err}`);
+                });
+                qrCodeScanner = null;
+            }
+
+            readerDiv.classList.toggle('hidden');
+        });
+    });
+</script>

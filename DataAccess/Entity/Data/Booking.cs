@@ -8,6 +8,7 @@ namespace DataAccess.Entity.Data
         public bool Status { get; set; }
         public float Price { get; set; }
         public string BillId { get; set; }
+        public DateTime Date { get; set; }
         public Bill Bill { get; set; }
 
         public ICollection<BookedSlot> BookedSlots { get; set; }

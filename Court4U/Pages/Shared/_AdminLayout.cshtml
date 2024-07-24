@@ -16,7 +16,7 @@
                 </div>
             </li>
             <li>
-                <a href="/admin" class="block px-4 py-2 rounded @((Context.Request.Path == "/admin/dashboard" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Dashboard</a>
+                <a href="/admin/dashboard" class="block px-4 py-2 rounded @((Context.Request.Path == "/admin/dashboard" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Dashboard</a>
             </li>
             <li>
                 <a href="/admin/users" class="block px-4 py-2 rounded @((Context.Request.Path == "/admin/users" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Users</a>
@@ -27,13 +27,16 @@
             <li>
                 <a href="/admin/courts" class="block px-4 py-2 rounded @((Context.Request.Path == "/admin/courts" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Courts</a>
             </li>
+            <li>
+                <a href="/" class="block px-4 py-2 rounded @((Context.Request.Path == "/" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Logout</a>
+            </li>
         </ul>
     </aside>
 
     <div class="flex flex-col w-[79vw] ml-[21vw]">
         <nav class="shadow-lg fixed z-10 w-full top-0 flex items-center justify-between px-8 h-16 bg-gradient-to-l from-[#6bc945] to-[#22ad5c]">
             <div class="text-2xl font-semibold text-white">
-                @if (Context.Request.Path != "/admin")
+                @if (Context.Request.Path != "/Admin/Dashboard")
                 {
                     var path = Context.Request.Path.Value;
                     if (path.Length > 7)
