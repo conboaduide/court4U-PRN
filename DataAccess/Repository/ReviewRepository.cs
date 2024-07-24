@@ -1,97 +1,89 @@
-﻿using DataAccess.Entity.Data;
-using DataAccess.Entity;
+﻿using DataAccess.Entity;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repository
 {
     public class ReviewRepository : IReviewRepository
     {
-        public async Task<Review> Create(Review Review)
+        private readonly Court4UDbContext _dbContext;
+
+        public ReviewRepository(Court4UDbContext dbContext)
         {
-            using (var _context = new Court4UDbContext())
+            _dbContext = dbContext;
+        }
+
+        public async Task<Review?> Create(Review entity)
+        {
+            try
             {
-                try
-                {
-                    _context.Add(Review);
-                    _context.SaveChanges();
-                    return Review;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                _dbContext.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<Review>> Get()
+        public async Task<Review?> Delete(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
+                var review = await _dbContext.Reviews.FindAsync(id);
+                if (review != null)
                 {
-                    return await _context.Reviews.ToListAsync();
+                    _dbContext.Reviews.Remove(review);
+                    await _dbContext.SaveChangesAsync();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return review;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<Review?> Get(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.Reviews.Where(x => x.Id == id).FirstOrDefaultAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Reviews.FirstOrDefaultAsync(r => r.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Review> Update(Review Review)
+        public async Task<List<Review>> Get()
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    _context.Update(Review);
-                    _context.SaveChanges();
-                    return Review;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Reviews.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Review> Delete(string id)
+        public async Task<Review?> Update(Review entity)
         {
-            using (var db = new Court4UDbContext())
+            try
             {
-                var found = await db.Reviews.Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (found != null)
-                {
-                    db.Remove(found);
-                    await db.SaveChangesAsync();
-                    return found;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

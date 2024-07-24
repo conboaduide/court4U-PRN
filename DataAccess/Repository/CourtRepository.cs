@@ -1,116 +1,102 @@
-﻿using DataAccess.Entity.Data;
-using DataAccess.Entity;
+﻿using DataAccess.Entity;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repository
 {
     public class CourtRepository : ICourtRepository
     {
-        public async Task<Court> Create(Court Court)
+        private readonly Court4UDbContext _dbContext;
+
+        public CourtRepository(Court4UDbContext dbContext)
         {
-            using (var _context = new Court4UDbContext())
+            _dbContext = dbContext;
+        }
+
+        public async Task<Court?> Create(Court entity)
+        {
+            try
             {
-                try
-                {
-                    _context.Add(Court);
-                    _context.SaveChanges();
-                    return Court;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                _dbContext.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<Court>> Get()
+        public async Task<Court?> Delete(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
+                var court = await _dbContext.Courts.FindAsync(id);
+                if (court != null)
                 {
-                    return await _context.Courts
-                        .Include(c => c.Club)
-                        .ToListAsync();
+                    _dbContext.Courts.Remove(court);
+                    await _dbContext.SaveChangesAsync();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return court;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<Court?> Get(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.Courts.Where(x => x.Id == id).FirstOrDefaultAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Courts.Include(c => c.Club).FirstOrDefaultAsync(c => c.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Court> Update(Court Court)
+        public async Task<List<Court>> Get()
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    _context.Update(Court);
-                    _context.SaveChanges();
-                    return Court;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Courts.Include(c => c.Club).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Court> Delete(string id)
+        public async Task<Court?> Update(Court entity)
         {
-            using (var db = new Court4UDbContext())
+            try
             {
-                var found = await db.Courts.Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (found != null)
-                {
-                    db.Remove(found);
-                    await db.SaveChangesAsync();
-                    return found;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<List<Court>> GetCourtsByClubId(string clubId)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.Courts
-                        .Where(c => c.ClubId == clubId)
-                        .ToListAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Courts.Where(c => c.ClubId == clubId).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

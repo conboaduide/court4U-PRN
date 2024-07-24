@@ -1,97 +1,89 @@
-﻿using DataAccess.Entity.Data;
-using DataAccess.Entity;
+﻿using DataAccess.Entity;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repository
 {
     public class BookingRepository : IBookingRepository
     {
-        public async Task<Booking> Create(Booking Booking)
+        private readonly Court4UDbContext _dbContext;
+
+        public BookingRepository(Court4UDbContext dbContext)
         {
-            using (var _context = new Court4UDbContext())
+            _dbContext = dbContext;
+        }
+
+        public async Task<Booking?> Create(Booking entity)
+        {
+            try
             {
-                try
-                {
-                    _context.Add(Booking);
-                    _context.SaveChanges();
-                    return Booking;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                _dbContext.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<Booking>> Get()
+        public async Task<Booking?> Delete(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
+                var booking = await _dbContext.Bookings.FindAsync(id);
+                if (booking != null)
                 {
-                    return await _context.Bookings.ToListAsync();
+                    _dbContext.Bookings.Remove(booking);
+                    await _dbContext.SaveChangesAsync();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return booking;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<Booking?> Get(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.Bookings.Where(x => x.Id == id).FirstOrDefaultAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Bookings.FirstOrDefaultAsync(b => b.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Booking> Update(Booking Booking)
+        public async Task<List<Booking>> Get()
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    _context.Update(Booking);
-                    _context.SaveChanges();
-                    return Booking;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Bookings.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Booking> Delete(string id)
+        public async Task<Booking?> Update(Booking entity)
         {
-            using (var db = new Court4UDbContext())
+            try
             {
-                var found = await db.Bookings.Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (found != null)
-                {
-                    db.Remove(found);
-                    await db.SaveChangesAsync();
-                    return found;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

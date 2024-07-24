@@ -1,18 +1,22 @@
-using DataAccess.Repository;
-using DataAccess.Entity;
-using Microsoft.EntityFrameworkCore;
-using BusinessLogic;
-using DataAccess.Repository.Interface;
 using BusinessLogic.Service.Interface;
 using BusinessLogic.Service;
+using DataAccess.Entity;
+using DataAccess.Repository.Interface;
+using DataAccess.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-using DataAccess.Repository.Request;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// Add services to the container
 builder.Services.AddDbContext<Court4UDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local")));
+
+builder.Services.AddRazorPages();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -21,13 +25,13 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; // Make the session cookie essential
 });
-
-// Service
+// Register services and repositories
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IClubService, ClubService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
 builder.Services.AddScoped<ISubscriptionOptionService, SubscriptionOptionService>();
+
 builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService>();
 builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddScoped<IBillService, BillService>();
@@ -43,20 +47,23 @@ builder.Services.AddScoped<ISlotRepository, SlotRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IBookedSlotRepository, BookedSlotRepository>();
 
-// Add logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
+builder.Services.AddLogging(config =>
+{
+    config.ClearProviders();
+    config.AddConsole();
+    config.AddDebug();
+});
 
-builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
-builder.Services.AddScoped<IMomoService, MomoService>();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline
+if (app.Environment.IsProduction())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -67,8 +74,12 @@ app.UseRouting();
 
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 
 app.Run();

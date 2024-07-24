@@ -29,12 +29,29 @@ namespace DataAccess.Entity
         public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var configuration = new ConfigurationBuilder()
-            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Court4U"))
-            .AddJsonFile("appsettings.json")
-            .Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Local"),
-                options => options.EnableRetryOnFailure());
+            try
+            {
+                if (!optionsBuilder.IsConfigured)
+                {
+                    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    var configuration = new ConfigurationBuilder()
+                        .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Court4U"))
+                        .AddJsonFile($"appsettings.{environment}.json", optional: true)
+                        .AddJsonFile("appsettings.json")
+                        .Build();
+                    // Log the basePath for debugging purposes
+                    Console.WriteLine($"Base Path: {configuration}");
+                    optionsBuilder.UseSqlServer(configuration.GetConnectionString("Local"),
+                        options => options.EnableRetryOnFailure());
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or print to console for debugging
+                Console.WriteLine($"Exception in OnConfiguring: {ex.Message}");
+                throw; // Rethrow the exception to halt application startup and diagnose the issue
+            }
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

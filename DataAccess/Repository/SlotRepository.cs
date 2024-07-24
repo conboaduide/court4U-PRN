@@ -1,181 +1,170 @@
-﻿using DataAccess.Entity.Data;
-using DataAccess.Entity;
+﻿using DataAccess.Entity;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DataAccess.Repository
 {
     public class SlotRepository : ISlotRepository
     {
-        public async Task<Slot> Create(Slot Slot)
+        private readonly Court4UDbContext _dbContext;
+
+        public SlotRepository(Court4UDbContext dbContext)
         {
-            using (var _context = new Court4UDbContext())
+            _dbContext = dbContext;
+        }
+
+        public async Task<Slot?> Create(Slot entity)
+        {
+            try
             {
-                try
-                {
-                    _context.Add(Slot);
-                    _context.SaveChanges();
-                    return Slot;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                _dbContext.Add(entity);
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<Slot>> Get()
+        public async Task<Slot?> Delete(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
+                var slot = await _dbContext.Slots.FindAsync(id);
+                if (slot != null)
                 {
-                    return await _context.Slots.ToListAsync();
+                    _dbContext.Slots.Remove(slot);
+                    await _dbContext.SaveChangesAsync();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return slot;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<Slot?> Get(string id)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.Slots.Where(x => x.Id == id).FirstOrDefaultAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Slots.FirstOrDefaultAsync(s => s.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Slot> Update(Slot Slot)
+        public async Task<List<Slot>> Get()
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    _context.Update(Slot);
-                    _context.SaveChanges();
-                    return Slot;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Slots.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Slot> Delete(string id)
+        public async Task<Slot?> Update(Slot entity)
         {
-            using (var db = new Court4UDbContext())
+            try
             {
-                var found = await db.Slots.Where(c => c.Id == id).SingleOrDefaultAsync();
-
-                if (found != null)
-                {
-                    db.Remove(found);
-                    await db.SaveChangesAsync();
-                    return found;
-                }
-                else
-                {
-                    return null;
-                }
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task<List<Slot>> GetSlotsByClubId(string clubId)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    return await _context.Slots
-                        .Where(s => s.ClubId == clubId)
-                        .ToListAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                return await _dbContext.Slots.Where(s => s.ClubId == clubId).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
+
         public async Task<List<Slot>> GetAvailableSlots(string slotId, DateTime startDate, DateTime endDate)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                try
-                {
-                    var bookedSlots = await _context.BookedSlots
-                        .Where(bs => bs.SlotId == slotId && bs.Slot.StartTime >= startDate && bs.Slot.EndTime <= endDate)
-                        .Select(bs => bs.SlotId)
-                        .ToListAsync();
+                var bookedSlots = await _dbContext.BookedSlots
+                    .Where(bs => bs.SlotId == slotId && bs.Slot.StartTime >= startDate && bs.Slot.EndTime <= endDate)
+                    .Select(bs => bs.SlotId)
+                    .ToListAsync();
 
-                    var availableSlotsQuery = _context.Slots
-                        .Where(s => s.ClubId == slotId && !bookedSlots.Contains(s.Id) && s.DateOfWeek >= startDate && s.DateOfWeek <= endDate);
+                var availableSlots = await _dbContext.Slots
+                    .Where(s => s.ClubId == slotId && !bookedSlots.Contains(s.Id) && s.DateOfWeek >= startDate && s.DateOfWeek <= endDate)
+                    .ToListAsync();
 
-                    var validSlots = await availableSlotsQuery
-                        .Where(slot => !_context.BookedSlots.Select(bookedSlot => bookedSlot.SlotId).Contains(slot.Id) && slot.ClubId == slotId)
-                        .ToListAsync();
-
-                    return validSlots;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Failed to get available slots.", ex);
-                }
+                return availableSlots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to get available slots.", ex);
             }
         }
 
-        public async Task<List<Slot>> SearchByDate(DateTime date, string ClubId)
+        public async Task<List<Slot>> SearchByDate(DateTime date, string clubId)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                var validSlots = await _context.Slots
-                                       .Where(slot => !_context.BookedSlots
-                                                              .Select(bookedSlot => bookedSlot.SlotId)
-                                                              .Contains(slot.Id) && slot.DateOfWeek == date && slot.ClubId == ClubId)
-                                       .ToListAsync();
+                var validSlots = await _dbContext.Slots
+                    .Where(slot => !_dbContext.BookedSlots.Select(bookedSlot => bookedSlot.SlotId).Contains(slot.Id) && slot.DateOfWeek == date && slot.ClubId == clubId)
+                    .ToListAsync();
                 return validSlots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public async Task Booking(Booking booking, BookedSlot bookedSlot)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                await _context.Bookings.AddAsync(booking);
-                await _context.SaveChangesAsync();
+                await _dbContext.Bookings.AddAsync(booking);
+                await _dbContext.SaveChangesAsync();
 
                 bookedSlot.BookingId = booking.Id;
 
-                await _context.BookedSlots.AddAsync(bookedSlot);
-                await _context.SaveChangesAsync();
+                await _dbContext.BookedSlots.AddAsync(bookedSlot);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<List<Slot>> GetValidSlotsAsync(DateTime date, string ClubId)
+        public async Task<List<Slot>> GetValidSlotsAsync(DateTime date, string clubId)
         {
-            using (var _context = new Court4UDbContext())
+            try
             {
-                var validSlots = await _context.Slots
-                                       .Where(slot => !_context.BookedSlots
-                                                              .Select(bookedSlot => bookedSlot.SlotId)
-                                                              .Contains(slot.Id) && slot.DateOfWeek == date && slot.ClubId == ClubId)
-                                       .ToListAsync();
+                var validSlots = await _dbContext.Slots
+                    .Where(slot => !_dbContext.BookedSlots.Select(bookedSlot => bookedSlot.SlotId).Contains(slot.Id) && slot.DateOfWeek == date && slot.ClubId == clubId)
+                    .ToListAsync();
                 return validSlots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
