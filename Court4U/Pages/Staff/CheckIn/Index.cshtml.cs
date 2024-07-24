@@ -7,14 +7,14 @@ namespace Court4U.Pages.Staff.CheckIn
 {
     public class IndexModel : PageModel
     {
-        //IQRService _qrService;
+        IQRService _qrService;
         IBookingService _bookingService;
 
         public IndexModel(
-            //IQRService qrService, 
+            IQRService qrService,
             IBookingService bookingService)
         {
-            //_qrService = qrService;
+            _qrService = qrService;
             _bookingService = bookingService;
         }
 
@@ -26,7 +26,7 @@ namespace Court4U.Pages.Staff.CheckIn
 
         public async Task<IActionResult> OnGet(string data)
         {
-            //var qrCode = _qrService.GenerateQRCode("2bfb7b23-acaf-4d8a-b9dc-ecb916ae9f9b");
+            //var qrCode = _qrService.GenerateQRCode("a168ac12-a2de-4c8e-98c5-620fc6b665b0");
             //QRCode = qrCode;
 
             var qrCodeContent = data;
@@ -35,22 +35,35 @@ namespace Court4U.Pages.Staff.CheckIn
             {
                 var booking = await _bookingService.Get(data);
 
-                if (booking != null)
+                if (booking.Date < DateTime.Now)
                 {
-                    try
-                    {
-                        booking.Status = true;
-                        var result = await _bookingService.Update(booking);
-                        Message = "Checked in successfully for booking " + data;
-                    }
-                    catch (Exception ex)
-                    {
-                        Message = "Error while checking in!";
-                    }
+                    // Ngay book da het han
+                    Message = "Booking is expired";
                 }
                 else
                 {
-                    Message = "Booking not found!";
+                    // Ngay book la hom nay hoac tuong lai
+                    if (booking != null && booking.Status == true)
+                    {
+                        Message = "Booking is already checked!";
+                    }
+                    else if (booking != null)
+                    {
+                        try
+                        {
+                            booking.Status = true;
+                            var result = await _bookingService.Update(booking);
+                            Message = "Checked in successfully for booking " + data;
+                        }
+                        catch (Exception ex)
+                        {
+                            Message = "Error while checking in!";
+                        }
+                    }
+                    else
+                    {
+                        Message = "Booking not found!";
+                    }
                 }
             }
 

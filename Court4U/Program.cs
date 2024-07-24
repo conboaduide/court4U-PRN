@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,11 @@ builder.Services.AddDbContext<Court4UDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local")));
 
 builder.Services.AddRazorPages();
+
+var cloudinary = builder.Configuration.GetSection("Cloudinary");
+
+builder.Services.AddSingleton(new Cloudinary(new Account(cloudinary["Cloud"],
+    cloudinary["Key"], cloudinary["Secret"])));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -38,6 +44,7 @@ builder.Services.AddScoped<IBookedSlotService, BookedSlotService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IQRService, QRService>();
 builder.Services.AddScoped<IMomoService, MomoService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
