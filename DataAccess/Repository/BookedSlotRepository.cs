@@ -35,7 +35,7 @@ namespace DataAccess.Repository
         {
             try
             {
-                var bookedSlot = await _dbContext.BookedSlots.FindAsync(id);
+                var bookedSlot = await _dbContext.BookedSlots.Include(bs => bs.Slot).Where(bs => bs.Id == id).SingleOrDefaultAsync();
                 if (bookedSlot != null)
                 {
                     _dbContext.BookedSlots.Remove(bookedSlot);
@@ -53,7 +53,7 @@ namespace DataAccess.Repository
         {
             try
             {
-                return await _dbContext.BookedSlots.FirstOrDefaultAsync(bs => bs.Id == id);
+                return await _dbContext.BookedSlots.Where(bs => bs.Id == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -65,7 +65,10 @@ namespace DataAccess.Repository
         {
             try
             {
-                return await _dbContext.BookedSlots.ToListAsync();
+                return await _dbContext.BookedSlots
+                    .Include(bs => bs.Slot)
+                    .ThenInclude(s => s.Club)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -80,6 +83,36 @@ namespace DataAccess.Repository
                 _dbContext.Entry(entity).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
                 return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<BookedSlot>> GetByUserId(string userId)
+        {
+            try
+            {
+                return await _dbContext.BookedSlots
+                    .Where(bs => bs.Booking.UserId == userId)
+                    .Include(bs => bs.Slot)
+                    .ThenInclude(s => s.Club)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<BookedSlot?> GetWithBooking(string id)
+        {
+            try
+            {
+                return await _dbContext.BookedSlots
+                    .Include(bs => bs.Booking)
+                    .FirstOrDefaultAsync(bs => bs.Id == id);
             }
             catch (Exception ex)
             {

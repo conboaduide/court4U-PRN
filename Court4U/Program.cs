@@ -31,7 +31,6 @@ builder.Services.AddSingleton<IClubService, ClubService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
 builder.Services.AddScoped<ISubscriptionOptionService, SubscriptionOptionService>();
-
 builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService>();
 builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddScoped<IBillService, BillService>();
