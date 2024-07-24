@@ -37,6 +37,7 @@ builder.Services.AddScoped<IBillService, BillService>();
 builder.Services.AddScoped<IBookedSlotService, BookedSlotService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IQRService, QRService>();
+builder.Services.AddScoped<IMomoService, MomoService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();

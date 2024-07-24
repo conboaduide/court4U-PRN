@@ -9,14 +9,25 @@
 <body class="flex bg-primary">
     <aside class="fixed bg-base-200 w-[21vw] h-screen bg-gradient-to-b to-[#6bc945] from-[#22ad5c] gap-y-2 font-semibold text-base text-white">
         <ul class="space-y-2 p-4">
-            
+            <li class="w-full bg-slate-900 bg-opacity-40 hover:bg-opacity-75 rounded-xl p-2">
+                <div class="flex items-center space-x-2">
+                    <img class="w-9 h-9" src="~/favicon.ico" alt="Logo" />
+                    <div class="text-xl text-secondary font-sans font-bold hover:text-primary">Court4U</div>
+                </div>
+            </li>
+            <li>
+                <a href="/Owner/Clubs" class="block px-4 py-2 rounded @((Context.Request.Path == "/Owner/Clubs" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Clubs</a>
+            </li>
+            <li>
+                <a href="/" class="block px-4 py-2 rounded @((Context.Request.Path == "/" ? "bg-gray-700 text-white hover:bg-gray-700" : "hover:bg-slate-900 hover:bg-opacity-40 hover:bg-opacity-50"))">Logout</a>
+            </li>
         </ul>
     </aside>
 
     <div class="flex flex-col w-[79vw] ml-[21vw]">
         <nav class="shadow-lg fixed z-10 w-full top-0 flex items-center justify-between px-8 h-16 bg-gradient-to-l from-[#6bc945] to-[#22ad5c]">
             <div class="text-2xl font-semibold text-white">
-                @if (Context.Request.Path != "/owner")
+                @if (Context.Request.Path != "/Owner/Clubs")
                 {
                     var path = Context.Request.Path.Value;
                     if (path.Length > 7)
@@ -25,12 +36,12 @@
                     }
                     else
                     {
-                        @:Dashboard
+                        @:Clubs
                     }
                 }
                 else
                 {
-                    @:Dashboard
+                    @:Clubs
                 }
             </div>
         </nav>
