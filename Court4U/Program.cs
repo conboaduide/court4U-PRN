@@ -35,6 +35,7 @@ builder.Services.AddScoped<IMemberSubscriptionService, MemberSubscriptionService
 builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddScoped<IBillService, BillService>();
 builder.Services.AddScoped<IBookedSlotService, BookedSlotService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IQRService, QRService>();
 //Repository
 builder.Services.AddSingleton<IClubRepository, ClubRepository>();
@@ -45,6 +46,7 @@ builder.Services.AddScoped<IMemberSubscriptionRepository, MemberSubscriptionRepo
 builder.Services.AddScoped<ISlotRepository, SlotRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IBookedSlotRepository, BookedSlotRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
 builder.Services.AddLogging(config =>
 {

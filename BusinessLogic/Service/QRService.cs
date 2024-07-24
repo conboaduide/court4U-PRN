@@ -18,7 +18,8 @@ namespace BusinessLogic.Service
             using var qrCodeData = qrGenerator.CreateQrCode(id, QRCodeGenerator.ECCLevel.Q);
             var qrCode = new Base64QRCode(qrCodeData);
             var qrCodeBitmap = qrCode.GetGraphic(20);
-            return qrCodeBitmap;
+            var result = "data:image/png;base64," + qrCodeBitmap;
+            return result;
         }
     }
 }
