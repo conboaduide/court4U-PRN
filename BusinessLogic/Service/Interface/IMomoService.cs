@@ -9,7 +9,7 @@ namespace BusinessLogic.Service.Interface
 {
     public interface IMomoService
     {
-        Task<MomoCreatePaymentResponseModel> CreatePaymentAsync(RequestCreateOrderModel model);
+        Task<MomoCreatePaymentResponseModel> CreateBookSlotPaymentAsync(RequestCreateOrderModel model);
         MomoExecuteResponseModel PaymentExecuteAsync(IQueryable<KeyValuePair<string, string>> collection);
     }
 }

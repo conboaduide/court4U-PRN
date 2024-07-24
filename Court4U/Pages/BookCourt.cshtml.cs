@@ -3,6 +3,7 @@ using BusinessLogic.Service.Interface;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
 using DataAccess.Migrations;
+using DataAccess.Repository.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -14,12 +15,14 @@ namespace Court4U.Pages
         private readonly ISlotService _slotService;
         private readonly IClubService _clubService;
         private readonly IBillService _billService;
+        private readonly IMomoService _momoService;
 
-        public BookCourtModel(ISlotService slotService, IClubService clubService, IBillService billService)
+        public BookCourtModel(ISlotService slotService, IClubService clubService, IBillService billService, IMomoService momoService)
         {
             _slotService = slotService;
             _clubService = clubService;
             _billService = billService;
+            _momoService = momoService;
         }
 
         public Club SelectedClub { get; set; }
@@ -78,7 +81,7 @@ namespace Court4U.Pages
             Slots = await _slotService.SearchByDateAsync(SearchDate, ClubId);
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync(string ClubId, string SelectedSlotId)
+        public async Task<IActionResult> OnPostAsync(string SelectedSlotId)
         {
             var userRole = HttpContext.Session.GetString("Role");
             if (userRole == null || userRole != "Member")
@@ -91,69 +94,17 @@ namespace Court4U.Pages
                 Message = "Please select a slot.";
                 return Page();
             }
-            try
+            var slot = await _slotService.Get(SelectedSlotId);
+            if (slot == null)
             {
-                var UserId = "";
-                var BookingId = Guid.NewGuid().ToString();
-                var bill = new Bill()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Method = "Momo",
-                    Price = 150000,
-                    Type = "Member",
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                };
-
-                UserId = HttpContext.Session.GetString("UserId");
-                if (ClubId.Equals("ClubId"))
-                {
-                    ClubId = HttpContext.Session.GetString("ClubId");
-                }
-                else
-                {
-                    HttpContext.Session.SetString("ClubId", ClubId);
-                }
-
-                var booking = new Booking()
-                {
-                    Id = BookingId,
-                    Bill = bill,
-                    BillId = bill.Id,
-                    Status = true,
-                    UserId = UserId,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                };
-                var bookedSlot = new BookedSlot()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CheckedIn = false,
-                    SlotId = SelectedSlotId,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                    BookingId = BookingId,
-                };
-
-                var result = await _slotService.BookSlotAsync(ClubId, SelectedSlotId, booking, bookedSlot);
-
-                if (result)
-                {
-                    Message = "Booking successful!";
-                }
-                else
-                {
-                    Message = "Booking failed. Please try again.";
-                }
+                Message = "Slot is not available";
+                return Page();
             }
-            catch (Exception ex)
-            {
-                Message = "Booking failed due to an error. Please try again later.";
-            }
+            var ClubId = HttpContext.Session.GetString("ClubId");
+
 
             TempData["BookingMessage"] = Message;
-
-            return Page();
+            return Redirect($"/checkout?SelectedSlotId={SelectedSlotId}&ClubId={ClubId}");
         }
 
         public async Task<IActionResult> OnGetSlot()

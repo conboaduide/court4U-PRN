@@ -25,5 +25,15 @@
             InActive,
             Active,
         }
+        public enum DateOfWeek
+        {
+            Sunday,
+            Monday,
+            Tuesday,
+            Wednesday,
+            Thursday,
+            Friday,
+            Saturday,
+        }
     }
 }
