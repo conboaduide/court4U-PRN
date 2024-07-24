@@ -9,9 +9,10 @@ namespace DataAccess.Entity.Data
         public float Price { get; set; }
         public string BillId { get; set; }
         public DateTime Date { get; set; }
-        public Bill Bill { get; set; }
+        public string SlotId { get; set; }
+        public Slot Slot { get; set; }
 
-        public ICollection<BookedSlot> BookedSlots { get; set; }
+        public Bill Bill { get; set; }
 
         [ForeignKey("Users")]
         public string UserId { get; set; }

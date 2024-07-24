@@ -49,37 +49,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Bill");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Data.BookedSlot", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BookingId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("CheckedIn")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SlotId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.HasIndex("SlotId");
-
-                    b.ToTable("BookedSlot");
-                });
-
             modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
                 {
                     b.Property<string>("Id")
@@ -98,6 +67,10 @@ namespace DataAccess.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("SlotId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -109,6 +82,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SlotId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -312,8 +288,8 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfWeek")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DateOfWeek")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
@@ -474,25 +450,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Data.BookedSlot", b =>
-                {
-                    b.HasOne("DataAccess.Entity.Data.Booking", "Booking")
-                        .WithMany("BookedSlots")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
-                        .WithMany("BookedSlots")
-                        .HasForeignKey("SlotId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("Slot");
-                });
-
             modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
                 {
                     b.HasOne("DataAccess.Entity.Data.Bill", "Bill")
@@ -501,13 +458,21 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Entity.Data.User", "User")
-                        .WithMany("Bookings")
-                        .HasForeignKey("UserId")
+                    b.HasOne("DataAccess.Entity.Data.Slot", "Slot")
+                        .WithOne("Booking")
+                        .HasForeignKey("DataAccess.Entity.Data.Booking", "SlotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DataAccess.Entity.Data.User", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Bill");
+
+                    b.Navigation("Slot");
 
                     b.Navigation("User");
                 });
@@ -660,11 +625,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Data.Booking", b =>
-                {
-                    b.Navigation("BookedSlots");
-                });
-
             modelBuilder.Entity("DataAccess.Entity.Data.Club", b =>
                 {
                     b.Navigation("ClubImages");
@@ -682,7 +642,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entity.Data.Slot", b =>
                 {
-                    b.Navigation("BookedSlots");
+                    b.Navigation("Booking")
+                        .IsRequired();
 
                     b.Navigation("SubOptionSlots");
                 });

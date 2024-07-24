@@ -7,10 +7,10 @@ namespace DataAccess.Entity.Data
     {
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public DateTime DateOfWeek { get; set; }
+        public Enums.DateOfWeek DateOfWeek { get; set; }
         public float Price { get; set; }
+        public Booking Booking { get; set; }
         public ICollection<SubOptionSlot> SubOptionSlots { get; set; }
-        public ICollection<BookedSlot> BookedSlots { get; set; }
 
         [ForeignKey("Clubs")]
         public string ClubId { get; set; }

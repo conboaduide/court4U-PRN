@@ -15,7 +15,7 @@ namespace DataAccess.Entity
         public Court4UDbContext(DbContextOptions<Court4UDbContext> options) : base(options)
         { }
         public DbSet<Bill> Bills { get; set; }
-        public DbSet<BookedSlot> BookedSlots { get; set; }
+        //public DbSet<BookedSlot> BookedSlots { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<ClubImage> ClubImages { get; set; }
@@ -70,13 +70,13 @@ namespace DataAccess.Entity
                 .HasForeignKey<MemberSubscription>(ms => ms.MemberId);
 
             //
-            modelBuilder.Entity<BookedSlot>()
-                .HasKey(bs => bs.Id);
-            modelBuilder.Entity<BookedSlot>()
-                .HasOne(bs => bs.Slot)
-                .WithMany(s => s.BookedSlots)
-                .HasForeignKey(bs => bs.SlotId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<BookedSlot>()
+            //    .HasKey(bs => bs.Id);
+            //modelBuilder.Entity<BookedSlot>()
+            //    .HasOne(bs => bs.Slot)
+            //    .WithMany(s => s.BookedSlots)
+            //    .HasForeignKey(bs => bs.SlotId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             //
             modelBuilder.Entity<Booking>()
@@ -84,7 +84,8 @@ namespace DataAccess.Entity
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
-                .HasForeignKey(b => b.UserId);
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //
             modelBuilder.Entity<Club>()
