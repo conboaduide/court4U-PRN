@@ -37,7 +37,7 @@ namespace Court4U.Pages.Owner
                 Type = "Member",
                 UserId = "ed7bb1ea-5e99-44a0-9014-24c51c1a08ea"
             };
-            var result = await _momoService.CreatePaymentAsync(order);
+            var result = await _momoService.CreateBookSlotPaymentAsync(order);
             return Redirect(result.PayUrl);
         }
     }
