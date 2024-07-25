@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "_OwnerLayout";
+    var clubId = HttpContext.Session.GetString("ClubId");
 }
 
 <h1>Create</h1>
@@ -19,30 +20,7 @@
                 <input asp-for="Court.Num" class="form-control" />
                 <span asp-validation-for="Court.Num" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Court.Status" class="control-label"></label>
-                <select asp-for="Court.Status" class="form-control"></select>
-                <span asp-validation-for="Court.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Court.ClubId" class="control-label"></label>
-                <select asp-for="Court.ClubId" class ="form-control" asp-items="ViewBag.ClubId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Court.Id" class="control-label"></label>
-                <input asp-for="Court.Id" class="form-control" />
-                <span asp-validation-for="Court.Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Court.CreatedDate" class="control-label"></label>
-                <input asp-for="Court.CreatedDate" class="form-control" />
-                <span asp-validation-for="Court.CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Court.UpdatedDate" class="control-label"></label>
-                <input asp-for="Court.UpdatedDate" class="form-control" />
-                <span asp-validation-for="Court.UpdatedDate" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="Court.ClubId" asp-items="@clubId"></input>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -55,5 +33,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

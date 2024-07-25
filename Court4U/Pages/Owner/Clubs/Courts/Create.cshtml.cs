@@ -7,21 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
+using BusinessLogic.Service.Interface;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Court4U.Pages.Owner.Clubs.Courts
 {
     public class CreateModel : PageModel
     {
-        private readonly DataAccess.Entity.Court4UDbContext _context;
+        private ICourtService _courtService;
+        private IHubContext<ClubHub> _hub;
 
-        public CreateModel(DataAccess.Entity.Court4UDbContext context)
+        public CreateModel(ICourtService courtService, IHubContext<ClubHub> hub)
         {
-            _context = context;
+            _courtService = courtService;
+            _hub = hub;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["ClubId"] = new SelectList(_context.Clubs, "Id", "Id");
             return Page();
         }
 
@@ -36,8 +39,11 @@ namespace Court4U.Pages.Owner.Clubs.Courts
                 return Page();
             }
 
-            _context.Courts.Add(Court);
-            await _context.SaveChangesAsync();
+            Court.Status = Enums.CourtStatus.Active;
+
+            await _courtService.Create(Court);
+
+            await _hub.Clients.All.SendAsync("CourtChanged");
 
             return RedirectToPage("./Index");
         }

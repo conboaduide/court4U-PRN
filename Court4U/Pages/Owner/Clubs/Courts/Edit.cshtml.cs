@@ -8,16 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
+using static DataAccess.Entity.Enums;
+using BusinessLogic.Service.Interface;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Court4U.Pages.Owner.Clubs.Courts
 {
     public class EditModel : PageModel
     {
-        private readonly DataAccess.Entity.Court4UDbContext _context;
+        private ICourtService _courtService;
+        private IHubContext<ClubHub> _hub;
 
-        public EditModel(DataAccess.Entity.Court4UDbContext context)
+        public EditModel(ICourtService courtService, IHubContext<ClubHub> hub)
         {
-            _context = context;
+            _courtService = courtService;
+            _hub = hub;
         }
 
         [BindProperty]
@@ -30,13 +35,17 @@ namespace Court4U.Pages.Owner.Clubs.Courts
                 return NotFound();
             }
 
-            var court =  await _context.Courts.FirstOrDefaultAsync(m => m.Id == id);
+            var court = await _courtService.Get(id);
             if (court == null)
             {
                 return NotFound();
             }
             Court = court;
-           ViewData["ClubId"] = new SelectList(_context.Clubs, "Id", "Id");
+            ViewData["Status"] = new SelectList(Enum.GetValues(typeof(CourtStatus)).Cast<CourtStatus>().Select(s => new SelectListItem
+            {
+                Value = s.ToString(),
+                Text = s.ToString()
+            }).ToList(), "Value", "Text");
             return Page();
         }
 
@@ -49,30 +58,11 @@ namespace Court4U.Pages.Owner.Clubs.Courts
                 return Page();
             }
 
-            _context.Attach(Court).State = EntityState.Modified;
+            await _courtService.Update(Court);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourtExists(Court.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _hub.Clients.All.SendAsync("CourtChanged");
 
             return RedirectToPage("./Index");
-        }
-
-        private bool CourtExists(string id)
-        {
-            return _context.Courts.Any(e => e.Id == id);
         }
     }
 }

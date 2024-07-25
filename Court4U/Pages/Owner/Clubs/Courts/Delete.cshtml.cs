@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Entity;
 using DataAccess.Entity.Data;
+using BusinessLogic.Service.Interface;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Court4U.Pages.Owner.Clubs.Courts
 {
     public class DeleteModel : PageModel
     {
-        private readonly DataAccess.Entity.Court4UDbContext _context;
+        private ICourtService _courtService;
+        private IHubContext<ClubHub> _hub;
 
-        public DeleteModel(DataAccess.Entity.Court4UDbContext context)
+        public DeleteModel(ICourtService courtService, IHubContext<ClubHub> hub)
         {
-            _context = context;
+            _courtService = courtService;
+            _hub = hub;
         }
 
         [BindProperty]
@@ -29,7 +33,7 @@ namespace Court4U.Pages.Owner.Clubs.Courts
                 return NotFound();
             }
 
-            var court = await _context.Courts.FirstOrDefaultAsync(m => m.Id == id);
+            var court = await _courtService.Get(id);
 
             if (court == null)
             {
@@ -49,12 +53,13 @@ namespace Court4U.Pages.Owner.Clubs.Courts
                 return NotFound();
             }
 
-            var court = await _context.Courts.FindAsync(id);
+            var court = await _courtService.Get(id);
             if (court != null)
             {
                 Court = court;
-                _context.Courts.Remove(Court);
-                await _context.SaveChangesAsync();
+                await _courtService.Delete(id);
+
+                await _hub.Clients.All.SendAsync("CourtChanged");
             }
 
             return RedirectToPage("./Index");
