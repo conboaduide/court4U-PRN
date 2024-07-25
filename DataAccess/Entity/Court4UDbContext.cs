@@ -33,11 +33,9 @@ namespace DataAccess.Entity
             {
                 if (!optionsBuilder.IsConfigured)
                 {
-                    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     var configuration = new ConfigurationBuilder()
-                        .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Court4U"))
-                        .AddJsonFile($"appsettings.{environment}.json", optional: true)
-                        .AddJsonFile("appsettings.json")
+                        .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
+                        .AddJsonFile("appsettings.json", true, true)
                         .Build();
                     // Log the basePath for debugging purposes
                     Console.WriteLine($"Base Path: {configuration}");
