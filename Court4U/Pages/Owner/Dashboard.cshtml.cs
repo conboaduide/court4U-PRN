@@ -22,9 +22,15 @@ namespace Court4U.Pages.Owner
         }
         [BindProperty]
         public string Price { get; set; }
+        [BindProperty]
+        public int MemberSubscriptionCount { get; set; }
+        [BindProperty]
+        public int BookingTodayCount { get; set; }
         public float TotalPrice { get; set; } = 0;
+        
         public async Task<IActionResult> OnGetAsync()
         {
+            // Start get REVENEU
             var clubId = HttpContext.Session.Get("ClubId");
             var convertClubId = System.Text.Encoding.UTF8.GetString(clubId);
             var memberSubs = await _memberSubscriptionService.Get();
@@ -36,6 +42,16 @@ namespace Court4U.Pages.Owner
             var billListPrice = billList.Aggregate(0.0f, (acc, x) => acc + x.Price);
             TotalPrice += billListPrice;
             Price = TotalPrice.ToString("C0", new CultureInfo("vi-VN"));
+            // End get REVENEU
+
+            //Start Get number of member subscription 
+            var memberSub = await _memberSubscriptionService.GetByClubId(convertClubId);
+            MemberSubscriptionCount = memberSub.Count;
+            //End Get number of member subscription
+
+            //Start Get Booking Today
+            var bookingToday = await _bookingService.GetToDayBookingByClubId(convertClubId);
+            BookingTodayCount = bookingToday.Count;
             return Page();
         }
 

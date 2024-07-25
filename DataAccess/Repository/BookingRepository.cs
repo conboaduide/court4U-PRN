@@ -90,5 +90,21 @@ namespace DataAccess.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<Booking>> GetToDayBookingByClubId(string clubId)
+        {
+            try
+            {
+                DateTime today = DateTime.Now.Date;
+                var result = await _dbContext.Bookings
+                    .Where(x => x.Slot.ClubId == clubId && x.Date.Date == today)
+                    .ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

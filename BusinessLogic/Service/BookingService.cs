@@ -42,5 +42,9 @@ namespace BusinessLogic.Service
         {
             return await iBookingRepository.Update(entity);
         }
+        public async Task<List<Booking>> GetToDayBookingByClubId(string clubId)
+        {
+            return await iBookingRepository.GetToDayBookingByClubId(clubId);
+        }
     }
 }

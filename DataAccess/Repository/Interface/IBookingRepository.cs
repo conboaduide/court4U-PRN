@@ -9,6 +9,6 @@ namespace DataAccess.Repository.Interface
 {
     public interface IBookingRepository : IBaseRepository<Booking>
     {
-
+        Task<List<Booking>> GetToDayBookingByClubId(string clubId);
     }
 }

@@ -47,5 +47,9 @@ namespace BusinessLogic.Service
             return await iMemberSubscriptionRepository.GetByUserId(userId);
         }
 
+        public async Task<List<MemberSubscription>> GetByClubId(string clubId)
+        {
+            return await iMemberSubscriptionRepository.GetByClubId(clubId);
+        }
     }
 }

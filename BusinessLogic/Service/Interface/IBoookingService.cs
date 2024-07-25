@@ -9,5 +9,6 @@ namespace BusinessLogic.Service.Interface
 {
     public interface IBookingService : IBaseService<Booking>
     {
+        Task<List<Booking>> GetToDayBookingByClubId(string clubId);
     }
 }
