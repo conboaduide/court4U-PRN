@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Service.Interface;
 using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,5 +43,10 @@ namespace BusinessLogic.Service
         {
             return await iStaffProfileRepository.Update(entity);
         }
+        public async Task<StaffProfile> GetWithUserAsync(string id)
+        {
+            return await iStaffProfileRepository.GetWithUser(id);
+        }
+
     }
 }

@@ -70,5 +70,23 @@ namespace BusinessLogic.Service
             var user = iuserRepository.Get(id).Result;
             return user != null;
         }
+        public async Task<int[]> GetMonthlyCounts(int year, DataAccess.Entity.Enums.Roles role)
+        {
+            var counts = new int[12];
+            var users = await iuserRepository.Get();
+
+            var monthlyCounts = users
+                .Where(u => u.Role == role && u.CreatedDate.Year == year)
+                .GroupBy(u => u.CreatedDate.Month)
+                .Select(g => new { Month = g.Key, Count = g.Count() })
+                .ToList();
+
+            foreach (var item in monthlyCounts)
+            {
+                counts[item.Month - 1] = item.Count;
+            }
+
+            return counts;
+        }
     }
 }
