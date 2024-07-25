@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.Service.Interface;
 using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using DataAccess.Repository.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,19 @@ namespace BusinessLogic.Service
         public async Task<List<Booking>> GetToDayBookingByClubId(string clubId)
         {
             return await iBookingRepository.GetToDayBookingByClubId(clubId);
+        }
+        public async Task<List<Booking>> GetBookingInUseByClubId(string clubId)
+        {
+            return await iBookingRepository.GetBookingInUseByClubId(clubId);
+        }
+        public async Task<CurrentYear[]> GetBookingInCurrentYear(string clubId)
+        {
+            return await iBookingRepository.GetBookingInCurrentYear(clubId);
+        }
+
+        public async Task<CurrentYear[]> GetRevenueInCurrentYear(string clubId)
+        {
+            return await iBookingRepository.GetRevenueInCurrentYear(clubId);
         }
     }
 }

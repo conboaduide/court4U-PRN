@@ -1,9 +1,11 @@
 ﻿using DataAccess.Entity;
 using DataAccess.Entity.Data;
 using DataAccess.Repository.Interface;
+using DataAccess.Repository.Request;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repository
@@ -97,6 +99,22 @@ namespace DataAccess.Repository
             {
                 DateTime today = DateTime.Now.Date;
                 var result = await _dbContext.Bookings
+                    .Where(x => x.Slot.ClubId == clubId && x.CreatedDate.Date == today)
+                    .ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<Booking>> GetBookingInUseByClubId(string clubId)
+        {
+            try
+            {
+                DateTime today = DateTime.Now.Date;
+                var result = await _dbContext.Bookings
                     .Where(x => x.Slot.ClubId == clubId && x.Date.Date == today)
                     .ToListAsync();
                 return result;
@@ -106,5 +124,85 @@ namespace DataAccess.Repository
                 throw new Exception(ex.Message);
             }
         }
+        
+        public async Task<CurrentYear[]> GetBookingInCurrentYear(string clubId)
+        {
+            try
+            {
+                DateTime startOfYear = new DateTime(DateTime.Now.Year, 1, 1);
+                DateTime endOfYear = new DateTime(DateTime.Now.Year, 12, 31);
+
+                var bookings = await _dbContext.Bookings
+                    .Where(x => x.Date >= startOfYear && x.Date <= endOfYear && x.Slot.ClubId == clubId)
+                    .ToListAsync();
+
+                var bookingsByMonth = bookings
+                    .GroupBy(b => b.Date.Month)
+                    .Select(g => new {
+                        Month = g.Key,
+                        Count = g.Count()
+                    })
+                    .OrderBy(x => x.Month)
+                    .ToArray();
+
+                CurrentYear[] result = new CurrentYear[12];
+                for (int i = 1; i <= 12; i++)
+                {
+                    var monthData = bookingsByMonth.FirstOrDefault(x => x.Month == i);
+                    result[i - 1] = new CurrentYear
+                    {
+                        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i),
+                        Count = monthData?.Count ?? 0
+                    };
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public async Task<CurrentYear[]> GetRevenueInCurrentYear(string clubId)
+        {
+            try
+            {
+                DateTime startOfYear = new DateTime(DateTime.Now.Year, 1, 1);
+                DateTime endOfYear = new DateTime(DateTime.Now.Year, 12, 31);
+
+                var bookings = await _dbContext.Bookings
+                    .Where(x => x.Date >= startOfYear && x.Date <= endOfYear && x.Slot.ClubId == clubId)
+                    .ToListAsync();
+
+                var revenueByMonth = bookings
+                    .GroupBy(b => b.Date.Month)
+                    .Select(g => new {
+                        Month = g.Key,
+                        TotalRevenue = (int)g.Sum(b => b.Price) // Convert to int
+                    })
+                    .OrderBy(x => x.Month)
+                    .ToArray();
+
+                CurrentYear[] result = new CurrentYear[12];
+                for (int i = 1; i <= 12; i++)
+                {
+                    var monthData = revenueByMonth.FirstOrDefault(x => x.Month == i);
+                    result[i - 1] = new CurrentYear
+                    {
+                        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i),
+                        Count = monthData?.TotalRevenue ?? 0
+                    };
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

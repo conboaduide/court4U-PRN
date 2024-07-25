@@ -25,8 +25,9 @@ namespace Court4U.Pages.Owner.Clubs.Slots
         [BindProperty]
         public string ClubId { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string? clubId)
+        public async Task<IActionResult> OnGetAsync()
         {
+            var clubId = HttpContext.Session.GetString("ClubId");
             if (clubId.IsNullOrEmpty())
             {
                 return RedirectToPage("/Owner/Clubs/Index");
