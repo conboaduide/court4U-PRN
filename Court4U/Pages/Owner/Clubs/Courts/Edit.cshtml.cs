@@ -53,11 +53,6 @@ namespace Court4U.Pages.Owner.Clubs.Courts
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             await _courtService.Update(Court);
 
             await _hub.Clients.All.SendAsync("CourtChanged");

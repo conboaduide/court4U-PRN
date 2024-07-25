@@ -34,11 +34,6 @@ namespace Court4U.Pages.Owner.Clubs.Courts
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             Court.Status = Enums.CourtStatus.Active;
 
             await _courtService.Create(Court);

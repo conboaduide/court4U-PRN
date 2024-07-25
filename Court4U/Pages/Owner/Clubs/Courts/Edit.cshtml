@@ -7,35 +7,33 @@
     var clubId = HttpContext.Session.GetString("ClubId");
 }
 
-<h1>Edit</h1>
+<h1 class="text-3xl font-bold mb-6">Edit Court</h1>
 
-<h4>Court</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Court.Num" class="control-label"></label>
-                <input asp-for="Court.Num" class="form-control" />
-                <span asp-validation-for="Court.Num" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Court.Status" class="control-label"></label>
-                <select asp-for="Court.Status" class="form-control"></select>
-                <span asp-validation-for="Court.Status" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Court.ClubId" class="form-control" asp-items="@clubId"></input>
-            <input type="hidden" asp-for="Court.Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<h4 class="text-xl mb-4">Court Details</h4>
+<hr class="mb-6" />
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+    <form method="post" class="space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+        <div class="form-group">
+            <label asp-for="Court.Num" class="block text-gray-700 font-bold mb-2"></label>
+            <input asp-for="Court.Num" class="form-control border border-gray-300 rounded px-4 py-2 w-full" />
+            <span asp-validation-for="Court.Num" class="text-red-600"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Court.Status" class="block text-gray-700 font-bold mb-2"></label>
+            <select asp-for="Court.Status" class="form-control border border-gray-300 rounded px-4 py-2 w-full" asp-items="ViewBag.Status"></select>
+            <span asp-validation-for="Court.Status" class="text-red-600"></span>
+        </div>
+        <input type="hidden" asp-for="Court.ClubId" value="@clubId" />
+        <input type="hidden" asp-for="Court.Id" />
+        <div class="form-group">
+            <input type="submit" value="Save" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" />
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
+<div class="mt-6">
+    <a asp-page="./Index" class="text-blue-600 hover:underline">Back to List</a>
 </div>
 
 @section Scripts {

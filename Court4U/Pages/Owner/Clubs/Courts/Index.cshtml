@@ -6,59 +6,53 @@
     Layout = "_OwnerLayout";
 }
 
-<h1>Index</h1>
+<h1 class="text-3xl font-bold mb-6">Court Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="inline-block mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Court[0].Num)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Court[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Court[0].Club.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Court[0].CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Court[0].UpdatedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Court) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Num)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Club.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="px-4 py-2 text-left border-b">
+                    @Html.DisplayNameFor(model => model.Court[0].Num)
+                </th>
+                <th class="px-4 py-2 text-left border-b">
+                    @Html.DisplayNameFor(model => model.Court[0].Status)
+                </th>
+                <th class="px-4 py-2 text-left border-b">
+                    @Html.DisplayNameFor(model => model.Court[0].Club.Name)
+                </th>
+                <th class="px-4 py-2 text-left border-b">
+                    @Html.DisplayNameFor(model => model.Court[0].CreatedDate)
+                </th>
+                <th class="px-4 py-2 text-left border-b">
+                    @Html.DisplayNameFor(model => model.Court[0].UpdatedDate)
+                </th>
+                <th class="px-4 py-2 text-left border-b">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Court)
+            {
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Num)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.Club.Name)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                    <td class="px-4 py-2 border-b">@Html.DisplayFor(modelItem => item.UpdatedDate)</td>
+                    <td class="px-4 py-2 border-b">
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="text-blue-600 hover:underline">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id" class="text-blue-600 hover:underline">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="text-red-600 hover:underline">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/club.js"></script>

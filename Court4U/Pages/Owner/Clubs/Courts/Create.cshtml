@@ -7,29 +7,27 @@
     var clubId = HttpContext.Session.GetString("ClubId");
 }
 
-<h1>Create</h1>
+<h1 class="text-3xl font-bold mb-6">Create Court</h1>
 
-<h4>Court</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Court.Num" class="control-label"></label>
-                <input asp-for="Court.Num" class="form-control" />
-                <span asp-validation-for="Court.Num" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Court.ClubId" asp-items="@clubId"></input>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<h4 class="text-xl mb-4">Court Details</h4>
+<hr class="mb-6" />
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+    <form method="post" class="space-y-4">
+        <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+        <div class="form-group">
+            <label asp-for="Court.Num" class="block text-gray-700 font-bold mb-2"></label>
+            <input asp-for="Court.Num" class="form-control border border-gray-300 rounded px-4 py-2 w-full" />
+            <span asp-validation-for="Court.Num" class="text-red-600"></span>
+        </div>
+        <input type="hidden" asp-for="Court.ClubId" value="@clubId" />
+        <div class="form-group">
+            <input type="submit" value="Create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:cursor-pointer" />
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
+<div class="mt-6">
+    <a asp-page="Index" class="text-blue-600 hover:underline">Back to List</a>
 </div>
 
 @section Scripts {
