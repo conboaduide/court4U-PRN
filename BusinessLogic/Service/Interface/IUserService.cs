@@ -13,5 +13,6 @@ namespace BusinessLogic.Service.Interface
         Task<bool> CheckVerify(string token);
         Task<User?> GetByUsernameAndEmail(string username, string email);
         bool UserExists(string id);
+        Task<int[]> GetMonthlyCounts(int year, DataAccess.Entity.Enums.Roles role);
     }
 }

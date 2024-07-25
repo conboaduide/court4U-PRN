@@ -2,6 +2,12 @@
 @model Court4U.Pages.Admin.DashboardModel
 @{
     Layout = "_AdminLayout";
+    var year = DateTime.Now.Year;
+    var selectedYear = Request.Query["year"].ToString();
+    if (string.IsNullOrEmpty(selectedYear))
+    {
+        selectedYear = year.ToString();
+    }
 }
 
 <h2 class="text-2xl font-semibold mb-4">Counts</h2>
@@ -38,4 +44,84 @@
             </div>
         </div>
     </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Select Year:</label>
+        <div class="flex flex-wrap">
+            @for (int i = year - 10; i <= year; i++)
+            {
+                <button type="button"
+                        onclick="onYearChange(@i);"
+                        class="px-4 py-2 m-1 rounded @(i.ToString() == selectedYear ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800")">
+                    @i
+                </button>
+            }
+        </div>
+    </div>
+
+    <!-- Chart Container -->
+    <div>
+        <canvas id="monthlyChart" width="400" height="200"></canvas>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const monthlyData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MonthlyData));
+
+        function onYearChange(year) {
+            window.location.href = `?year=${year}`;
+        }
+
+        function renderChart(data) {
+            const ctx = document.getElementById('monthlyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [
+                        {
+                            label: 'Members',
+                            data: data.Members,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Court Owners',
+                            data: data.CourtOwners,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Clubs',
+                            data: data.Clubs,
+                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Courts',
+                            data: data.Courts,
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderChart(monthlyData);
+        });
+    </script>
+}

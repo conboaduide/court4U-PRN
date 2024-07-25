@@ -9,5 +9,6 @@ namespace BusinessLogic.Service.Interface
 {
     public interface IStaffProfileService : IBaseService<StaffProfile>
     {
+        Task<StaffProfile> GetWithUserAsync(string id);
     }
 }

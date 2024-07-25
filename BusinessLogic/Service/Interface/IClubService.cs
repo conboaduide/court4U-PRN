@@ -11,5 +11,6 @@ namespace BusinessLogic.Service.Interface
         Task AddClubAsync(ClubRequest clubRequest);
         Task UpdateClubAsync(Club club);
         Task DeleteClubAsync(string id);
+        Task<int[]> GetMonthlyCounts(int year);
     }
 }

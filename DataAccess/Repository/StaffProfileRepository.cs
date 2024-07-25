@@ -86,5 +86,11 @@ namespace DataAccess.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<StaffProfile> GetWithUser(string id)
+        {
+            return await _dbContext.StaffProfiles
+                .Include(sp => sp.User)
+                .FirstOrDefaultAsync(sp => sp.Id == id);
+        }
     }
 }
