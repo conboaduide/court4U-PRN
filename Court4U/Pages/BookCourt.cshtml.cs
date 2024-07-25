@@ -16,13 +16,17 @@ namespace Court4U.Pages
         private readonly IClubService _clubService;
         private readonly IBillService _billService;
         private readonly IMomoService _momoService;
+        private readonly ISubscriptionOptionService _subscriptionOptionService;
+        private readonly IMemberSubscriptionService _memberSubscriptionService;
 
-        public BookCourtModel(ISlotService slotService, IClubService clubService, IBillService billService, IMomoService momoService)
+        public BookCourtModel(ISubscriptionOptionService subscriptionOptionService ,ISlotService slotService, IClubService clubService, IBillService billService, IMomoService momoService, IMemberSubscriptionService memberSubscriptionService)
         {
             _slotService = slotService;
             _clubService = clubService;
             _billService = billService;
             _momoService = momoService;
+            _subscriptionOptionService = subscriptionOptionService;
+            _memberSubscriptionService = memberSubscriptionService;
         }
 
         public Club SelectedClub { get; set; }
@@ -35,6 +39,10 @@ namespace Court4U.Pages
         public string ClubId { get; set; }
         [BindProperty(SupportsGet = true)]
         public DateTime SearchDate { get; set; } = DateTime.Now;
+        [BindProperty]
+        public List<SubscriptionOption> SubscriptionOptions { get; set; }
+        [BindProperty]
+        public string SubscriptionId { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
             if (ClubId.Equals("ClubId"))
@@ -55,11 +63,9 @@ namespace Court4U.Pages
             {
                 return NotFound();
             }
+            SubscriptionOptions = await _subscriptionOptionService.GetByClubId(ClubId);
 
-            DateTime startDate = DateTime.Today;
-            DateTime endDate = DateTime.Today.AddDays(7);
-
-            Slots = await _slotService.GetAvailableSlotsAsync(ClubId, startDate, endDate, SearchDate);
+            Slots = await _slotService.GetAvailableSlotsAsync(ClubId,  SearchDate);
             Slots = Slots.OrderBy(s => s.StartTime.Date).ThenBy(s => s.StartTime.TimeOfDay).ToList();
 
             return Page();
@@ -78,7 +84,12 @@ namespace Court4U.Pages
             {
                 return RedirectToPage("/Clubs");
             }
-            Slots = await _slotService.SearchByDateAsync(SearchDate, ClubId);
+            Slots = await _slotService.GetAvailableSlotsAsync(ClubId, SearchDate);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostBuySubscription(string SubscriptionId)
+        {
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(string SelectedSlotId)
@@ -123,7 +134,7 @@ namespace Court4U.Pages
             DateTime startDate = DateTime.Today;
             DateTime endDate = DateTime.Today.AddDays(7);
 
-            Slots = await _slotService.GetAvailableSlotsAsync(ClubId, startDate, endDate, SearchDate);
+            Slots = await _slotService.GetAvailableSlotsAsync(ClubId, SearchDate);
             Slots = Slots.OrderBy(s => s.StartTime.Date).ThenBy(s => s.StartTime.TimeOfDay).ToList();
 
             return Page();

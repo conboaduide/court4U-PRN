@@ -14,7 +14,7 @@ namespace DataAccess.Repository.Interface
         //Task<List<Slot>> SearchByDate(DateTime date, string ClubId);
         //Task Booking(Booking booking, BookedSlot bookedSlot);
         //Task<List<Slot>> GetValidSlotsAsync(DateTime date, string ClubId);
-        Task<List<Slot>> GetAvailableSlots(string slotId, DateTime startDate, DateTime endDate, DateTime searchDate);
+        Task<List<Slot>> GetAvailableSlots(string slotId, DateTime searchDate);
         Task<List<Slot>> SearchByDate(DateTime date, string clubId);
         Task<Booking> Booking(Booking booking, Bill bill);
 

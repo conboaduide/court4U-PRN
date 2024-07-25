@@ -42,5 +42,7 @@ namespace BusinessLogic.Service
         {
             return await iMemberSubscriptionRepository.Update(entity);
         }
+
+        
     }
 }

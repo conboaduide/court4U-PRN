@@ -100,12 +100,13 @@ namespace DataAccess.Repository
             }
         }
 
-        public async Task<List<Slot>> GetAvailableSlots(string slotId, DateTime startDate, DateTime endDate, DateTime searchDate)
+        public async Task<List<Slot>> GetAvailableSlots(string slotId, DateTime searchDate)
         {
             try
             {
                 var bookedSlots = await _dbContext.Bookings
-                    .Where(bs => bs.SlotId == slotId && bs.Slot.StartTime >= startDate && bs.Slot.EndTime <= endDate)
+                    //&& bs.Slot.StartTime >= startDate && bs.Slot.EndTime <= endDate
+                    .Where(bs => bs.SlotId == slotId )
                     .Select(bs => bs.SlotId)
                     .ToListAsync();
                 var searchDayOfWeek = (DateOfWeek)searchDate.DayOfWeek;

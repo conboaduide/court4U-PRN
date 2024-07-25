@@ -86,5 +86,19 @@ namespace DataAccess.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<SubscriptionOption>> GetByClubId(string clubId)
+        {
+            try
+            {
+                
+                var result = await _dbContext.SubscriptionOptions.Where(x => x.ClubId == clubId).ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

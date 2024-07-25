@@ -9,5 +9,6 @@ namespace BusinessLogic.Service.Interface
 {
     public interface ISubscriptionOptionService : IBaseService<SubscriptionOption>
     {
+        Task<List<SubscriptionOption>> GetByClubId(string clubId);
     }
 }

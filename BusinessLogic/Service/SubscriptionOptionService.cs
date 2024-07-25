@@ -48,5 +48,10 @@ namespace BusinessLogic.Service
         {
             return await iSubscriptionOptionRepository.Update(entity);
         }
+
+        public async Task<List<SubscriptionOption>> GetByClubId(string clubId)
+        {
+            return await iSubscriptionOptionRepository.GetByClubId(clubId);
+        }
     }
 }
