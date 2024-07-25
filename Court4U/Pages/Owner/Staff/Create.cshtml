@@ -1,0 +1,77 @@
+﻿@page
+@model Court4U.Pages.Owner.Staff.CreateModel
+
+@{
+    Layout = "_OwnerLayout";
+    ViewData["Title"] = "Create new Staff";
+}
+
+<h4>StaffProfile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="User.Username" class="control-label"></label>
+                <input asp-for="User.Username" class="form-control" />
+                <span asp-validation-for="User.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Password" class="control-label"></label>
+                <input asp-for="User.Password" class="form-control" />
+                <span asp-validation-for="User.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.FullName" class="control-label"></label>
+                <input asp-for="User.FullName" class="form-control" />
+                <span asp-validation-for="User.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="User.DOB" class="block text-gray-700"></label>
+                <input asp-for="User.DOB" type="date" format="dd-mm-yyyy" class="form-input mt-1 block w-full" />
+                <span asp-validation-for="User.DOB" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Phone" class="control-label"></label>
+                <input asp-for="User.Phone" class="form-control" />
+                <span asp-validation-for="User.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Address" class="control-label"></label>
+                <input asp-for="User.Address" class="form-control" />
+                <span asp-validation-for="User.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="User.Gender" class="block text-gray-700"></label>
+                <select asp-for="User.Gender" class="form-select mt-1 block w-full">
+                    <option value="@(true)">Male</option>
+                    <option value="@(false)">Female</option>
+                </select>
+                <span asp-validation-for="User.Gender" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.AvatarUrl" class="control-label"></label>
+                <input asp-for="User.AvatarUrl" class="form-control" />
+                <span asp-validation-for="User.AvatarUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

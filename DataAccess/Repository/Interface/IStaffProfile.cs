@@ -9,5 +9,6 @@ namespace DataAccess.Repository.Interface
 {
     public interface IStaffProfileRepository : IBaseRepository<StaffProfile>
     {
+        Task<StaffProfile> GetWithUser(string id);
     }
 }

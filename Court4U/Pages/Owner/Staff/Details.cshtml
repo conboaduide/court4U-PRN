@@ -1,0 +1,41 @@
+﻿@page "{Id}"
+@model Court4U.Pages.Owner.Staff.DetailsModel
+
+@{
+    Layout = "_OwnerLayout";
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mx-auto p-4">
+    <h4 class="text-2xl font-bold mb-4">Staff Profile</h4>
+    <hr class="mb-4" />
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col">
+            <dt class="text-gray-500 font-semibold">@Html.DisplayNameFor(model => model.StaffProfile.User.FullName)</dt>
+            <dd class="text-gray-900">@Html.DisplayFor(model => model.StaffProfile.User.FullName)</dd>
+        </div>
+        <div class="flex flex-col">
+            <dt class="text-gray-500 font-semibold">@Html.DisplayNameFor(model => model.StaffProfile.User.Email)</dt>
+            <dd class="text-gray-900">@Html.DisplayFor(model => model.StaffProfile.User.Email)</dd>
+        </div>
+        <div class="flex flex-col">
+            <dt class="text-gray-500 font-semibold">@Html.DisplayNameFor(model => model.StaffProfile.Club)</dt>
+            <dd class="text-gray-900">@Html.DisplayFor(model => model.StaffProfile.Club.Name)</dd>
+        </div>
+        <div class="flex flex-col">
+            <dt class="text-gray-500 font-semibold">@Html.DisplayNameFor(model => model.StaffProfile.User.Address)</dt>
+            <dd class="text-gray-900">@Html.DisplayFor(model => model.StaffProfile.User.Address)</dd>
+        </div>
+        <div class="flex flex-col">
+            <dt class="text-gray-500 font-semibold">@Html.DisplayNameFor(model => model.StaffProfile.User.Role)</dt>
+            <dd class="text-gray-900">@Html.DisplayFor(model => model.StaffProfile.User.Role)</dd>
+        </div>
+        <div class="flex flex-col">
+            <dt class="text-gray-500 font-semibold">@Html.DisplayNameFor(model => model.StaffProfile.User.Status)</dt>
+            <dd class="text-gray-900">@Html.DisplayFor(model => model.StaffProfile.User.Status)</dd>
+        </div>
+    </dl>
+</div>
+<div class="container mx-auto p-4">
+    <a asp-page="./Index" class="text-blue-500 hover:underline">Back to List</a>
+</div>
