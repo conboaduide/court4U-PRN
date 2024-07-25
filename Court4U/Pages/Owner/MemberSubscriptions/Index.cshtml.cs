@@ -12,7 +12,7 @@ namespace Court4U.Pages.Owner.MemberSubscriptions
         {
             this._memberSubscriptionService = memberSubscriptionService;
         }
-        public IList<MemberSubscription> MemberSubscriptions { get; set; }
+        public IList<DataAccess.Entity.Data.MemberSubscription> MemberSubscriptions { get; set; }
         public async Task OnGetAsync()
         {
             MemberSubscriptions = await _memberSubscriptionService.Get();

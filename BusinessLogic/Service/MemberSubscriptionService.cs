@@ -42,7 +42,10 @@ namespace BusinessLogic.Service
         {
             return await iMemberSubscriptionRepository.Update(entity);
         }
+        public async Task<MemberSubscription> GetByUserId(string userId)
+        {
+            return await iMemberSubscriptionRepository.GetByUserId(userId);
+        }
 
-        
     }
 }

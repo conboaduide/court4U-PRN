@@ -9,6 +9,6 @@ namespace DataAccess.Repository.Interface
 {
     public interface IMemberSubscriptionRepository : IBaseRepository<MemberSubscription>
     {
-        
+        Task<MemberSubscription> GetByUserId(string userId);
     }
 }

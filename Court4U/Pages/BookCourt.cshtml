@@ -28,6 +28,7 @@
         {
             <h3 class="text-xl font-semibold mt-8">Available Slots:</h3>
             <form method="post">
+                <input asp-for=@Model.MemberSubscriptionId value=@Model.MemberSubscription.Id />
                 <div class="overflow-x-auto mt-4">
                     <table class="table-auto border-collapse border border-gray-300 w-full">
                         <thead>
@@ -69,30 +70,54 @@
     </div>
     <div class="mt-8 mx-4 w-[30vw] container">
         <div class="text-xl font-semibold">Member Subcription</div>
-        @foreach(var subscription in Model.SubscriptionOptions)
+        @if(Model.MemberSubscription == null)
         {
-            <form method="post" asp-page-handler="BuySubscription">
-                <input type="hidden" value=@subscription.Id asp-for=@Model.SubscriptionId />
-                <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
-                    <div class="p-6">
-                        <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                            @subscription.Name
-                        </h5>
-                        <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                            Price: @subscription.price
-                        </p>
-                        <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                            Total date: @subscription.TotalDate
-                        </p>
+            @foreach (var subscription in Model.SubscriptionOptions)
+            {
+                <form method="post" asp-page-handler="BuySubscription">
+                    <input type="hidden" value=@subscription.Id asp-for=@Model.SubscriptionId />
+                    <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+                        <div class="p-6">
+                            <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                                @subscription.Name
+                            </h5>
+                            <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                                Price: @subscription.price
+                            </p>
+                            <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                                Total date: @subscription.TotalDate
+                            </p>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <button class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                                    type="submit">
+                                Buy
+                            </button>
+                        </div>
                     </div>
-                    <div class="p-6 pt-0">
-                        <button class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                                type="submit">
-                            Buy
-                        </button>
-                    </div>
+                </form>
+            }
+        } else
+        {
+            <div class="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+                <div class="p-6">
+                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                        @Model.MemberSubscription.SubscriptionOption.Name
+                    </h5>
+                    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                        Price: @Model.MemberSubscription.Price
+                    </p>
+                    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                        Date: @Model.MemberSubscription.StartDate - @Model.MemberSubscription.EndDate
+                    </p>
                 </div>
-            </form>
+                <div class="p-6 pt-0">
+                    <button disabled class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                            type="button">
+                        You already buy subscription for this club
+                    </button>
+                </div>
+            </div>
         }
     </div>
 </div>

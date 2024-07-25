@@ -9,5 +9,6 @@ namespace BusinessLogic.Service.Interface
 {
     public interface IMemberSubscriptionService : IBaseService<MemberSubscription>
     {
+        Task<MemberSubscription> GetByUserId(string userId);    
     }
 }

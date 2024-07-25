@@ -86,5 +86,17 @@ namespace DataAccess.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<MemberSubscription> GetByUserId(string userId)
+        {
+            try
+            {
+                var result = await _dbContext.MemberSubscriptions.Include(x => x.SubscriptionOption).FirstOrDefaultAsync(x => x.MemberId == userId);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

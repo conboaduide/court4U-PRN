@@ -89,6 +89,52 @@ namespace BusinessLogic.Service
             return JsonConvert.DeserializeObject<MomoCreatePaymentResponseModel>(response.Content);
         }
 
+        public async Task<MomoCreatePaymentResponseModel> CreateMemberSubscriptionPaymentAsync(RequestCreateOrderModel order, string subscriptionId)
+        {
+            var bill = new Bill
+            {
+                Method = "Momo",
+                Price = order.Price,
+                Type = order.Type,
+            };
+            var returnUrl = "https://localhost:7292/MemberSubscription/PaymentCallBack";
+
+            var model = await _billService.Create(bill);
+            var user = await _userService.Get(order.UserId);
+            var orderInfo = "Khách hàng: " + user.FullName + ". Nội dung: Mua gói hội viên tại court4u ";
+            var orderId = order.OrderId + DateTime.Now;
+            var extraData = $"{subscriptionId};{model.Id};";
+            var rawData =
+                $"partnerCode={_options.Value.PartnerCode}&accessKey={_options.Value.AccessKey}&requestId={order.OrderId}&amount={order.Price}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={_options.Value.NotifyUrl}&extraData={extraData}";
+
+            var signature = ComputeHmacSha256(rawData, _options.Value.SecretKey);
+
+            var client = new RestClient(_options.Value.MomoApiUrl);
+            var request = new RestRequest() { Method = Method.Post };
+            request.AddHeader("Content-Type", "application/json; charset=UTF-8");
+
+            // Create an object representing the request data
+            var requestData = new
+            {
+                accessKey = _options.Value.AccessKey,
+                partnerCode = _options.Value.PartnerCode,
+                requestType = _options.Value.RequestType,
+                notifyUrl = _options.Value.NotifyUrl,
+                returnUrl = returnUrl,
+                orderId = orderId,
+                amount = order.Price.ToString(),
+                orderInfo = orderInfo,
+                requestId = order.OrderId,
+                extraData = extraData,
+                signature = signature
+            };
+            request.AddParameter("application/json", JsonConvert.SerializeObject(requestData), ParameterType.RequestBody);
+
+            var response = await client.ExecuteAsync(request);
+
+            return JsonConvert.DeserializeObject<MomoCreatePaymentResponseModel>(response.Content);
+        }
+
         public MomoExecuteResponseModel PaymentExecuteAsync(IQueryable<KeyValuePair<string, string>> collection)
         {
             var amount = collection.First(s => s.Key == "amount").Value;
