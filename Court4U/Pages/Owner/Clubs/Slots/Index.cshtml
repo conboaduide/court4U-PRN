@@ -27,10 +27,17 @@
                             <td class="py-2 px-4 border-b">
                                 @if (timeSlot.Slots.ContainsKey(day))
                                 {
-                                    <div class="flex items-center justify-between">
+                                    <div class="flex items-center justify-center">
                                         @timeSlot.Slots[day].Display
-                                        <button onclick="deleteSlot('@timeSlot.Slots[day].SlotId')" class="text-red-500 ml-2 w-1">
-                                            <i class="fa fa-trash"></i>
+                                        <form method="post" asp-page-handler="DeleteSlot">
+                                            <input type="hidden" name="slotId" value="@timeSlot.Slots[day].SlotId" />
+                                            <input type="hidden" name="ClubId" value="@Model.ClubId" />
+                                            <button type="submit" class="text-red-500 ml-2 w-1">
+                                                <i class="fa fa-trash text-red-500 font-bold">X</i>
+                                            </button>
+                                        </form>
+                                        <button onclick="showUpdateSlotModal(@day, '@timeSlot.Slots[day].SlotId', '@timeSlot.Slots[day].Start', '@timeSlot.Slots[day].End', @timeSlot.Slots[day].Price)" class="ml-2 text-yellow-500">
+                                            <i class="font-bold">U</i>
                                         </button>
                                     </div>
                                 }
@@ -53,29 +60,60 @@
         </table>
     </div>
 
-    <!-- Modal for Adding Slot -->
     <div id="addSlotModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 hidden">
         <div class="bg-white p-6 rounded-lg">
             <h2 class="text-xl font-bold mb-4">Add Slot</h2>
-            <div class="mb-4">
-                <label class="block mb-2">Start Time</label>
-                <input type="time" id="startTime" class="border border-gray-300 p-2 w-full bg-white" />
-            </div>
-            <div class="mb-4">
-                <label class="block mb-2">End Time</label>
-                <input type="time" id="endTime" class="border border-gray-300 p-2 w-full bg-white" />
-            </div>
-            <div class="mb-4">
-                <label class="block mb-2">Price</label>
-                <input type="number" id="price" class="border border-gray-300 p-2 w-full bg-white" />
-            </div>
-            <div class="mb-4">
-                <input type="hidden" id="dateOfWeek" />
-            </div>
-            <div class="flex justify-end">
-                <button onclick="addSlot()" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Add</button>
-                <button onclick="hideAddSlotModal()" class="bg-gray-300 text-black px-4 py-2 rounded">Cancel</button>
-            </div>
+            <form method="post" asp-page-handler="AddSlot">
+                <div class="mb-4">
+                    <label class="block mb-2">Start Time</label>
+                    <input type="time" name="StartTime" id="startTime" class="border border-gray-300 p-2 w-full bg-white" />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2">End Time</label>
+                    <input type="time" name="EndTime" id="endTime" class="border border-gray-300 p-2 w-full bg-white" />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2">Price</label>
+                    <input type="number" name="Price" id="price" class="border border-gray-300 p-2 w-full bg-white" />
+                </div>
+                <div class="mb-4">
+                    <input type="hidden" name="DayOfWeek" id="dateOfWeek" />
+                </div>
+                <input type="hidden" name="ClubId" id="clubId" value=@Model.ClubId />
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Add</button>
+                    <button type="button" onclick="hideAddSlotModal()" class="bg-gray-300 text-black px-4 py-2 rounded">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="updateSlotModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 hidden">
+        <div class="bg-white p-6 rounded-lg">
+            <h2 class="text-xl font-bold mb-4">Update Slot</h2>
+            <form method="post" asp-page-handler="UpdateSlot">
+                <div class="mb-4">
+                    <label class="block mb-2">Start Time</label>
+                    <input type="time" name="StartTime" id="updateStartTime" class="border border-gray-300 p-2 w-full bg-white" />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2">End Time</label>
+                    <input type="time" name="EndTime" id="updateEndTime" class="border border-gray-300 p-2 w-full bg-white" />
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2">Price</label>
+                    <input type="number" name="Price" id="updatePrice" class="border border-gray-300 p-2 w-full bg-white" />
+                </div>
+                <div class="mb-4">
+                    <input type="hidden" name="DayOfWeek" id="updateDateOfWeek" />
+                    <input type="hidden" name="SlotId" id="updateSlotId" />
+                </div>
+                <input type="hidden" name="ClubId" id="clubId" value=@Model.ClubId />
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Update</button>
+                    <button type="button" onclick="hideUpdateSlotModal()" class="bg-gray-300 text-black px-4 py-2 rounded">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -91,41 +129,18 @@
             document.getElementById('addSlotModal').classList.add('hidden');
         }
 
-        async function addSlot() {
-            const startTime = document.getElementById('startTime').value;
-            const endTime = document.getElementById('endTime').value;
-            const price = document.getElementById('price').value;
-            const dateOfWeek = document.getElementById('dateOfWeek').value;
-
-            const response = await fetch('/api/slot/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ startTime, endTime, price, dateOfWeek })
-            });
-
-            if (response.ok) {
-                location.reload();
-            } else {
-                alert('Failed to add slot.');
-            }
+        function showUpdateSlotModal(day, slotId, startTime, endTime, price) {
+            console.log(slotId)
+            document.getElementById('updateDateOfWeek').value = day;
+            document.getElementById('updateStartTime').value = startTime;
+            document.getElementById('updateEndTime').value = endTime;
+            document.getElementById('updatePrice').value = price;
+            document.getElementById('updateSlotId').value = slotId;
+            document.getElementById('updateSlotModal').classList.remove('hidden');
         }
 
-        async function deleteSlot(slotId) {
-            const response = await fetch(`/api/slot/delete/${slotId}`, {
-                method: 'DELETE'
-            });
-
-            if (response.ok) {
-                location.reload();
-            } else {
-                alert('Failed to delete slot.');
-            }
+        function hideUpdateSlotModal() {
+            document.getElementById('updateSlotModal').classList.add('hidden');
         }
     </script>
 }
-
-<script type="module">
-    import reactIcons from 'https://cdn.jsdelivr.net/npm/react-icons@5.2.1/+esm'
-</script>
