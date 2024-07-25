@@ -65,7 +65,7 @@ namespace DataAccess.Repository
         {
             try
             {
-                return await _dbContext.Bills.ToListAsync();
+                return await _dbContext.Bills.Include(x => x.Booking.Slot.Club).ToListAsync();
             }
             catch (Exception ex)
             {

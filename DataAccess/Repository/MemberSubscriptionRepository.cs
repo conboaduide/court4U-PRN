@@ -65,7 +65,7 @@ namespace DataAccess.Repository
         {
             try
             {
-                return await _dbContext.MemberSubscriptions.ToListAsync();
+                return await _dbContext.MemberSubscriptions.Include(x => x.SubscriptionOption).ToListAsync();
             }
             catch (Exception ex)
             {

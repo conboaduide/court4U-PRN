@@ -187,7 +187,7 @@ namespace Court4U.Pages
                     throw new Exception("Gen bill fail");
                 }
                 
-                var booking = new Booking
+                var booking = new DataAccess.Entity.Data.Booking
                 {
                     BillId = genBill.Id,
                     Price = slot.Price,

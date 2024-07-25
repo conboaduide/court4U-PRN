@@ -1,7 +1,9 @@
 using BusinessLogic.Service.Interface;
+using DataAccess.Entity.Data;
 using DataAccess.Repository.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Globalization;
 
 namespace Court4U.Pages.Owner
 {
@@ -9,12 +11,17 @@ namespace Court4U.Pages.Owner
     {
         private readonly IMemberSubscriptionService _memberSubscriptionService;
         private readonly IMomoService _momoService;
-        public DashboardModel(IMemberSubscriptionService memberSubscriptionService, IMomoService momoService)
+        private readonly IBillService _billService;
+        private readonly IBookingService _bookingService;
+        public DashboardModel(IMemberSubscriptionService memberSubscriptionService, IMomoService momoService, IBillService billService, IBookingService bookingService)
         {
             _memberSubscriptionService = memberSubscriptionService;
             _momoService = momoService;
-
+            _billService = billService;
+            _bookingService = bookingService;
         }
+        [BindProperty]
+        public string Price { get; set; }
         public float TotalPrice { get; set; } = 0;
         public async Task<IActionResult> OnGetAsync()
         {
@@ -24,6 +31,11 @@ namespace Court4U.Pages.Owner
             var memberSubsList = memberSubs.Where(x => x.SubscriptionOption.ClubId == convertClubId).ToList();
             var memberSubListPrice = memberSubsList.Aggregate(0.0f, (acc, x) => acc + x.SubscriptionOption.price);
             TotalPrice += memberSubListPrice;
+            var booking = await _bookingService.Get();
+            var billList = booking.Where(x => x.Slot.ClubId == convertClubId).ToList();
+            var billListPrice = billList.Aggregate(0.0f, (acc, x) => acc + x.Price);
+            TotalPrice += billListPrice;
+            Price = TotalPrice.ToString("C0", new CultureInfo("vi-VN"));
             return Page();
         }
 
