@@ -16,22 +16,22 @@ namespace DataAccess.Repository
         public async Task<IEnumerable<Club>> GetAllAsync()
         {
             using (var _context = new Court4UDbContext())
-            try
-            {
-                return await _context.Clubs.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                // Log lỗi chi tiết
-                Console.WriteLine($"Error in GetAllAsync: {ex.Message}");
-                throw;
-            }
+                try
+                {
+                    return await _context.Clubs.ToListAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Log lỗi chi tiết
+                    Console.WriteLine($"Error in GetAllAsync: {ex.Message}");
+                    throw;
+                }
         }
 
         public async Task<Club> GetByIdAsync(string id)
         {
             using (var _context = new Court4UDbContext())
-            return await _context.Clubs.FirstOrDefaultAsync(c => c.Id == id);
+                return await _context.Clubs.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(Club club)
@@ -47,7 +47,7 @@ namespace DataAccess.Repository
         {
             using (var _context = new Court4UDbContext())
             {
-                var existingClub = await _context.Clubs.FindAsync(club.Id);
+                var existingClub = await _context.Clubs.Include(c => c.User).Where(c => c.Id == club.Id).SingleOrDefaultAsync();
                 if (existingClub != null)
                 {
                     existingClub.Name = club.Name;
