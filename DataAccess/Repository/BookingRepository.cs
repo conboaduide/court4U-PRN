@@ -175,7 +175,18 @@ namespace DataAccess.Repository
                 var bookings = await _dbContext.Bookings
                     .Where(x => x.Date >= startOfYear && x.Date <= endOfYear && x.Slot.ClubId == clubId)
                     .ToListAsync();
-
+                var memberSub = await _dbContext.MemberSubscriptions
+                    .Where(x => x.CreatedDate >= startOfYear && x.CreatedDate <= endOfYear && x.SubscriptionOption.ClubId == clubId)
+                    .ToListAsync();
+                var memberSubsByMonth = memberSub
+                    .GroupBy(m => m.CreatedDate.Month)
+                    .Select(g => new
+                    {
+                        Month = g.Key,
+                        TotalRevenue = (int)g.Sum(b => b.Price)
+                    })
+                    .OrderBy(x => x.Month)
+                    .ToArray();
                 var revenueByMonth = bookings
                     .GroupBy(b => b.Date.Month)
                     .Select(g => new {
@@ -189,10 +200,11 @@ namespace DataAccess.Repository
                 for (int i = 1; i <= 12; i++)
                 {
                     var monthData = revenueByMonth.FirstOrDefault(x => x.Month == i);
+                    var memberData = memberSubsByMonth.FirstOrDefault(x => x.Month == i);
                     result[i - 1] = new CurrentYear
                     {
                         Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i),
-                        Count = monthData?.TotalRevenue ?? 0
+                        Count = monthData?.TotalRevenue + memberData?.TotalRevenue ?? 0
                     };
                 }
 

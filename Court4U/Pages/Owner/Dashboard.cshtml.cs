@@ -89,7 +89,7 @@ namespace Court4U.Pages.Owner
             CountBookingData  = bookingInCurrentYear.Select(x => x.Count).ToArray();
             CountBookingMonth = bookingInCurrentYear.Select(x => x.Month).ToArray();
 
-            CurrentYear[] revenueInCurrentYear = (CurrentYear[])await _bookingService.GetBookingInCurrentYear(convertClubId);
+            CurrentYear[] revenueInCurrentYear = (CurrentYear[])await _bookingService.GetRevenueInCurrentYear(convertClubId);
             CountRevenueData = revenueInCurrentYear.Select(x => x.Count).ToArray();
             CountRevenueMonth = revenueInCurrentYear.Select(x => x.Month).ToArray();
             return Page();

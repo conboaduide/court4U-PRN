@@ -50,7 +50,7 @@ namespace BusinessLogic.Service
             //    Price = order.Price,
             //    Type = order.Type,
             //};
-            var returnUrl = "https://localhost:7292/BookedSlot/PaymentCallBack";
+            var returnUrl = "https://court4u.ddns.net/BookedSlot/PaymentCallBack";
 
             //var model = await _billService.Create(bill);
             //var model = await _orderService.CreateOrder(order);
@@ -97,7 +97,7 @@ namespace BusinessLogic.Service
                 Price = order.Price,
                 Type = order.Type,
             };
-            var returnUrl = "https://localhost:7292/MemberSubscription/PaymentCallBack";
+            var returnUrl = "https://court4u.ddns.net/MemberSubscription/PaymentCallBack";
 
             var model = await _billService.Create(bill);
             var user = await _userService.Get(order.UserId);
