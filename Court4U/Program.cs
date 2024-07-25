@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CloudinaryDotNet;
+using DataAccess.Repository.Request;
 
 var builder = WebApplication.CreateBuilder(args);
 

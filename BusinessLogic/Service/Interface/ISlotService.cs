@@ -12,5 +12,6 @@ namespace BusinessLogic.Service.Interface
         Task<List<Slot>> GetAvailableSlotsAsync(string clubId, DateTime startDate, DateTime endDate, DateTime searchDate);
         Task<List<Slot>> SearchByDateAsync(DateTime date, string ClubId);
         Task<Booking> Booking(Booking booking, Bill bill);
+        Task<List<Slot>> GetSlotsByClubId(string id);
     }
 }
