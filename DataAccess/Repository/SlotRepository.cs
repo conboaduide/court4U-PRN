@@ -100,21 +100,61 @@ namespace DataAccess.Repository
             }
         }
 
-        public async Task<List<Slot>> GetAvailableSlots(string slotId, DateTime searchDate)
+        public async Task<List<Slot>> GetAvailableSlots(string clubId, DateTime searchDate)
         {
+            //try
+            //{
+            //    var courtList = await _dbContext.Courts.Where(x => x.ClubId == clubId).ToListAsync();
+            //    var courtAmount = courtList.Count;
+            //    var bookedSlots = await _dbContext.Bookings
+            //        && bs.Slot.StartTime >= startDate && bs.Slot.EndTime <= endDate
+            //        .Where(bs => bs.SlotId == clubId)
+            //        .Select(bs => bs.SlotId)
+            //        .ToListAsync();
+            //    var searchDayOfWeek = (DateOfWeek)searchDate.DayOfWeek;
+            //    var availableSlots = await _dbContext.Slots
+            //        .Where(s => s.ClubId == clubId && !bookedSlots.Contains(s.Id) && s.DateOfWeek == searchDayOfWeek)
+            //        .ToListAsync();
+
+            //    return availableSlots;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Failed to get available slots.", ex);
+            //}
+
             try
             {
-                var bookedSlots = await _dbContext.Bookings
-                    //&& bs.Slot.StartTime >= startDate && bs.Slot.EndTime <= endDate
-                    .Where(bs => bs.SlotId == slotId )
-                    .Select(bs => bs.SlotId)
-                    .ToListAsync();
+                // Retrieve all courts for the given club
+                var courtList = await _dbContext.Courts.Where(x => x.ClubId == clubId).ToListAsync();
+                var courtAmount = courtList.Count;
+
+                // Get all booked slots for the given club on the search date
                 var searchDayOfWeek = (DateOfWeek)searchDate.DayOfWeek;
-                var availableSlots = await _dbContext.Slots
-                    .Where(s => s.ClubId == slotId && !bookedSlots.Contains(s.Id) && s.DateOfWeek == searchDayOfWeek)
+                var bookedSlots = await _dbContext.Bookings
+                    .Where(bs => bs.Slot.ClubId == clubId && bs.Slot.DateOfWeek == searchDayOfWeek)
+                    .GroupBy(bs => bs.SlotId)
+                    .Select(group => new
+                    {
+                        SlotId = group.Key,
+                        BookingCount = group.Count()
+                    })
                     .ToListAsync();
 
-                return availableSlots;
+                // Get all slots for the given club on the search date
+                var availableSlots = await _dbContext.Slots
+                    .Where(s => s.ClubId == clubId && s.DateOfWeek == searchDayOfWeek)
+                    .ToListAsync();
+
+                // Filter slots where the number of bookings is less than the number of courts
+                var resultSlots = availableSlots.Where(slot =>
+                {
+                    var bookedSlot = bookedSlots.FirstOrDefault(bs => bs.SlotId == slot.Id);
+                    var bookingCount = bookedSlot?.BookingCount ?? 0;
+                    return courtAmount - bookingCount > 0;
+                }).ToList();
+
+                return resultSlots;
             }
             catch (Exception ex)
             {
