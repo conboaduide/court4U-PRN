@@ -11,14 +11,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CloudinaryDotNet;
 using DataAccess.Repository.Request;
+using Court4U;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddDbContext<Court4UDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Local")));
+builder.Services.AddTransient<Court4UDbContext>();
 
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 var cloudinary = builder.Configuration.GetSection("Cloudinary");
 
@@ -93,5 +94,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapRazorPages();
 });
+
+app.MapHub<ClubHub>("/clubHub");
 
 app.Run();

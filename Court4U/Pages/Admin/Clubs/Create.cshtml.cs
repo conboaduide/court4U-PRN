@@ -4,16 +4,19 @@ using DataAccess.Entity.Data;
 using System.Threading.Tasks;
 using BusinessLogic.Service.Interface;
 using DataAccess.Repository.Request;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Court4U.Pages.Admin.Clubs
 {
     public class CreateModel : PageModel
     {
         private readonly IClubService _clubService;
+        private IHubContext<ClubHub> _clubHub;
 
-        public CreateModel(IClubService clubService)
+        public CreateModel(IClubService clubService, IHubContext<ClubHub> clubHub)
         {
             _clubService = clubService;
+            _clubHub = clubHub;
         }
 
         [BindProperty]
@@ -32,6 +35,8 @@ namespace Court4U.Pages.Admin.Clubs
             }
 
             await _clubService.AddClubAsync(Club);
+
+            await _clubHub.Clients.All.SendAsync("ClubChanged");
 
             return RedirectToPage("Index");
         }

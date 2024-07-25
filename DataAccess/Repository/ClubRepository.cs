@@ -9,15 +9,13 @@ namespace DataAccess.Repository
 {
     public class ClubRepository : IClubRepository
     {
-        private readonly Court4UDbContext _context;
-
-        public ClubRepository(Court4UDbContext context)
+        public ClubRepository()
         {
-            _context = context;
         }
 
         public async Task<IEnumerable<Club>> GetAllAsync()
         {
+            using (var _context = new Court4UDbContext())
             try
             {
                 return await _context.Clubs.ToListAsync();
@@ -32,39 +30,50 @@ namespace DataAccess.Repository
 
         public async Task<Club> GetByIdAsync(string id)
         {
+            using (var _context = new Court4UDbContext())
             return await _context.Clubs.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(Club club)
         {
-            await _context.Clubs.AddAsync(club);
-            await _context.SaveChangesAsync();
+            using (var _context = new Court4UDbContext())
+            {
+                await _context.Clubs.AddAsync(club);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task UpdateAsync(Club club)
         {
-            var existingClub = await _context.Clubs.FindAsync(club.Id);
-            if (existingClub != null)
+            using (var _context = new Court4UDbContext())
             {
-                existingClub.Name = club.Name;
-                existingClub.Description = club.Description;
-                existingClub.Address = club.Address;
-                existingClub.CityOfProvince = club.CityOfProvince;
-                existingClub.District = club.District;
-                existingClub.LogoUrl = club.LogoUrl;
-                existingClub.UserId = club.UserId;
+                var existingClub = await _context.Clubs.FindAsync(club.Id);
+                if (existingClub != null)
+                {
+                    existingClub.Name = club.Name;
+                    existingClub.Description = club.Description;
+                    existingClub.Address = club.Address;
+                    existingClub.CityOfProvince = club.CityOfProvince;
+                    existingClub.District = club.District;
+                    existingClub.LogoUrl = club.LogoUrl;
+                    existingClub.UserId = club.UserId;
+                    existingClub.User.Id = club.UserId;
 
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
+                }
             }
         }
 
         public async Task DeleteAsync(string id)
         {
-            var club = await _context.Clubs.FindAsync(id);
-            if (club != null)
+            using (var _context = new Court4UDbContext())
             {
-                _context.Clubs.Remove(club);
-                await _context.SaveChangesAsync();
+                var club = await _context.Clubs.FindAsync(id);
+                if (club != null)
+                {
+                    _context.Clubs.Remove(club);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
     }

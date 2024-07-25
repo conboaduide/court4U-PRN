@@ -2,19 +2,22 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccess.Repository.Request;
 using BusinessLogic.Service.Interface;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Court4U.Pages.Admin.Clubs
 {
     public class EditModel : PageModel
     {
         private readonly IClubService _clubService;
+        private IHubContext<ClubHub> _clubHub;
 
         [BindProperty]
         public ClubRequest ClubRequest { get; set; }
 
-        public EditModel(IClubService clubService)
+        public EditModel(IClubService clubService, IHubContext<ClubHub> clubHub)
         {
             _clubService = clubService;
+            _clubHub = clubHub;
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
@@ -61,6 +64,8 @@ namespace Court4U.Pages.Admin.Clubs
             club.UserId = ClubRequest.UserId;
 
             await _clubService.UpdateClubAsync(club);
+
+            await _clubHub.Clients.All.SendAsync("ClubChanged");
 
             return RedirectToPage("Index");
         }

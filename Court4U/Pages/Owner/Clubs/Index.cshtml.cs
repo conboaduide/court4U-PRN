@@ -22,7 +22,7 @@ namespace Court4U.Pages.Owner.Clubs
             Clubs = await clubService.GetClubByUserIdAsync(convertUserId);
             Console.WriteLine(Clubs);
         }
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             HttpContext.Session.SetString("ClubId", ClubId);
             

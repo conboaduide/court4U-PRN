@@ -3,6 +3,7 @@ using BusinessLogic.Service.Interface;
 using DataAccess.Repository.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Court4U.Pages.Owner.Clubs
 {
@@ -10,11 +11,13 @@ namespace Court4U.Pages.Owner.Clubs
     {
         private readonly IClubService _clubService;
         private ICloudinaryService _cloudinaryService;
+        private IHubContext<ClubHub> _hub;
 
-        public CreateModel(IClubService clubService, ICloudinaryService cloudinaryService)
+        public CreateModel(IClubService clubService, ICloudinaryService cloudinaryService, IHubContext<ClubHub> hub)
         {
             _clubService = clubService;
             _cloudinaryService = cloudinaryService;
+            _hub = hub;
         }
 
         [BindProperty]
@@ -51,6 +54,8 @@ namespace Court4U.Pages.Owner.Clubs
                 // Handle the case where no file was uploaded
                 ModelState.AddModelError("LogoFile", "Please upload a file.");
             }
+
+            await _hub.Clients.All.SendAsync("ClubChanged");
 
             return RedirectToPage("Index");
         }
