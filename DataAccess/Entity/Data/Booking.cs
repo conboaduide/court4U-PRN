@@ -9,6 +9,7 @@ namespace DataAccess.Entity.Data
         public float Price { get; set; }
         public string BillId { get; set; }
         public DateTime Date { get; set; }
+        public bool CheckIn {  get; set; } = false;
         public string SlotId { get; set; }
         public Slot Slot { get; set; }
 
