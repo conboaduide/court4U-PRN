@@ -92,7 +92,7 @@ namespace DataAccess.Repository
         {
             try
             {
-                return await _dbContext.Courts.Where(c => c.ClubId == clubId).ToListAsync();
+                return await _dbContext.Courts.Include(c => c.Club).Where(c => c.ClubId == clubId).ToListAsync();
             }
             catch (Exception ex)
             {
