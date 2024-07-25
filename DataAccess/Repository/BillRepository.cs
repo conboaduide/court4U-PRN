@@ -21,7 +21,7 @@ namespace DataAccess.Repository
         {
             try
             {
-                _dbContext.Add(entity);
+                await _dbContext.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return entity;
             }

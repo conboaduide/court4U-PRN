@@ -9,5 +9,6 @@ namespace BusinessLogic.Service.Interface
     public interface IEmailService
     {
         Task SendEmail(string email, string token);
+        Task SendQrCode(string email, string token);
     }
 }

@@ -59,7 +59,7 @@ namespace Court4U.Pages
             DateTime startDate = DateTime.Today;
             DateTime endDate = DateTime.Today.AddDays(7);
 
-            //Slots = await _slotService.GetAvailableSlotsAsync(ClubId, startDate, endDate);
+            Slots = await _slotService.GetAvailableSlotsAsync(ClubId, startDate, endDate, SearchDate);
             Slots = Slots.OrderBy(s => s.StartTime.Date).ThenBy(s => s.StartTime.TimeOfDay).ToList();
 
             return Page();
@@ -78,7 +78,7 @@ namespace Court4U.Pages
             {
                 return RedirectToPage("/Clubs");
             }
-            //Slots = await _slotService.SearchByDateAsync(SearchDate, ClubId);
+            Slots = await _slotService.SearchByDateAsync(SearchDate, ClubId);
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(string SelectedSlotId)
@@ -123,7 +123,7 @@ namespace Court4U.Pages
             DateTime startDate = DateTime.Today;
             DateTime endDate = DateTime.Today.AddDays(7);
 
-            //Slots = await _slotService.GetAvailableSlotsAsync(ClubId, startDate, endDate);
+            Slots = await _slotService.GetAvailableSlotsAsync(ClubId, startDate, endDate, SearchDate);
             Slots = Slots.OrderBy(s => s.StartTime.Date).ThenBy(s => s.StartTime.TimeOfDay).ToList();
 
             return Page();

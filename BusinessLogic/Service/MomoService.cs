@@ -44,21 +44,22 @@ namespace BusinessLogic.Service
 
         public async Task<MomoCreatePaymentResponseModel> CreateBookSlotPaymentAsync(RequestCreateOrderModel order)
         {
-            var bill = new Bill
-            {
-                Method = "Momo",
-                Price = order.Price,
-                Type = order.Type,
-            };
+            //var bill = new Bill
+            //{
+            //    Method = "Momo",
+            //    Price = order.Price,
+            //    Type = order.Type,
+            //};
             var returnUrl = "https://localhost:7292/BookedSlot/PaymentCallBack";
 
-            var model = await _billService.Create(bill);
+            //var model = await _billService.Create(bill);
             //var model = await _orderService.CreateOrder(order);
             var user = await _userService.Get(order.UserId);
             //var course = await _unitOfWork.CourseRepository.GetSingleById(model.CourseId);
             var orderInfo = "Khách hàng: " + user.FullName + ". Nội dung: Mua hàng tại court4u ";
+            var orderId = order.OrderId + DateTime.Now;
             var rawData =
-                $"partnerCode={_options.Value.PartnerCode}&accessKey={_options.Value.AccessKey}&requestId={model.Id}&amount={model.Price}&orderId={model.Id}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={_options.Value.NotifyUrl}&extraData=";
+                $"partnerCode={_options.Value.PartnerCode}&accessKey={_options.Value.AccessKey}&requestId={order.OrderId}&amount={order.Price}&orderId={orderId}&orderInfo={orderInfo}&returnUrl={returnUrl}&notifyUrl={_options.Value.NotifyUrl}&extraData=";
 
             var signature = ComputeHmacSha256(rawData, _options.Value.SecretKey);
 
@@ -74,10 +75,10 @@ namespace BusinessLogic.Service
                 requestType = _options.Value.RequestType,
                 notifyUrl = _options.Value.NotifyUrl,
                 returnUrl = returnUrl,
-                orderId = model.Id,
+                orderId = orderId,
                 amount = order.Price.ToString(),
                 orderInfo = orderInfo,
-                requestId = model.Id,
+                requestId = order.OrderId,
                 extraData = "",
                 signature = signature
             };

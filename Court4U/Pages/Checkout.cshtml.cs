@@ -47,42 +47,33 @@ namespace Court4U.Pages
             try
             {
 
-                var UserId = "";
-                var BookingId = Guid.NewGuid().ToString();
-                var bill = new Bill()
+                var UserId = HttpContext.Session.GetString("UserId");
+                var bill = new Bill
                 {
-                    Id = Guid.NewGuid().ToString(),
                     Method = "Momo",
                     Price = slot.Price,
-                    Type = "Member",
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    Type = "Booking",
                 };
-
-                UserId = HttpContext.Session.GetString("UserId");
-
-
-                var booking = new Booking()
+              
+                var booking = new Booking
                 {
-                    Id = BookingId,
-                    Bill = bill,
                     BillId = bill.Id,
-                    Status = false,
+                    SlotId = slot.Id,
                     UserId = UserId,
+                    Status = false,
+                    Date = SearchDate,
+                    Price = slot.Price,
                     CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
-                    Date = SearchDate
+                    UpdatedDate = DateTime.Now
                 };
-
-
-                var result = await _bookingService.Create(booking);
+                var result = await _slotService.Booking(booking, bill);
 
                 if (result != null)
                 {
                     var requestMomo = new RequestCreateOrderModel
                     {
                         Buy_date = DateTime.Now,
-                        OrderId = SelectedSlotId + DateTime.Now,
+                        OrderId = result.Id,
                         Price = slot.Price,
                         Type = "Momo",
                         UserId = UserId
@@ -97,9 +88,10 @@ namespace Court4U.Pages
             }
             catch (Exception ex)
             {
+                // Log or capture the inner exception details for troubleshooting
+                var innerExceptionMessage = ex.InnerException?.Message ?? "No inner exception";
+                throw new Exception($"An error occurred: {ex.Message}. Inner exception: {innerExceptionMessage}");
             }
-            return Page();
-
         }
     }
 }

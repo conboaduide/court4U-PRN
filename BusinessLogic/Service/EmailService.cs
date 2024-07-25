@@ -41,5 +41,35 @@ namespace BusinessLogic.Service
                 Console.WriteLine($"An error occurred while sending the email: {ex.Message}");
             }
         }
+
+        public async Task SendQrCode(string email, string content)
+        {
+            try
+            {
+
+                var smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587, // or the port your email provider uses
+                    Credentials = new NetworkCredential("anhvnvse172006@fpt.edu.vn", "ahea kegk wmtv ptrs"),
+                    EnableSsl = true,
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("anhvnvse172006@fpt.edu.vn"),
+                    Subject = "Confirm booking from Court4u",
+                    Body = content,
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(email);
+
+                await smtpClient.SendMailAsync(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., log it or rethrow it)
+                Console.WriteLine($"An error occurred while sending the email: {ex.Message}");
+            }
+        }
     }
 }

@@ -61,24 +61,14 @@ namespace DataAccess.Entity
             modelBuilder.Entity<Bill>()
                 .HasOne(b => b.Booking)
                 .WithOne(b => b.Bill)
-                .HasForeignKey<Booking>(b => b.Id);
+                .HasForeignKey<Booking>(b => b.BillId);
 
             //
             modelBuilder.Entity<Bill>()
                 .HasOne(b => b.MemberSubscription)
                 .WithOne(ms => ms.Bill)
-                .HasForeignKey<MemberSubscription>(ms => ms.MemberId);
+                .HasForeignKey<MemberSubscription>(ms => ms.BillId);
 
-            //
-            //modelBuilder.Entity<BookedSlot>()
-            //    .HasKey(bs => bs.Id);
-            //modelBuilder.Entity<BookedSlot>()
-            //    .HasOne(bs => bs.Slot)
-            //    .WithMany(s => s.BookedSlots)
-            //    .HasForeignKey(bs => bs.SlotId)
-            //    .OnDelete(DeleteBehavior.NoAction);
-
-            //
             modelBuilder.Entity<Booking>()
                 .HasKey(b => b.Id);
             modelBuilder.Entity<Booking>()
@@ -87,7 +77,6 @@ namespace DataAccess.Entity
                 .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //
             modelBuilder.Entity<Club>()
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Club>()
@@ -95,7 +84,6 @@ namespace DataAccess.Entity
                 .WithMany(u => u.Clubs)
                 .HasForeignKey(c => c.UserId);
 
-            //
             modelBuilder.Entity<ClubImage>()
                 .HasKey(ci => ci.Id);
             modelBuilder.Entity<ClubImage>()
@@ -104,7 +92,6 @@ namespace DataAccess.Entity
                 .HasForeignKey(ci => ci.ClubId);
 
 
-            //
             modelBuilder.Entity<Court>()
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Court>()
@@ -112,7 +99,6 @@ namespace DataAccess.Entity
                 .WithMany(c => c.Courts)
                 .HasForeignKey(c => c.ClubId);
 
-            //
             modelBuilder.Entity<MemberSubscription>()
                 .HasKey(ms => ms.MemberId);
             modelBuilder.Entity<MemberSubscription>()
@@ -186,5 +172,8 @@ namespace DataAccess.Entity
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
         }
+
+
+
     }
 }

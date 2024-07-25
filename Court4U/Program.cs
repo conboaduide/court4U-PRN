@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DataAccess.Repository.Request;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +54,9 @@ builder.Services.AddLogging(config =>
     config.AddConsole();
     config.AddDebug();
 });
-
+//config momo
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline

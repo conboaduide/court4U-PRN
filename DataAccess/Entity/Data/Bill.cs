@@ -8,7 +8,7 @@ namespace DataAccess.Entity.Data
         public string Method { get; set; }
         public float Price { get; set; }
         public string Type { get; set; }
-        public Booking Booking { get; set; }
+        public virtual Booking Booking { get; set; }
         public MemberSubscription MemberSubscription { get; set; }
     }
 }

@@ -44,6 +44,18 @@ namespace BusinessLogic.Service
         {
             return await iSlotRepository.Update(entity);
         }
-       
+        public async Task<List<Slot>> GetAvailableSlotsAsync(string clubId, DateTime startDate, DateTime endDate, DateTime searchDate)
+        {
+            return await iSlotRepository.GetAvailableSlots(clubId, startDate, endDate , searchDate);
+        }
+        public async Task<List<Slot>> SearchByDateAsync(DateTime date, string ClubId)
+        {
+            return await iSlotRepository.SearchByDate(date, ClubId);
+        }
+
+        public async Task<Booking> Booking(Booking booking, Bill bill)
+        {
+            return await iSlotRepository.Booking(booking, bill);
+        }
     }
 }

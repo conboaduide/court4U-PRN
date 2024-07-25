@@ -21,13 +21,17 @@ namespace DataAccess.Repository
         {
             try
             {
-                _dbContext.Add(entity);
+                await _dbContext.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return entity;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+
+                var innerExceptionMessage = ex.InnerException?.Message ?? "No inner exception";
+                var errorMessage = $"Error: {ex.Message}, Inner Exception: {innerExceptionMessage}";
+                Console.WriteLine(errorMessage);
+                throw new Exception(errorMessage);
             }
         }
 
