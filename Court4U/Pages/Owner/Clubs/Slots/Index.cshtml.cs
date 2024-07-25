@@ -20,6 +20,11 @@ namespace Court4U.Pages.Owner.Clubs.Slots
 
         public List<TimeSlot> TimeSlots { get; set; }
 
+        public List<Slot> Slots { get; set; }
+
+        [BindProperty]
+        public string ClubId { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string? clubId)
         {
             if (clubId.IsNullOrEmpty())
@@ -29,6 +34,8 @@ namespace Court4U.Pages.Owner.Clubs.Slots
 
             var slots = await _slotService.GetSlotsByClubId(clubId);
             TimeSlots = GenerateTimeSlots(slots);
+            Slots = slots;
+            ClubId = clubId;
             return Page();
         }
 
@@ -53,7 +60,10 @@ namespace Court4U.Pages.Owner.Clubs.Slots
                 timeSlotMap[startTime][dayOfWeek] = new SlotInfo
                 {
                     SlotId = slot.Id.ToString(),
-                    Display = $"{startTime} - {endTime}"
+                    Display = $"{startTime} - {endTime}",
+                    Start = startTime,
+                    End = endTime,
+                    Price = slot.Price.ToString()
                 };
             }
 
@@ -79,6 +89,50 @@ namespace Court4U.Pages.Owner.Clubs.Slots
         {
             public string SlotId { get; set; }
             public string Display { get; set; }
+            public string Start { get; set; }
+            public string End { get; set; }
+            public string Price { get; set; }
+        }
+
+        public async Task<IActionResult> OnPostAddSlot(DateTime StartTime, DateTime EndTime, float Price, int DayOfWeek, string ClubId)
+        {
+            var slot = new Slot
+            {
+                Id = Guid.NewGuid().ToString(),
+                DateOfWeek = (DataAccess.Entity.Enums.DateOfWeek)DayOfWeek,
+                ClubId = ClubId,
+                Price = Price,
+                StartTime = StartTime,
+                EndTime = EndTime,
+            };
+            await _slotService.Create(slot);
+            return Redirect("/Owner/Clubs/Slots?clubId=" + ClubId);
+        }
+
+        public async Task<IActionResult> OnPostUpdateSlot(DateTime StartTime, DateTime EndTime, float Price, int DayOfWeek, string SlotId)
+        {
+            var slot = await _slotService.Get(SlotId);
+
+            if (slot == null)
+            {
+                TempData["Message"] = "Slot not exist";
+            }
+            else
+            {
+                slot.DateOfWeek = (DataAccess.Entity.Enums.DateOfWeek)DayOfWeek;
+                slot.Price = Price;
+                slot.StartTime = StartTime;
+                slot.EndTime = EndTime;
+                await _slotService.Update(slot);
+            }
+
+            return Redirect("/Owner/Clubs/Slots?clubId=" + ClubId);
+        }
+
+        public async Task<IActionResult> OnPostDeleteSlot(string slotId, string ClubId)
+        {
+            await _slotService.Delete(slotId);
+            return Redirect("/Owner/Clubs/Slots?clubId=" + ClubId);
         }
     }
 }

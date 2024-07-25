@@ -43,7 +43,7 @@ namespace Court4U.Pages.Staff.CheckIn
                 else
                 {
                     // Ngay book la hom nay hoac tuong lai
-                    if (booking != null && booking.Status == true)
+                    if (booking != null && booking.CheckIn == true)
                     {
                         Message = "Booking is already checked!";
                     }
@@ -51,7 +51,7 @@ namespace Court4U.Pages.Staff.CheckIn
                     {
                         try
                         {
-                            booking.Status = true;
+                            booking.CheckIn = true;
                             var result = await _bookingService.Update(booking);
                             Message = "Checked in successfully for booking " + data;
                         }
