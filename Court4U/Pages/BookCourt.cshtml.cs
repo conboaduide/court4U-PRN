@@ -113,6 +113,7 @@ namespace Court4U.Pages
             {
                 MemberSubscription = null;
             }
+            this.SearchDate = SearchDate;
             return Page();
         }
 

@@ -72,7 +72,7 @@ namespace Court4U.Pages
                 {
                     var requestMomo = new RequestCreateOrderModel
                     {
-                        Buy_date = DateTime.Now,
+                        Buy_date = SearchDate,
                         OrderId = result.Id,
                         Price = slot.Price,
                         Type = "Momo",

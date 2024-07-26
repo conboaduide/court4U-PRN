@@ -55,6 +55,7 @@
                         </tbody>
                     </table>
                 </div>
+                <input type="hidden" asp-for="@Model.SearchDate" value="@Model.SearchDate" />
                 <div class="flex justify-end mt-4">
                     <button type="submit" formaction="/BookCourt/ClubId?handler=OnPostAsync" class="bg-green-500 text-white py-2 px-4 rounded-lg">Book Selected Slot</button>
                 </div>
