@@ -15,7 +15,7 @@ namespace BusinessLogic.Service
         {
             try
             {
-                string link = "http://localhost:5234/verify?token=" + $"{token}";
+                string link = "https://court4u.ddns.net/verify?token=" + $"{token}";
 
                 var smtpClient = new SmtpClient("smtp.gmail.com")
                 {
