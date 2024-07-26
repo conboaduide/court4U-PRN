@@ -63,6 +63,10 @@ namespace Court4U.Pages
                 {
                     return RedirectToPage("/Index");
                 }
+                if (user.Role == Roles.Staff)
+                {
+                    return RedirectToPage("/Staff/CheckIn/Index");
+                }
                 else
                 {
                     return RedirectToPage("/Login");
